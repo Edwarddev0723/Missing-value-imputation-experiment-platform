@@ -1,0 +1,13 @@
+dataset:
+  name: adult
+  source: uci
+  target_col: income
+  task_type: classification
+  split:
+    train_ratio: 0.7
+    valid_ratio: 0.1
+    test_ratio: 0.2
+    stratify: true
+  feature_types:
+    numerical: [age, fnlwgt, education-num, capital-gain, capital-loss, hours-per-week]
+    categorical: [workclass, education, marital-status, occupation, relationship, race, sex, native-country]

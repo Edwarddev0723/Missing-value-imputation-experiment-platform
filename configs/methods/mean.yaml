@@ -1,0 +1,5 @@
+method:
+  name: mean
+  family: statistical
+  device: cpu
+  params: {}

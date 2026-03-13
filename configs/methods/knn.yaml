@@ -1,0 +1,6 @@
+method:
+  name: knn
+  family: statistical
+  device: cpu
+  params:
+    n_neighbors: 5

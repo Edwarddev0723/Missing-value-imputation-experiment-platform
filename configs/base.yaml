@@ -1,0 +1,32 @@
+project:
+  name: missing-value-imputation-benchmark
+  task_name: benchmark_core
+  seed: 42
+  output_dir: results/
+
+runtime:
+  device: cpu
+  num_workers: 4
+  deterministic: true
+
+tracking:
+  use_wandb: false
+  project: missing-value-imputation-benchmark
+  entity: null
+  group: null
+  tags: [benchmark]
+  log_artifacts: true
+  output_dir: results/logs
+
+experiment:
+  repeat_seeds: [42, 52, 62]
+  save_imputed_data: false
+  save_masks: true
+
+downstream:
+  enabled: true
+  params:
+    n_estimators: 100
+    max_depth: 5
+    learning_rate: 0.1
+    random_state: 42

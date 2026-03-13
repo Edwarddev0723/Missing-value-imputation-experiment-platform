@@ -1,0 +1,9 @@
+method:
+  name: softimpute
+  family: statistical
+  device: cpu
+  params:
+    max_rank: 50
+    lam: 0.0
+    max_iter: 100
+    tol: 1.0e-5

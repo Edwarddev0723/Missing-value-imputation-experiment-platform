@@ -1,0 +1,8 @@
+missingness:
+  protocol: controlled
+  mechanism: MAR
+  rate: 0.3
+  seed: 123
+  scenario_tag: benchmark_mar
+  options:
+    exclude_target: true

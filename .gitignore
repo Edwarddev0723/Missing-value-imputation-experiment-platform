@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Environment
+.env
+
+# Data (raw data may be large)
+data/raw/
+data/processed/
+data/cache/
+data/interim/
+
+# Results (generated)
+results/tables/
+results/figures/
+results/logs/
+results/reports/
+results/exports/
+
+# W&B
+wandb/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Masks (generated, can be large)
+data/masks/

@@ -1,0 +1,9 @@
+missingness:
+  protocol: controlled
+  mechanism: MCAR
+  rate: 0.1
+  seed: 123
+  scenario_tag: benchmark_mcar
+  options:
+    exclude_target: true
+    per_feature_rate: false

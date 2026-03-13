@@ -1,0 +1,27 @@
+# Core benchmark: all baseline methods × datasets × missingness profiles
+# Usage: python scripts/run_batch.py --config configs/experiments/benchmark_core.yaml
+
+project:
+  name: missing-value-imputation-benchmark
+  output_dir: results/
+
+tracking:
+  use_wandb: false
+  output_dir: results/logs
+
+downstream:
+  enabled: true
+  params:
+    n_estimators: 100
+    max_depth: 5
+    learning_rate: 0.1
+    random_state: 42
+
+batch:
+  datasets: [adult, heart]
+  missingness_profiles: [mcar_10, mar_30]
+  methods: [mean, knn, missforest, softimpute]
+  seeds: [42, 52, 62]
+  parallel:
+    enabled: false
+    max_concurrent_runs: 1

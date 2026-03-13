@@ -1,0 +1,108 @@
+{
+  "experiment_id": "adult_mean_MCAR_s42_b8792d1b",
+  "dataset_name": "adult",
+  "method_name": "mean",
+  "method_family": "statistical",
+  "missing_mechanism": "MCAR",
+  "missing_rate": 0.1,
+  "scenario_tag": "benchmark_mcar",
+  "seed": 42,
+  "imputation_metrics": {
+    "test_numerical_rmse": 41923.79886275823,
+    "test_numerical_mae": 13258.695435903672,
+    "test_numerical_nrmse": 0.5202269673511953,
+    "test_categorical_accuracy": 0.5792011019283747,
+    "test_n_missing_values": 12778,
+    "train_numerical_rmse": 41825.010336219966,
+    "train_numerical_mae": 13142.934489807478,
+    "train_numerical_nrmse": 0.5110733210929355,
+    "train_categorical_accuracy": 0.5642185454112606,
+    "train_n_missing_values": 44087
+  },
+  "downstream_metrics": {
+    "downstream_error": "Found input variables with inconsistent numbers of samples: [31629, 31655]"
+  },
+  "runtime_metrics": {
+    "fit_time_seconds": 0.0016505830026289914,
+    "impute_time_seconds": 0.0017820000030042138,
+    "total_time_seconds": 0.003432583005633205
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 42,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        52,
+        62
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "downstream": {
+      "enabled": true,
+      "params": {
+        "n_estimators": 100,
+        "max_depth": 5,
+        "learning_rate": 0.1,
+        "random_state": 42
+      }
+    },
+    "dataset": {
+      "name": "adult",
+      "split": {
+        "train_ratio": 0.7,
+        "valid_ratio": 0.1
+      }
+    },
+    "missingness": {
+      "mechanism": "MCAR",
+      "rate": 0.1,
+      "seed": 123,
+      "scenario_tag": "benchmark_mcar",
+      "exclude_target": true
+    },
+    "method": {
+      "name": "mean",
+      "params": {}
+    },
+    "summary": {
+      "test_numerical_rmse": 41923.79886275823,
+      "test_numerical_mae": 13258.695435903672,
+      "test_numerical_nrmse": 0.5202269673511953,
+      "test_categorical_accuracy": 0.5792011019283747,
+      "test_n_missing_values": 12778,
+      "train_numerical_rmse": 41825.010336219966,
+      "train_numerical_mae": 13142.934489807478,
+      "train_numerical_nrmse": 0.5110733210929355,
+      "train_categorical_accuracy": 0.5642185454112606,
+      "train_n_missing_values": 44087,
+      "downstream_error": "Found input variables with inconsistent numbers of samples: [31629, 31655]",
+      "fit_time_seconds": 0.0016505830026289914,
+      "impute_time_seconds": 0.0017820000030042138,
+      "total_time_seconds": 0.003432583005633205
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}
