@@ -1,0 +1,7 @@
+method:
+  name: em
+  family: statistical
+  device: cpu
+  params:
+    max_iterations: 100
+    convergence_threshold: 1.0e-4

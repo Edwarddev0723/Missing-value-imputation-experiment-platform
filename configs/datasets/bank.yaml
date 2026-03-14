@@ -1,0 +1,14 @@
+dataset:
+  name: bank
+  dataset_id: MX2
+  source: uci
+  target_col: deposit
+  task_type: classification
+  split:
+    train_ratio: 0.8
+    valid_ratio: 0.0
+    test_ratio: 0.2
+    stratify: true
+  feature_types:
+    numerical: [age, balance, day, duration, campaign, pdays, previous]
+    categorical: [job, marital, education, default, housing, loan, contact, month, poutcome]

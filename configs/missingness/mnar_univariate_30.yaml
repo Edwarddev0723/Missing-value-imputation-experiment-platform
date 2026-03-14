@@ -1,0 +1,7 @@
+missingness:
+  protocol: controlled
+  mechanism: MNAR
+  pattern: univariate
+  rate: 0.3
+  options:
+    exclude_target: true

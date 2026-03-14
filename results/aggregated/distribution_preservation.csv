@@ -1,0 +1,4 @@
+dataset_id,dataset_name,method_id,method_name,mechanism,pattern,missing_rate,wasserstein_distance_mean_mean,wasserstein_distance_mean_std,jsd_mean_mean,jsd_mean_std,n_seeds
+PN5,breast_cancer,,gain,MCAR,general,0.2,0.03952881078480616,,,,1
+PN5,breast_cancer,,knn,MCAR,general,0.2,0.01569923491970386,,,,1
+PN5,breast_cancer,,mean,MCAR,general,0.2,0.05195392564751592,,,,1

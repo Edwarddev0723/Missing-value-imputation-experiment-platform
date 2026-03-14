@@ -1,0 +1,4 @@
+dataset_id,dataset_name,method_id,method_name,mechanism,pattern,missing_rate,downstream_accuracy_mean,downstream_accuracy_std,downstream_f1_weighted_mean,downstream_f1_weighted_std,downstream_f1_macro_mean,downstream_f1_macro_std,downstream_roc_auc_mean,downstream_roc_auc_std,n_seeds
+PN5,breast_cancer,,gain,MCAR,general,0.2,0.9562043795620438,,0.9567286089448511,,0.9531463748290014,,0.9918071161048689,,1
+PN5,breast_cancer,,knn,MCAR,general,0.2,0.9708029197080292,,0.9710512626898229,,0.9685057471264368,,0.9820926966292135,,1
+PN5,breast_cancer,,mean,MCAR,general,0.2,0.9708029197080292,,0.9710512626898229,,0.9685057471264368,,0.9803370786516854,,1

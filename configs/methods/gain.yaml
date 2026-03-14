@@ -1,0 +1,13 @@
+method:
+  name: gain
+  family: dl
+  device: mps
+  params:
+    generator_hidden: [256, 128]
+    discriminator_hidden: [256, 128]
+    epochs: 300
+    learning_rate: 1.0e-3
+    alpha: 100
+    batch_size: 256
+    early_stopping_patience: 10
+    hint_rate: 0.9

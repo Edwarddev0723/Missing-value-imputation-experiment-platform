@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-import uuid
+import hashlib
+from pathlib import Path
 from typing import Any
 
 import numpy as np
@@ -87,7 +88,7 @@ class ExperimentRunner:
 
             # 3. Preprocess
             preprocessor = CanonicalPreprocessor(
-                encode_categoricals=True, scale_numericals=False,
+                encode_categoricals=True, scale_numericals=True,
                 drop_duplicates=False,
             )
             train_features = self.dataset.get_features(train_df)
@@ -107,19 +108,22 @@ class ExperimentRunner:
             miss_cfg = self.config.get("missingness", {})
             miss_rate = miss_cfg.get("rate", 0.1)
             miss_seed = miss_cfg.get("seed", seed)
+            miss_pattern = miss_cfg.get("pattern", "general")
 
             logger.info(
                 f"Injecting missingness: {self.missingness_generator.name} "
-                f"rate={miss_rate}"
+                f"pattern={miss_pattern} rate={miss_rate}"
             )
             train_miss_result = self.missingness_generator.generate(
                 X_train_complete, metadata, seed=miss_seed, rate=miss_rate,
                 exclude_target=miss_cfg.get("exclude_target", True),
+                pattern=miss_pattern,
                 scenario_tag=miss_cfg.get("scenario_tag", ""),
             )
             test_miss_result = self.missingness_generator.generate(
                 X_test_complete, metadata, seed=miss_seed + 1, rate=miss_rate,
                 exclude_target=miss_cfg.get("exclude_target", True),
+                pattern=miss_pattern,
                 scenario_tag=miss_cfg.get("scenario_tag", ""),
             )
 
@@ -157,6 +161,7 @@ class ExperimentRunner:
                     X_test_imputed, test_target,
                     task_type=task_type,
                     model_params=ds_cfg.get("params", {}),
+                    seed=seed,
                 )
 
             # 8. Runtime metrics
@@ -166,7 +171,7 @@ class ExperimentRunner:
                 "total_time_seconds": fit_timer.elapsed + impute_timer.elapsed,
             }
 
-            # 9. Build result
+            # 9. Build result (internal)
             result = ExperimentResult(
                 experiment_id=experiment_id,
                 dataset_name=self.dataset.name,
@@ -174,6 +179,7 @@ class ExperimentRunner:
                 method_family=self.imputer.family,
                 missing_mechanism=self.missingness_generator.name,
                 missing_rate=miss_rate,
+                missing_pattern=miss_pattern,
                 scenario_tag=miss_cfg.get("scenario_tag", ""),
                 seed=seed,
                 imputation_metrics=imp_metrics,
@@ -183,12 +189,50 @@ class ExperimentRunner:
                 status=STATUS_COMPLETED,
             )
 
-            # 10. Log to tracker
+            # 10. Build spec-compliant raw JSON
+            dataset_cfg = self.config.get("dataset", {})
+            method_cfg = self.config.get("method", {})
+            raw_json = {
+                "dataset_id": dataset_cfg.get("dataset_id", ""),
+                "dataset_name": self.dataset.name,
+                "method_id": method_cfg.get("method_id", ""),
+                "method_name": self.imputer.name,
+                "mechanism": self.missingness_generator.name,
+                "pattern": miss_pattern,
+                "missing_rate": miss_rate,
+                "seed": seed,
+                "n_samples": int(X_train_complete.shape[0]),
+                "n_features": int(X_train_complete.shape[1]),
+                "runtime_seconds": runtime_metrics["total_time_seconds"],
+                "imputation_quality": {
+                    "numerical": {
+                        "rmse": test_imp_metrics.get("numerical_rmse"),
+                        "mae": test_imp_metrics.get("numerical_mae"),
+                    },
+                    "categorical": {
+                        "accuracy": test_imp_metrics.get("categorical_accuracy"),
+                        "macro_f1": test_imp_metrics.get("categorical_macro_f1"),
+                    },
+                },
+                "downstream_performance": {
+                    "task_type": metadata.get("task_type", "classification"),
+                    "model": "RandomForest",
+                    "metrics": {k.replace("downstream_", ""): v for k, v in ds_metrics.items() if not k.endswith("_error")},
+                },
+                "distribution_preservation": {
+                    "wasserstein_distance_mean": test_imp_metrics.get("wasserstein_distance_mean"),
+                    "jsd_mean": test_imp_metrics.get("jsd_mean"),
+                },
+            }
+
+            # 11. Log to tracker
             all_metrics = {**imp_metrics, **ds_metrics, **runtime_metrics}
             self.tracker.log_metrics(all_metrics)
             self.tracker.log_summary(all_metrics)
 
-            # 11. Save result locally
+            # 12. Save spec-compliant JSON to results/raw/
+            save_json(raw_json, ensure_dir(f"{output_dir}/raw") / f"{experiment_id}.json")
+            # Also save full result to results/runs/ for internal use
             result_dir = ensure_dir(f"{output_dir}/runs/{experiment_id}")
             save_json(result.to_dict(), result_dir / "result.json")
 
@@ -206,19 +250,30 @@ class ExperimentRunner:
                 method_family=self.imputer.family,
                 missing_mechanism=self.missingness_generator.name,
                 missing_rate=self.config.get("missingness", {}).get("rate", 0.0),
-                scenario_tag="",
+                missing_pattern=self.config.get("missingness", {}).get("pattern", "general"),
                 seed=seed,
                 status=STATUS_FAILED,
                 error_message=str(e),
             )
 
     def _generate_experiment_id(self) -> str:
+        """Generate a deterministic experiment ID from config parameters."""
         ds = self.config.get("dataset", {}).get("name", "unknown")
         method = self.config.get("method", {}).get("name", "unknown")
         mechanism = self.config.get("missingness", {}).get("mechanism", "unknown")
+        pattern = self.config.get("missingness", {}).get("pattern", "general")
+        rate = self.config.get("missingness", {}).get("rate", 0.0)
         seed = self.config.get("project", {}).get("seed", 0)
-        short_uuid = uuid.uuid4().hex[:8]
-        return f"{ds}_{method}_{mechanism}_s{seed}_{short_uuid}"
+        # Convert rate to int percentage for readable ID
+        rate_pct = int(round(rate * 100))
+        return f"{ds}_{method}_{mechanism}_{pattern}_{rate_pct}pct_s{seed}"
 
     def _generate_run_name(self, experiment_id: str) -> str:
         return experiment_id
+
+    def result_exists(self) -> bool:
+        """Check if a result file already exists for this experiment (for checkpoint/resume)."""
+        experiment_id = self._generate_experiment_id()
+        output_dir = self.config.get("project", {}).get("output_dir", "results")
+        result_path = Path(output_dir) / "raw" / f"{experiment_id}.json"
+        return result_path.exists()

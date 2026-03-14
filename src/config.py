@@ -130,7 +130,8 @@ def expand_batch_config(
 ) -> list[dict[str, Any]]:
     """Expand a batch config into a list of individual experiment configs.
 
-    Generates the cartesian product of datasets × missingness × methods × seeds.
+    Generates the cartesian product of datasets × missingness_profiles × methods × seeds.
+    Each missingness profile YAML already encodes mechanism + pattern + rate.
     """
     config_dir = Path(config_dir)
     batch = batch_config.get("batch", {})

@@ -8,6 +8,7 @@ import numpy as np
 import pandas as pd
 
 from src.missingness.base import BaseMissingnessGenerator, MissingnessResult
+from src.missingness.patterns import select_target_columns, ensure_no_empty_rows
 from src.registry import MISSINGNESS_REGISTRY
 
 
@@ -29,18 +30,26 @@ class MCARGenerator(BaseMissingnessGenerator):
 
         exclude_target = kwargs.get("exclude_target", True)
         target_col = metadata.get("target_col")
+        pattern = kwargs.get("pattern", "general")
 
         # Determine which columns to inject missingness into
         feature_cols = [c for c in X.columns if not (exclude_target and c == target_col)]
-        col_indices = [X.columns.get_loc(c) for c in feature_cols]
+        target_columns = select_target_columns(
+            X, metadata, feature_cols, pattern, rng,
+        )
+        col_indices = [X.columns.get_loc(c) for c in target_columns]
 
         n_rows, n_cols = X.shape
         missing_mask = np.zeros((n_rows, n_cols), dtype=bool)
 
-        # Generate random mask for feature columns only
+        # Generate random mask for target columns only
         for idx in col_indices:
             mask_col = rng.rand(n_rows) < rate
             missing_mask[:, idx] = mask_col
+
+        # Ensure no row is entirely missing (general pattern constraint)
+        if pattern == "general":
+            ensure_no_empty_rows(missing_mask, col_indices, rng)
 
         # Apply mask
         X_missing = X.copy()
@@ -48,7 +57,6 @@ class MCARGenerator(BaseMissingnessGenerator):
         X_missing_values[missing_mask] = np.nan
         X_missing = pd.DataFrame(X_missing_values, columns=X.columns, index=X.index)
 
-        # Restore original dtypes for non-missing columns where possible
         observed_mask = ~missing_mask
 
         return MissingnessResult(
@@ -57,6 +65,7 @@ class MCARGenerator(BaseMissingnessGenerator):
             observed_mask=observed_mask,
             missing_config={
                 "mechanism": "MCAR",
+                "pattern": pattern,
                 "rate": rate,
                 "seed": seed,
                 "exclude_target": exclude_target,

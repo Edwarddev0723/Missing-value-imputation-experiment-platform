@@ -1,0 +1,4 @@
+dataset_id,dataset_name,method_id,method_name,mechanism,pattern,missing_rate,numerical_rmse_mean,numerical_rmse_std,numerical_mae_mean,numerical_mae_std,categorical_accuracy_mean,categorical_accuracy_std,categorical_macro_f1_mean,categorical_macro_f1_std,n_seeds
+PN5,breast_cancer,,gain,MCAR,general,0.2,0.2775737347593863,,0.225255622386208,,,,,,1
+PN5,breast_cancer,,knn,MCAR,general,0.2,0.20730058344799257,,0.12205825046203647,,,,,,1
+PN5,breast_cancer,,mean,MCAR,general,0.2,0.33607240368314234,,0.26691329301411304,,,,,,1

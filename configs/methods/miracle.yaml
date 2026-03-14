@@ -1,0 +1,12 @@
+method:
+  name: miracle
+  family: dl
+  device: mps
+  params:
+    hidden_dim: 128
+    n_layers: 3
+    lambda_reg: 1.0
+    epochs: 200
+    learning_rate: 1.0e-3
+    batch_size: 256
+    early_stopping_patience: 10

@@ -1,4 +1,4 @@
-"""Wine Quality dataset adapter — UCI."""
+"""Wine Quality (White) dataset adapter — UCI (PN1)."""
 
 from __future__ import annotations
 
@@ -19,7 +19,7 @@ logger = get_logger(__name__)
 
 @DATASET_REGISTRY.register("wine")
 class WineDataset(BaseDataset):
-    """UCI Wine Quality dataset (red wine)."""
+    """UCI Wine Quality dataset (White wine) — PN1."""
 
     name = "wine"
 
@@ -28,19 +28,18 @@ class WineDataset(BaseDataset):
         self._df: pd.DataFrame | None = None
 
     def load(self) -> pd.DataFrame:
-        cache_path = self.data_dir / "wine.csv"
+        cache_path = self.data_dir / "wine_white.csv"
         if cache_path.exists():
-            logger.info(f"Loading Wine dataset from cache: {cache_path}")
+            logger.info(f"Loading Wine White dataset from cache: {cache_path}")
             df = pd.read_csv(cache_path)
         else:
-            logger.info("Downloading Wine Quality dataset from OpenML...")
-            data = fetch_openml("wine-quality-red", version=1, as_frame=True, parser="auto")
+            logger.info("Downloading Wine Quality (White) dataset from OpenML...")
+            data = fetch_openml("wine-quality-white", version=1, as_frame=True, parser="auto")
             df = data.frame  # type: ignore
             self.data_dir.mkdir(parents=True, exist_ok=True)
             df.to_csv(cache_path, index=False)
-            logger.info(f"Cached Wine dataset to {cache_path}")
+            logger.info(f"Cached Wine White dataset to {cache_path}")
 
-        # All features are numerical
         target_col = "quality"
         df = df.dropna().reset_index(drop=True)
         for col in df.columns:
@@ -61,6 +60,7 @@ class WineDataset(BaseDataset):
 
         return {
             "dataset_name": self.name,
+            "dataset_id": "PN1",
             "n_samples": len(df),
             "n_features": len(feature_cols),
             "task_type": REGRESSION,
@@ -72,7 +72,7 @@ class WineDataset(BaseDataset):
         }
 
     def get_splits(
-        self, seed: int = 42, train_ratio: float = 0.7, valid_ratio: float = 0.1
+        self, seed: int = 42, train_ratio: float = 0.8, valid_ratio: float = 0.0
     ) -> dict[str, pd.DataFrame]:
         if self._df is None:
             self.load()

@@ -1,0 +1,7 @@
+missingness:
+  protocol: controlled
+  mechanism: MCAR
+  pattern: general
+  rate: 0.5
+  options:
+    exclude_target: true

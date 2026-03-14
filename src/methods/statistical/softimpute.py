@@ -12,7 +12,7 @@ import numpy as np
 import pandas as pd
 from sklearn.utils.extmath import randomized_svd
 
-from src.constants import FAMILY_STATISTICAL
+from src.constants import FAMILY_ML
 from src.methods.base import BaseImputer
 from src.registry import METHOD_REGISTRY
 from src.utils.logging import get_logger
@@ -34,7 +34,7 @@ class SoftImputeImputer(BaseImputer):
     """
 
     name = "softimpute"
-    family = FAMILY_STATISTICAL
+    family = FAMILY_ML
 
     def __init__(
         self,

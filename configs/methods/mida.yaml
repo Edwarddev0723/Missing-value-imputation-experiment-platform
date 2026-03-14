@@ -1,0 +1,11 @@
+method:
+  name: mida
+  family: dl
+  device: mps
+  params:
+    hidden_layers: [256, 128, 256]
+    epochs: 200
+    learning_rate: 1.0e-3
+    corruption_rate: 0.5
+    batch_size: 256
+    early_stopping_patience: 10

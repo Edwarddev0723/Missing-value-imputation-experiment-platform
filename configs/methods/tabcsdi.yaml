@@ -1,0 +1,12 @@
+method:
+  name: tabcsdi
+  family: dl
+  device: mps
+  params:
+    diffusion_steps: 50
+    hidden_dim: 128
+    n_layers: 4
+    epochs: 200
+    learning_rate: 1.0e-3
+    batch_size: 256
+    early_stopping_patience: 10

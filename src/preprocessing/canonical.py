@@ -6,7 +6,7 @@ from typing import Any
 
 import numpy as np
 import pandas as pd
-from sklearn.preprocessing import LabelEncoder, OrdinalEncoder, StandardScaler
+from sklearn.preprocessing import LabelEncoder, MinMaxScaler, OrdinalEncoder
 
 from src.utils.logging import get_logger
 
@@ -20,20 +20,20 @@ class CanonicalPreprocessor:
         - Drop duplicates (optional)
         - Encode categoricals to integers (ordinal encoding for tree methods)
         - Record encoders for inverse transform
-        - Optionally scale numerical features
+        - MinMax scale numerical features to [0, 1] per spec
     """
 
     def __init__(
         self,
         drop_duplicates: bool = True,
         encode_categoricals: bool = True,
-        scale_numericals: bool = False,
+        scale_numericals: bool = True,
     ) -> None:
         self.drop_duplicates = drop_duplicates
         self.encode_categoricals = encode_categoricals
         self.scale_numericals = scale_numericals
         self._cat_encoders: dict[str, OrdinalEncoder] = {}
-        self._num_scaler: StandardScaler | None = None
+        self._num_scaler: MinMaxScaler | None = None
         self._fitted = False
 
     def fit(self, X: pd.DataFrame, metadata: dict[str, Any]) -> "CanonicalPreprocessor":
@@ -51,7 +51,7 @@ class CanonicalPreprocessor:
         if self.scale_numericals:
             num_cols = [c for c in numerical_cols if c in X.columns]
             if num_cols:
-                self._num_scaler = StandardScaler()
+                self._num_scaler = MinMaxScaler(feature_range=(0, 1))
                 self._num_scaler.fit(X[num_cols])
 
         self._metadata = metadata

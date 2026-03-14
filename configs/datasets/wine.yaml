@@ -1,10 +1,11 @@
 dataset:
   name: wine
+  dataset_id: PN1
   source: uci
   target_col: quality
   task_type: regression
   split:
-    train_ratio: 0.7
-    valid_ratio: 0.1
+    train_ratio: 0.8
+    valid_ratio: 0.0
     test_ratio: 0.2
     stratify: false

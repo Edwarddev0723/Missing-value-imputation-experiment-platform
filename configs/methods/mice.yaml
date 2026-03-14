@@ -1,0 +1,7 @@
+method:
+  name: mice
+  family: statistical
+  device: cpu
+  params:
+    max_iterations: 10
+    n_imputations: 5

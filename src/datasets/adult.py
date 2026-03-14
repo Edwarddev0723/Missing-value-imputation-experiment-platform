@@ -107,7 +107,7 @@ class AdultDataset(BaseDataset):
         }
 
     def get_splits(
-        self, seed: int = 42, train_ratio: float = 0.7, valid_ratio: float = 0.1
+        self, seed: int = 42, train_ratio: float = 0.8, valid_ratio: float = 0.0
     ) -> dict[str, pd.DataFrame]:
         if self._df is None:
             self.load()

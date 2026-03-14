@@ -1,0 +1,11 @@
+dataset:
+  name: letter
+  dataset_id: PN6
+  source: uci
+  target_col: letter
+  task_type: classification
+  split:
+    train_ratio: 0.8
+    valid_ratio: 0.0
+    test_ratio: 0.2
+    stratify: true

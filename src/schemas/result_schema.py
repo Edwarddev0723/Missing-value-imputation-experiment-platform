@@ -16,8 +16,9 @@ class ExperimentResult:
     method_family: str
     missing_mechanism: str
     missing_rate: float
-    scenario_tag: str
-    seed: int
+    missing_pattern: str = "general"
+    scenario_tag: str = ""
+    seed: int = 42
     imputation_metrics: dict[str, float] = field(default_factory=dict)
     downstream_metrics: dict[str, float] = field(default_factory=dict)
     runtime_metrics: dict[str, float] = field(default_factory=dict)
@@ -37,6 +38,7 @@ class ExperimentResult:
             "method_family": self.method_family,
             "missing_mechanism": self.missing_mechanism,
             "missing_rate": self.missing_rate,
+            "missing_pattern": self.missing_pattern,
             "scenario_tag": self.scenario_tag,
             "seed": self.seed,
             "status": self.status,

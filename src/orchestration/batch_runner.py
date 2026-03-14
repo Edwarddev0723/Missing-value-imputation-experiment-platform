@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from pathlib import Path
 from typing import Any
 
 import pandas as pd
@@ -20,6 +21,7 @@ class BatchExperimentRunner:
     """Run a batch of experiments from a batch config.
 
     Expands dataset × missingness × method × seed and runs each sequentially.
+    Supports checkpoint/resume: skips runs whose result JSON already exists.
     """
 
     def __init__(self, config_path: str | None = None, config_dir: str = "configs") -> None:
@@ -43,17 +45,21 @@ class BatchExperimentRunner:
     def run_all(self, experiment_configs: list[dict[str, Any]]) -> list[ExperimentResult]:
         """Run a list of experiment configs and collect results."""
         results: list[ExperimentResult] = []
+        skipped = 0
 
         for i, cfg in enumerate(experiment_configs):
             ds_name = cfg.get("dataset", {}).get("name", "?")
             method_name = cfg.get("method", {}).get("name", "?")
             mechanism = cfg.get("missingness", {}).get("mechanism", "?")
+            pattern = cfg.get("missingness", {}).get("pattern", "general")
+            rate = cfg.get("missingness", {}).get("rate", 0.0)
             seed = cfg.get("project", {}).get("seed", 42)
 
             logger.info(
                 f"[{i+1}/{len(experiment_configs)}] "
                 f"dataset={ds_name} method={method_name} "
-                f"mechanism={mechanism} seed={seed}"
+                f"mechanism={mechanism} pattern={pattern} "
+                f"rate={rate} seed={seed}"
             )
 
             try:
@@ -69,6 +75,13 @@ class BatchExperimentRunner:
                     tracker=tracker,
                     config=cfg,
                 )
+
+                # Checkpoint/resume: skip if result already exists
+                if runner.result_exists():
+                    logger.info(f"  Skipping (result already exists)")
+                    skipped += 1
+                    continue
+
                 result = runner.run()
                 results.append(result)
 
@@ -80,15 +93,18 @@ class BatchExperimentRunner:
                     method_name=method_name,
                     method_family="",
                     missing_mechanism=mechanism,
-                    missing_rate=cfg.get("missingness", {}).get("rate", 0),
-                    scenario_tag="",
+                    missing_rate=rate,
+                    missing_pattern=pattern,
                     seed=seed,
                     status="failed",
                     error_message=str(e),
                 ))
 
+        logger.info(f"Batch complete: {len(results)} ran, {skipped} skipped (already exist)")
+
         # Save summary CSV
-        self._save_summary(results)
+        if results:
+            self._save_summary(results)
         return results
 
     def _save_summary(self, results: list[ExperimentResult]) -> None:

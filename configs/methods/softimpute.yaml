@@ -1,6 +1,6 @@
 method:
   name: softimpute
-  family: statistical
+  family: ml
   device: cpu
   params:
     max_rank: 50

@@ -1,0 +1,13 @@
+# Phase 1 Smoke Test: PN5 (Breast Cancer) × {Mean, KNN, GAIN} × MCAR × general × 20% × seed=42
+# Purpose: Verify end-to-end pipeline works before scaling up.
+batch:
+  datasets:
+    - breast_cancer
+  missingness_profiles:
+    - mcar_general_20
+  methods:
+    - mean
+    - knn
+    - gain
+  seeds:
+    - 42
