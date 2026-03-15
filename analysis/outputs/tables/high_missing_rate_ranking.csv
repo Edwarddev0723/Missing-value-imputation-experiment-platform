@@ -1,0 +1,14 @@
+method,imp_avg_rank,ds_avg_rank,family
+missforest,2.5212,5.8106,Non-DL
+xgboost,3.1197,6.2545,Non-DL
+knn,4.803,7.1561,Non-DL
+mice,5.4061,6.9621,Non-DL
+em,5.8273,7.303,Non-DL
+mean,6.6364,6.0364,Non-DL
+mida,7.6818,7.5182,DL
+softimpute,7.7136,7.1848,Non-DL
+miwae,7.7439,7.147,DL
+gain,8.4439,6.8636,DL
+median,9.1727,6.3727,Non-DL
+miracle,10.5818,7.6591,DL
+tabcsdi,11.3485,8.7318,DL

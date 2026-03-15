@@ -1,0 +1,14 @@
+method,imp_rank_std,imp_norm_std,ds_rank_std,family
+xgboost,1.7543,0.0677,3.0344,Non-DL
+missforest,1.7946,0.0414,3.2197,Non-DL
+tabcsdi,1.9324,0.3026,3.3563,DL
+mean,2.1856,0.2233,2.9498,Non-DL
+gain,2.5428,0.2776,3.1337,DL
+median,2.5561,0.3071,3.4493,Non-DL
+miracle,2.599,0.3972,3.0698,DL
+knn,2.6413,0.1285,3.3998,Non-DL
+softimpute,2.6676,0.2686,3.3818,Non-DL
+mida,2.7395,0.219,2.9757,DL
+mice,2.8238,0.1504,3.3776,Non-DL
+miwae,2.9115,0.2469,3.0046,DL
+em,2.938,0.1623,3.1276,Non-DL

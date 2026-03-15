@@ -1,0 +1,12 @@
+dataset,method,family,imp_avg_rank,ds_avg_rank
+adult,xgboost,Non-DL,1.7417,5.4417
+autism,mice,Non-DL,2.1583,3.2292
+bank,missforest,Non-DL,2.0583,7.0
+breast_cancer,missforest,Non-DL,1.65,5.7458
+concrete,missforest,Non-DL,2.075,5.1333
+letter,missforest,Non-DL,1.1417,3.9333
+mammographic,missforest,Non-DL,1.1333,5.6
+spambase,missforest,Non-DL,2.5667,4.825
+titanic,missforest,Non-DL,1.5833,7.3833
+wine,missforest,Non-DL,1.9917,7.0
+yeast,missforest,Non-DL,2.95,4.2167

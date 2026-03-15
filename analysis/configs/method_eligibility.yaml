@@ -1,0 +1,65 @@
+# Method eligibility for each analysis track
+# All methods are applicable to all tracks in as-executed view.
+# This config controls the "compatibility-aware fair view".
+
+method_families:
+  non_dl:
+    - mean
+    - median
+    - em
+    - mice
+    - knn
+    - missforest
+    - softimpute
+    - xgboost
+  dl:
+    - mida
+    - miwae
+    - gain
+    - tabcsdi
+    - miracle
+
+# Eligibility for fair-comparison tracks
+# all: method works on all dataset types
+# numerical_only: method is designed for / best suited for numerical data
+# mixed: method handles mixed types natively
+track_eligibility:
+  mean:
+    tracks: [pure_numerical, mixed_type]
+    notes: "Simple baseline; handles numerical natively, categorical via mode"
+  median:
+    tracks: [pure_numerical, mixed_type]
+    notes: "Simple baseline; handles numerical natively, categorical via mode"
+  em:
+    tracks: [pure_numerical, mixed_type]
+    notes: "EM algorithm; primarily numerical but can handle encoded categoricals"
+  mice:
+    tracks: [pure_numerical, mixed_type]
+    notes: "Multiple imputation by chained equations; handles mixed types"
+  knn:
+    tracks: [pure_numerical, mixed_type]
+    notes: "KNN imputation; handles mixed via distance metrics"
+  missforest:
+    tracks: [pure_numerical, mixed_type]
+    notes: "Random forest based; handles mixed types natively"
+  softimpute:
+    tracks: [pure_numerical, mixed_type]
+    notes: "Matrix completion; primarily numerical"
+  xgboost:
+    tracks: [pure_numerical, mixed_type]
+    notes: "XGBoost iterative imputation; handles mixed types"
+  mida:
+    tracks: [pure_numerical, mixed_type]
+    notes: "Denoising autoencoder; works on encoded data"
+  miwae:
+    tracks: [pure_numerical, mixed_type]
+    notes: "Importance-weighted autoencoder; primarily numerical"
+  gain:
+    tracks: [pure_numerical, mixed_type]
+    notes: "Generative adversarial imputation; works on encoded data"
+  tabcsdi:
+    tracks: [pure_numerical, mixed_type]
+    notes: "Diffusion-based; works on tabular data"
+  miracle:
+    tracks: [pure_numerical, mixed_type]
+    notes: "Causal discovery based; works on encoded data"

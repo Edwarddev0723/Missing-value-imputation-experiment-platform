@@ -1,0 +1,3 @@
+method_family,imp_avg_rank,imp_std_rank,imp_avg_norm,ds_avg_rank,ds_avg_norm,runtime_mean,runtime_median
+DL,9.2609,3.0334,0.5722,7.6836,0.5066,11.5855,2.5135
+Non-DL,5.5869,3.4343,0.8408,6.5727,0.5497,21.0149,0.1686

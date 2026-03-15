@@ -1,0 +1,39 @@
+# Dataset track mapping: pure_numerical vs mixed_type
+# Determined by inspecting raw CSV dtypes.
+# Override manually if needed.
+
+tracks:
+  pure_numerical:
+    description: "Datasets with only numerical features (no object/string columns except target)"
+    datasets:
+      - concrete        # 9 float cols, 0 object cols
+      - mammographic    # 7 num cols, 0 object cols
+      - spambase        # 58 num cols, 0 object cols
+      - wine            # 12 num cols, 0 object cols
+      - breast_cancer   # 9 num + 1 target obj col (target only)
+      - letter          # 16 num + 1 target obj col (target only)
+      - yeast           # 8 num + 1 target obj col (target only)
+
+  mixed_type:
+    description: "Datasets with both numerical and categorical features"
+    datasets:
+      - adult           # 6 num, 9 object cols
+      - autism           # 12 num, 9 object cols
+      - bank            # 8 num, 9 object cols
+      - titanic         # 9 num, 5 object cols
+
+# Task type mapping (auto-detected from results)
+task_types:
+  classification:
+    - adult
+    - autism
+    - bank
+    - breast_cancer
+    - letter
+    - mammographic
+    - spambase
+    - titanic
+    - yeast
+  regression:
+    - concrete
+    - wine

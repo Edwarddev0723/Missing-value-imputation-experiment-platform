@@ -1,0 +1,5 @@
+comparison,winner,mean_rank_diff,p_adjusted,significant,effect_size_r
+missforest vs xgboost,missforest,0.6466,9.280001893510026e-33,True,inf
+gain vs tabcsdi,gain,3.0216,1.3496075521562787e-135,True,inf
+gain vs miracle,gain,2.0208,5.454259432670704e-65,True,inf
+tabcsdi vs miracle,miracle,1.0008,5.724923530741424e-16,True,inf

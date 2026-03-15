@@ -1,0 +1,14 @@
+method,imp_avg_rank_mnar,imp_avg_rank_other,mnar_degradation,family
+mean,8.0989,6.7994,1.2994,Non-DL
+miwae,8.5193,7.2795,1.2398,DL
+median,9.9659,8.85,1.1159,Non-DL
+miracle,10.8795,10.5443,0.3352,DL
+xgboost,2.8432,2.6426,0.2006,Non-DL
+mida,7.7295,7.6307,0.0989,DL
+gain,8.6557,8.625,0.0307,DL
+knn,4.3523,4.5557,-0.2034,Non-DL
+tabcsdi,11.3818,11.7943,-0.4125,DL
+missforest,1.65,2.2693,-0.6193,Non-DL
+em,4.4614,5.3455,-0.8841,Non-DL
+mice,4.7977,5.8852,-1.0875,Non-DL
+softimpute,7.6648,8.7784,-1.1136,Non-DL
