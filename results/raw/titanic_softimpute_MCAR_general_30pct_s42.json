@@ -1,0 +1,37 @@
+{
+  "dataset_id": "MX3",
+  "dataset_name": "titanic",
+  "method_id": "",
+  "method_name": "softimpute",
+  "mechanism": "MCAR",
+  "pattern": "general",
+  "missing_rate": 0.3,
+  "seed": 42,
+  "n_samples": 834,
+  "n_features": 7,
+  "runtime_seconds": 0.0982096669904422,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.2745305312910423,
+      "mae": 0.20201585109025838
+    },
+    "categorical": {
+      "accuracy": 0.6016260162601627,
+      "macro_f1": 0.5041220858860012
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.7129186602870813,
+      "f1_weighted": 0.7044918945940156,
+      "f1_macro": 0.6880597014925374,
+      "roc_auc": 0.7363851992409869
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.03388908860792828,
+    "jsd_mean": 0.33858890899400695
+  }
+}

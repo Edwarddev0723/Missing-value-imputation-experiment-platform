@@ -1,0 +1,37 @@
+{
+  "dataset_id": "MX3",
+  "dataset_name": "titanic",
+  "method_id": "",
+  "method_name": "missforest",
+  "mechanism": "MCAR",
+  "pattern": "univariate",
+  "missing_rate": 0.3,
+  "seed": 1024,
+  "n_samples": 834,
+  "n_features": 7,
+  "runtime_seconds": 0.5334452510142,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.09629959039949812,
+      "mae": 0.04177083333333333
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.7990430622009569,
+      "f1_weighted": 0.796657672193168,
+      "f1_macro": 0.7873546511627907,
+      "roc_auc": 0.8231499051233396
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.002156299840510367,
+    "jsd_mean": 0.0
+  }
+}

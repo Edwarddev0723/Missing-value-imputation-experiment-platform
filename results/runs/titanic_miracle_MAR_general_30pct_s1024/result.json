@@ -1,0 +1,143 @@
+{
+  "experiment_id": "titanic_miracle_MAR_general_30pct_s1024",
+  "dataset_name": "titanic",
+  "method_name": "miracle",
+  "method_family": "dl",
+  "missing_mechanism": "MAR",
+  "missing_rate": 0.3,
+  "missing_pattern": "general",
+  "scenario_tag": "",
+  "seed": 1024,
+  "imputation_metrics": {
+    "test_numerical_rmse": 0.3723607555308124,
+    "test_numerical_mae": 0.24958707107029937,
+    "test_categorical_accuracy": 0.3017241379310345,
+    "test_categorical_macro_f1": 0.15452538631346577,
+    "test_wasserstein_distance_mean": 0.0681090492811966,
+    "test_jsd_mean": 0.327924307783472,
+    "test_n_missing_values": 434,
+    "train_numerical_rmse": 0.29967300178542444,
+    "train_numerical_mae": 0.20381344300583673,
+    "train_categorical_accuracy": 0.340080971659919,
+    "train_categorical_macro_f1": 0.1691842900302115,
+    "train_wasserstein_distance_mean": 0.05523166142720413,
+    "train_jsd_mean": 0.34039968787646663,
+    "train_n_missing_values": 1740
+  },
+  "downstream_metrics": {
+    "downstream_accuracy": 0.722488038277512,
+    "downstream_f1_weighted": 0.7219462292093871,
+    "downstream_f1_macro": 0.7113809523809524,
+    "downstream_roc_auc": 0.7782258064516129
+  },
+  "runtime_metrics": {
+    "fit_time_seconds": 1.5657634160015732,
+    "impute_time_seconds": 0.003979291999712586,
+    "total_time_seconds": 1.5697427080012858
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 1024,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "dataset": {
+      "split": {
+        "train_ratio": 0.8,
+        "valid_ratio": 0.0,
+        "test_ratio": 0.2,
+        "stratify": true
+      },
+      "name": "titanic",
+      "dataset_id": "MX3",
+      "source": "kaggle/openml",
+      "target_col": "survived",
+      "task_type": "classification"
+    },
+    "downstream": {
+      "enabled": true,
+      "model": "random_forest",
+      "params": {
+        "n_estimators": 100,
+        "random_state": 42
+      }
+    },
+    "missingness": {
+      "protocol": "controlled",
+      "mechanism": "MAR",
+      "pattern": "general",
+      "rate": 0.3,
+      "options": {
+        "exclude_target": true
+      }
+    },
+    "method": {
+      "name": "miracle",
+      "family": "dl",
+      "device": "mps",
+      "params": {
+        "hidden_dim": 128,
+        "n_layers": 3,
+        "lambda_reg": 1.0,
+        "epochs": 100,
+        "learning_rate": 0.001,
+        "batch_size": 512,
+        "early_stopping_patience": 5,
+        "n_jobs": 2
+      }
+    },
+    "summary": {
+      "test_numerical_rmse": 0.3723607555308124,
+      "test_numerical_mae": 0.24958707107029937,
+      "test_categorical_accuracy": 0.3017241379310345,
+      "test_categorical_macro_f1": 0.15452538631346577,
+      "test_wasserstein_distance_mean": 0.0681090492811966,
+      "test_jsd_mean": 0.327924307783472,
+      "test_n_missing_values": 434,
+      "train_numerical_rmse": 0.29967300178542444,
+      "train_numerical_mae": 0.20381344300583673,
+      "train_categorical_accuracy": 0.340080971659919,
+      "train_categorical_macro_f1": 0.1691842900302115,
+      "train_wasserstein_distance_mean": 0.05523166142720413,
+      "train_jsd_mean": 0.34039968787646663,
+      "train_n_missing_values": 1740,
+      "downstream_accuracy": 0.722488038277512,
+      "downstream_f1_weighted": 0.7219462292093871,
+      "downstream_f1_macro": 0.7113809523809524,
+      "downstream_roc_auc": 0.7782258064516129,
+      "fit_time_seconds": 1.5657634160015732,
+      "impute_time_seconds": 0.003979291999712586,
+      "total_time_seconds": 1.5697427080012858
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}

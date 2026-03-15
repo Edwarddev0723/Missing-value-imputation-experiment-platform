@@ -1,0 +1,118 @@
+{
+  "experiment_id": "wine_softimpute_MNAR_univariate_50pct_s1024",
+  "dataset_name": "wine",
+  "method_name": "softimpute",
+  "method_family": "ml",
+  "missing_mechanism": "MNAR",
+  "missing_rate": 0.5,
+  "missing_pattern": "univariate",
+  "scenario_tag": "",
+  "seed": 1024,
+  "imputation_metrics": {
+    "test_numerical_rmse": 0.24784128335643224,
+    "test_numerical_mae": 0.21812010759828868,
+    "test_wasserstein_distance_mean": 0.008827956356390968,
+    "test_n_missing_values": 491,
+    "train_numerical_rmse": 0.23804575122101337,
+    "train_numerical_mae": 0.20669299495617532,
+    "train_wasserstein_distance_mean": 0.008219877243843925,
+    "train_n_missing_values": 1951
+  },
+  "downstream_metrics": {},
+  "runtime_metrics": {
+    "fit_time_seconds": 6.674999895039946e-05,
+    "impute_time_seconds": 0.5220377500081668,
+    "total_time_seconds": 0.5221045000071172
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 1024,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "dataset": {
+      "split": {
+        "train_ratio": 0.8,
+        "valid_ratio": 0.0,
+        "test_ratio": 0.2,
+        "stratify": false
+      },
+      "name": "wine",
+      "dataset_id": "PN1",
+      "source": "uci",
+      "target_col": "quality",
+      "task_type": "regression"
+    },
+    "downstream": {
+      "enabled": true,
+      "model": "random_forest",
+      "params": {
+        "n_estimators": 100,
+        "random_state": 42
+      }
+    },
+    "missingness": {
+      "protocol": "controlled",
+      "mechanism": "MNAR",
+      "pattern": "univariate",
+      "rate": 0.5,
+      "options": {
+        "exclude_target": true
+      }
+    },
+    "method": {
+      "name": "softimpute",
+      "family": "ml",
+      "device": "cpu",
+      "params": {
+        "max_rank": 50,
+        "lam": 0.0,
+        "max_iter": 100,
+        "tol": 1e-05
+      }
+    },
+    "summary": {
+      "test_numerical_rmse": 0.24784128335643224,
+      "test_numerical_mae": 0.21812010759828868,
+      "test_wasserstein_distance_mean": 0.008827956356390968,
+      "test_n_missing_values": 491,
+      "train_numerical_rmse": 0.23804575122101337,
+      "train_numerical_mae": 0.20669299495617532,
+      "train_wasserstein_distance_mean": 0.008219877243843925,
+      "train_n_missing_values": 1951,
+      "fit_time_seconds": 6.674999895039946e-05,
+      "impute_time_seconds": 0.5220377500081668,
+      "total_time_seconds": 0.5221045000071172
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}

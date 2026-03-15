@@ -1,0 +1,36 @@
+{
+  "dataset_id": "PN2",
+  "dataset_name": "concrete",
+  "method_id": "",
+  "method_name": "mida",
+  "mechanism": "MAR",
+  "pattern": "univariate",
+  "missing_rate": 0.3,
+  "seed": 789,
+  "n_samples": 824,
+  "n_features": 8,
+  "runtime_seconds": 0.5639593329979107,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.2309264971867588,
+      "mae": 0.2072911978507429
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "regression",
+    "model": "RandomForest",
+    "metrics": {
+      "rmse": 5.190453895538657,
+      "mae": 3.7350946035598667,
+      "r2": 0.891722683979831
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.007162528093030471,
+    "jsd_mean": null
+  }
+}

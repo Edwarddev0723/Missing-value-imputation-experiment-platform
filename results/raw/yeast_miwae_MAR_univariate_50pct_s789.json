@@ -1,0 +1,32 @@
+{
+  "dataset_id": "PN4",
+  "dataset_name": "yeast",
+  "method_id": "",
+  "method_name": "miwae",
+  "mechanism": "MAR",
+  "pattern": "univariate",
+  "missing_rate": 0.5,
+  "seed": 789,
+  "n_samples": 1933,
+  "n_features": 117,
+  "runtime_seconds": 4.402983833992039,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.4504980762303087,
+      "mae": 0.3851221842938159
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {}
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.0013049935462681906,
+    "jsd_mean": null
+  }
+}

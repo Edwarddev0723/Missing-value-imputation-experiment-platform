@@ -1,0 +1,36 @@
+{
+  "dataset_id": "MX2",
+  "dataset_name": "bank",
+  "method_id": "",
+  "method_name": "median",
+  "mechanism": "MNAR",
+  "pattern": "general",
+  "missing_rate": 0.2,
+  "seed": 123,
+  "n_samples": 36168,
+  "n_features": 16,
+  "runtime_seconds": 0.006587501004105434,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.21461096981361424,
+      "mae": 0.14151515520134306
+    },
+    "categorical": {
+      "accuracy": 0.3416305916305916,
+      "macro_f1": 0.1810433254316737
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 1.0,
+      "f1_weighted": 1.0,
+      "f1_macro": 1.0
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.028597681953453826,
+    "jsd_mean": 0.13469643241311516
+  }
+}

@@ -64,15 +64,14 @@ class SoftImputeImputer(BaseImputer):
         X = X_missing.values.copy().astype(float)
         mask = np.isnan(X)
 
-        # Initialize missing values with column means
-        for j in range(X.shape[1]):
-            X[mask[:, j], j] = self._fill_values[j]
+        # Initialize missing values with column means (vectorized)
+        fill_matrix = np.broadcast_to(self._fill_values, X.shape)
+        X[mask] = fill_matrix[mask]
 
         n_components = min(self.max_rank, min(X.shape) - 1)
         if n_components < 1:
             n_components = 1
 
-        prev_X = X.copy()
         for iteration in range(self.max_iter):
             # SVD
             U, s, Vt = randomized_svd(X, n_components=n_components, random_state=self._seed)
@@ -83,14 +82,15 @@ class SoftImputeImputer(BaseImputer):
             # Reconstruct
             X_reconstructed = U @ np.diag(s_thresh) @ Vt
 
+            # Convergence: norm of change at missing positions only
+            delta = X_reconstructed[mask] - X[mask]
+            diff = np.linalg.norm(delta) / (np.linalg.norm(X[mask]) + 1e-10)
+
             # Replace only missing positions
             X[mask] = X_reconstructed[mask]
 
-            # Check convergence
-            diff = np.linalg.norm(X - prev_X) / (np.linalg.norm(X) + 1e-10)
             if diff < self.tol:
                 logger.debug(f"softImpute converged at iteration {iteration + 1}")
                 break
-            prev_X = X.copy()
 
         return pd.DataFrame(X, columns=self._columns, index=X_missing.index)

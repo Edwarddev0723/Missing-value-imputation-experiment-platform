@@ -1,0 +1,37 @@
+{
+  "dataset_id": "PN3",
+  "dataset_name": "spambase",
+  "method_id": "",
+  "method_name": "mida",
+  "mechanism": "MAR",
+  "pattern": "general",
+  "missing_rate": 0.3,
+  "seed": 1024,
+  "n_samples": 3680,
+  "n_features": 57,
+  "runtime_seconds": 9.627266875002533,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.0847375482496485,
+      "mae": 0.041203805996708455
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.8892508143322475,
+      "f1_weighted": 0.8882410616428308,
+      "f1_macro": 0.8820878811916979,
+      "roc_auc": 0.9426103656308934
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.00902466048358019,
+    "jsd_mean": null
+  }
+}

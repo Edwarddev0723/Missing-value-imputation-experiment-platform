@@ -1,0 +1,32 @@
+{
+  "dataset_id": "PN4",
+  "dataset_name": "yeast",
+  "method_id": "",
+  "method_name": "mida",
+  "mechanism": "MAR",
+  "pattern": "general",
+  "missing_rate": 0.1,
+  "seed": 456,
+  "n_samples": 1933,
+  "n_features": 117,
+  "runtime_seconds": 1.5667118760029553,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.1699202079521933,
+      "mae": 0.12108200493938015
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {}
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.007985402681695562,
+    "jsd_mean": null
+  }
+}

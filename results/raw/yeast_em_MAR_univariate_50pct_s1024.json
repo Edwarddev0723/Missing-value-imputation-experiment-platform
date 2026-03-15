@@ -1,0 +1,36 @@
+{
+  "dataset_id": "PN4",
+  "dataset_name": "yeast",
+  "method_id": "",
+  "method_name": "em",
+  "mechanism": "MAR",
+  "pattern": "univariate",
+  "missing_rate": 0.5,
+  "seed": 1024,
+  "n_samples": 1187,
+  "n_features": 8,
+  "runtime_seconds": 0.011764249982661568,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.12148857539950193,
+      "mae": 0.09666794341904368
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.5892255892255892,
+      "f1_weighted": 0.5755374318547861,
+      "f1_macro": 0.5098724264420069
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.002540247796982971,
+    "jsd_mean": null
+  }
+}

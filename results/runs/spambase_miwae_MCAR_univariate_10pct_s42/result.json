@@ -1,0 +1,130 @@
+{
+  "experiment_id": "spambase_miwae_MCAR_univariate_10pct_s42",
+  "dataset_name": "spambase",
+  "method_name": "miwae",
+  "method_family": "dl",
+  "missing_mechanism": "MCAR",
+  "missing_rate": 0.1,
+  "missing_pattern": "univariate",
+  "scenario_tag": "",
+  "seed": 42,
+  "imputation_metrics": {
+    "test_numerical_rmse": 0.09723171011238128,
+    "test_numerical_mae": 0.060197363990390655,
+    "test_wasserstein_distance_mean": 6.129148333386915e-05,
+    "test_n_missing_values": 92,
+    "train_numerical_rmse": 0.11344863982111547,
+    "train_numerical_mae": 0.06550381992666145,
+    "train_wasserstein_distance_mean": 7.558715476633449e-05,
+    "train_n_missing_values": 391
+  },
+  "downstream_metrics": {
+    "downstream_accuracy": 0.9457111834961998,
+    "downstream_f1_weighted": 0.9456019374712563,
+    "downstream_f1_macro": 0.9429390656132595,
+    "downstream_roc_auc": 0.9840141394393593
+  },
+  "runtime_metrics": {
+    "fit_time_seconds": 31.594746333008516,
+    "impute_time_seconds": 0.0099471249995986,
+    "total_time_seconds": 31.604693458008114
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 42,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "dataset": {
+      "split": {
+        "train_ratio": 0.8,
+        "valid_ratio": 0.0,
+        "test_ratio": 0.2,
+        "stratify": true
+      },
+      "name": "spambase",
+      "dataset_id": "PN3",
+      "source": "uci",
+      "target_col": "is_spam",
+      "task_type": "classification"
+    },
+    "downstream": {
+      "enabled": true,
+      "model": "random_forest",
+      "params": {
+        "n_estimators": 100,
+        "random_state": 42
+      }
+    },
+    "missingness": {
+      "protocol": "controlled",
+      "mechanism": "MCAR",
+      "pattern": "univariate",
+      "rate": 0.1,
+      "options": {
+        "exclude_target": true
+      }
+    },
+    "method": {
+      "name": "miwae",
+      "family": "dl",
+      "device": "mps",
+      "params": {
+        "latent_dim": 32,
+        "n_hidden": 128,
+        "n_samples": 20,
+        "epochs": 100,
+        "learning_rate": 0.001,
+        "batch_size": 512,
+        "early_stopping_patience": 5
+      }
+    },
+    "summary": {
+      "test_numerical_rmse": 0.09723171011238128,
+      "test_numerical_mae": 0.060197363990390655,
+      "test_wasserstein_distance_mean": 6.129148333386915e-05,
+      "test_n_missing_values": 92,
+      "train_numerical_rmse": 0.11344863982111547,
+      "train_numerical_mae": 0.06550381992666145,
+      "train_wasserstein_distance_mean": 7.558715476633449e-05,
+      "train_n_missing_values": 391,
+      "downstream_accuracy": 0.9457111834961998,
+      "downstream_f1_weighted": 0.9456019374712563,
+      "downstream_f1_macro": 0.9429390656132595,
+      "downstream_roc_auc": 0.9840141394393593,
+      "fit_time_seconds": 31.594746333008516,
+      "impute_time_seconds": 0.0099471249995986,
+      "total_time_seconds": 31.604693458008114
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}

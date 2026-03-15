@@ -1,0 +1,37 @@
+{
+  "dataset_id": "PN3",
+  "dataset_name": "spambase",
+  "method_id": "",
+  "method_name": "knn",
+  "mechanism": "MNAR",
+  "pattern": "general",
+  "missing_rate": 0.3,
+  "seed": 123,
+  "n_samples": 3680,
+  "n_features": 57,
+  "runtime_seconds": 3.044710040994687,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.1172259934969854,
+      "mae": 0.042264898256050766
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.8523344191096635,
+      "f1_weighted": 0.850687680952693,
+      "f1_macro": 0.8422373140945548,
+      "roc_auc": 0.9066964858753714
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.012300482666933007,
+    "jsd_mean": null
+  }
+}

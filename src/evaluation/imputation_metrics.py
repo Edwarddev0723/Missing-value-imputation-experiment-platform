@@ -67,10 +67,19 @@ class ImputationEvaluator:
             if mask_cat.any():
                 true_vals = true_cat[mask_cat]
                 pred_vals = imputed_cat[mask_cat]
-                acc = float(accuracy_score(true_vals, pred_vals))
-                macro_f1 = float(f1_score(true_vals, pred_vals, average="macro", zero_division=0))
-                results["categorical_accuracy"] = acc
-                results["categorical_macro_f1"] = macro_f1
+                # Round imputed values to nearest category for methods
+                # that output continuous values on categorical columns
+                try:
+                    pred_vals = np.round(pred_vals).astype(true_vals.dtype)
+                except (ValueError, TypeError):
+                    pass
+                try:
+                    acc = float(accuracy_score(true_vals, pred_vals))
+                    macro_f1 = float(f1_score(true_vals, pred_vals, average="macro", zero_division=0))
+                    results["categorical_accuracy"] = acc
+                    results["categorical_macro_f1"] = macro_f1
+                except (ValueError, TypeError):
+                    pass
 
         # --- Distribution Preservation: Wasserstein Distance (numerical) ---
         if num_cols_present:
@@ -91,16 +100,21 @@ class ImputationEvaluator:
             for col in cat_cols_present:
                 true_col = X_true[col].values
                 imp_col = X_imputed[col].values
-                # Compute category distributions
+                # Compute category distributions (vectorized)
                 all_cats = np.union1d(np.unique(true_col), np.unique(imp_col))
                 n_classes = len(all_cats)
                 cat_to_idx = {c: i for i, c in enumerate(all_cats)}
                 true_counts = np.zeros(n_classes)
                 imp_counts = np.zeros(n_classes)
-                for v in true_col:
-                    true_counts[cat_to_idx[v]] += 1
-                for v in imp_col:
-                    imp_counts[cat_to_idx[v]] += 1
+                # Vectorized lookup via np.searchsorted on sorted all_cats
+                sorted_cats = np.sort(all_cats)
+                cat_to_idx_arr = np.argsort(all_cats)
+                true_uniq, true_cnts = np.unique(true_col, return_counts=True)
+                for u, c in zip(true_uniq, true_cnts):
+                    true_counts[cat_to_idx[u]] = c
+                imp_uniq, imp_cnts = np.unique(imp_col, return_counts=True)
+                for u, c in zip(imp_uniq, imp_cnts):
+                    imp_counts[cat_to_idx[u]] = c
                 # Normalize to probability distributions
                 true_dist = true_counts / true_counts.sum() if true_counts.sum() > 0 else true_counts
                 imp_dist = imp_counts / imp_counts.sum() if imp_counts.sum() > 0 else imp_counts

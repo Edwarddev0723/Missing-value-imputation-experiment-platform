@@ -35,7 +35,7 @@ class TabCSDIImputer(BaseImputer):
         epochs: int = 200,
         learning_rate: float = 1e-3,
         batch_size: int = 256,
-        device: str = "mps",
+        device: str = "cpu",
         early_stopping_patience: int = 10,
         beta_start: float = 1e-4,
         beta_end: float = 0.02,
@@ -78,9 +78,8 @@ class TabCSDIImputer(BaseImputer):
         X_arr = X_train.values.astype(np.float32)
         obs_mask = (~np.isnan(X_arr)).astype(np.float32)
         self._init_values = np.nanmean(X_arr, axis=0)
-        X_filled = X_arr.copy()
-        for j in range(X_filled.shape[1]):
-            X_filled[np.isnan(X_filled[:, j]), j] = self._init_values[j]
+        fill_row = self._init_values[np.newaxis, :]
+        X_filled = np.where(np.isnan(X_arr), fill_row, X_arr)
 
         input_dim = X_filled.shape[1]
 
@@ -116,6 +115,10 @@ class TabCSDIImputer(BaseImputer):
         best_loss = float("inf")
         patience_counter = 0
 
+        _amp_dtype = torch.float16
+        _use_amp = 'mps' not in str(torch_device)
+        _amp_device = 'cuda' if torch.cuda.is_available() else 'cpu'
+
         model.train()
         for epoch in range(self.epochs):
             epoch_loss = 0.0
@@ -125,29 +128,30 @@ class TabCSDIImputer(BaseImputer):
                 batch_m = batch_m.to(torch_device)
                 bs = batch_x.shape[0]
 
-                # Sample timestep
-                t = torch.randint(0, self.diffusion_steps, (bs,), device=torch_device)
-                t_norm = t.float().unsqueeze(1) / self.diffusion_steps
+                with torch.autocast(device_type=_amp_device, dtype=_amp_dtype, enabled=_use_amp):
+                    # Sample timestep
+                    t = torch.randint(0, self.diffusion_steps, (bs,), device=torch_device)
+                    t_norm = t.float().unsqueeze(1) / self.diffusion_steps
 
-                # Forward diffusion on missing values
-                alpha_bar_t = self._alpha_bars[t].unsqueeze(1)
-                noise = torch.randn_like(batch_x)
-                x_noisy = torch.sqrt(alpha_bar_t) * batch_x + torch.sqrt(1 - alpha_bar_t) * noise
+                    # Forward diffusion on missing values
+                    alpha_bar_t = self._alpha_bars[t].unsqueeze(1)
+                    noise = torch.randn_like(batch_x)
+                    x_noisy = torch.sqrt(alpha_bar_t) * batch_x + torch.sqrt(1 - alpha_bar_t) * noise
 
-                # Condition on observed values
-                x_cond = batch_x * batch_m
+                    # Condition on observed values
+                    x_cond = batch_x * batch_m
 
-                # Predict noise
-                t_emb = model["t_embed"](t_norm)
-                score_input = torch.cat([x_noisy, batch_m, x_cond, t_emb], dim=1)
-                noise_pred = model["score_net"](score_input)
+                    # Predict noise
+                    t_emb = model["t_embed"](t_norm)
+                    score_input = torch.cat([x_noisy, batch_m, x_cond, t_emb], dim=1)
+                    noise_pred = model["score_net"](score_input)
 
-                # Loss only on missing positions
-                loss_mask = 1 - batch_m
-                if loss_mask.sum() > 0:
-                    loss = ((noise_pred - noise) ** 2 * loss_mask).sum() / (loss_mask.sum() + 1e-8)
-                else:
-                    loss = ((noise_pred - noise) ** 2).mean()
+                    # Loss only on missing positions
+                    loss_mask = 1 - batch_m
+                    if loss_mask.sum() > 0:
+                        loss = ((noise_pred - noise) ** 2 * loss_mask).sum() / (loss_mask.sum() + 1e-8)
+                    else:
+                        loss = ((noise_pred - noise) ** 2).mean()
 
                 optimizer.zero_grad()
                 loss.backward()
@@ -177,14 +181,15 @@ class TabCSDIImputer(BaseImputer):
 
         X_arr = X_missing.values.astype(np.float32)
         obs_mask = (~np.isnan(X_arr)).astype(np.float32)
-        X_filled = X_arr.copy()
-        for j in range(X_filled.shape[1]):
-            X_filled[np.isnan(X_filled[:, j]), j] = self._init_values[j]
+        fill_row = self._init_values[np.newaxis, :]
+        X_filled = np.where(np.isnan(X_arr), fill_row, X_arr)
 
         self._model.eval()
-        with torch.no_grad():
-            m_tensor = torch.tensor(obs_mask, dtype=torch.float32).to(self._device)
-            x_cond = torch.tensor(X_filled, dtype=torch.float32).to(self._device) * m_tensor
+        _use_amp = 'mps' not in str(self._device)
+        _amp_device = 'cuda' if torch.cuda.is_available() else 'cpu'
+        with torch.inference_mode(), torch.autocast(device_type=_amp_device, dtype=torch.float16, enabled=_use_amp):
+            m_tensor = torch.tensor(obs_mask, dtype=torch.float32, device=self._device)
+            x_cond = torch.tensor(X_filled, dtype=torch.float32, device=self._device) * m_tensor
 
             # Start from noise
             x_t = torch.randn(X_arr.shape[0], self._input_dim).to(self._device)
@@ -215,7 +220,7 @@ class TabCSDIImputer(BaseImputer):
         # Ensure no NaN
         nan_mask = np.isnan(result)
         if nan_mask.any():
-            for j in range(result.shape[1]):
-                result[nan_mask[:, j], j] = self._init_values[j]
+            fill_row = self._init_values[np.newaxis, :]
+            result = np.where(nan_mask, fill_row, result)
 
         return pd.DataFrame(result, columns=self._columns, index=X_missing.index)

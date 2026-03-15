@@ -1,0 +1,36 @@
+{
+  "dataset_id": "PN6",
+  "dataset_name": "letter",
+  "method_id": "",
+  "method_name": "knn",
+  "mechanism": "MCAR",
+  "pattern": "univariate",
+  "missing_rate": 0.5,
+  "seed": 123,
+  "n_samples": 16000,
+  "n_features": 16,
+  "runtime_seconds": 3.8842905829806114,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.09162966419430657,
+      "mae": 0.0640590532127053
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.962,
+      "f1_weighted": 0.9620557348798,
+      "f1_macro": 0.9618844857526726
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.0007068029116547542,
+    "jsd_mean": null
+  }
+}

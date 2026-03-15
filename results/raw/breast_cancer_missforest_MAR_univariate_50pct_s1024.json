@@ -1,0 +1,37 @@
+{
+  "dataset_id": "PN5",
+  "dataset_name": "breast_cancer",
+  "method_id": "",
+  "method_name": "missforest",
+  "mechanism": "MAR",
+  "pattern": "univariate",
+  "missing_rate": 0.5,
+  "seed": 1024,
+  "n_samples": 546,
+  "n_features": 9,
+  "runtime_seconds": 0.6718797499925131,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.23262367354257668,
+      "mae": 0.1724978133495703
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.9854014598540146,
+      "f1_weighted": 0.9854674782985524,
+      "f1_macro": 0.9841141001855287,
+      "roc_auc": 0.9961376404494382
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.006872028908935406,
+    "jsd_mean": null
+  }
+}

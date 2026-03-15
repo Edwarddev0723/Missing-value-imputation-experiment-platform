@@ -28,6 +28,9 @@ dependencies = [
 dl = [
     "torch>=2.0",
 ]
+ml = [
+    "xgboost>=1.7",
+]
 dev = [
     "pytest>=7.4",
     "pytest-cov>=4.1",
@@ -35,7 +38,7 @@ dev = [
     "pre-commit>=3.4",
 ]
 all = [
-    "imputation-benchmark[dl,dev]",
+    "imputation-benchmark[dl,ml,dev]",
 ]
 
 [tool.setuptools.packages.find]

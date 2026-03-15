@@ -1,0 +1,32 @@
+{
+  "dataset_id": "PN4",
+  "dataset_name": "yeast",
+  "method_id": "",
+  "method_name": "gain",
+  "mechanism": "MAR",
+  "pattern": "univariate",
+  "missing_rate": 0.2,
+  "seed": 1024,
+  "n_samples": 1933,
+  "n_features": 117,
+  "runtime_seconds": 0.20356833399273455,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.4950914408865428,
+      "mae": 0.4903281968767925
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {}
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.0008052735406537486,
+    "jsd_mean": null
+  }
+}

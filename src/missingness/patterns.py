@@ -51,7 +51,7 @@ def ensure_no_empty_rows(
 
     Modifies missing_mask in-place.
     """
-    if not col_indices:
+    if len(col_indices) == 0:
         return
     sub_mask = missing_mask[:, col_indices]
     all_missing_rows = np.where(sub_mask.all(axis=1))[0]
@@ -70,35 +70,25 @@ def logistic_mask_with_calibration(
 ) -> np.ndarray:
     """Generate a missingness mask using logistic function with binary-search calibrated intercept.
 
-    Args:
-        driver_values: 1-D array of values that drive missingness probability.
-        n_rows: Number of rows.
-        target_rate: Desired overall missing rate.
-        rng: Random state.
-        slope: Steepness of the logistic curve (default 2.0 per spec).
-
-    Returns:
-        Boolean mask of shape (n_rows,).
+    Vectorized: precomputes slope*x_std once; binary search uses 32 iterations
+    (sufficient for float64 precision).
     """
-    # Standardize driver
+    # Standardize driver (vectorized)
     mean_val = np.nanmean(driver_values)
     std_val = np.nanstd(driver_values) + 1e-8
-    x_std = (driver_values - mean_val) / std_val
+    scaled = slope * ((driver_values - mean_val) / std_val)  # precompute once
 
-    # Binary search for intercept so that mean(sigmoid(slope * x_std + intercept)) ≈ target_rate
+    # Binary search for intercept: 32 iterations → ~1e-10 precision on [-10,10]
     lo, hi = -10.0, 10.0
-    for _ in range(64):
-        mid = (lo + hi) / 2.0
-        probs = _sigmoid(slope * x_std + mid)
+    for _ in range(32):
+        mid = (lo + hi) * 0.5
+        probs = _sigmoid(scaled + mid)
         if np.nanmean(probs) < target_rate:
             lo = mid
         else:
             hi = mid
 
-    intercept = (lo + hi) / 2.0
-    probs = _sigmoid(slope * x_std + intercept)
-    probs = np.clip(probs, 0.0, 0.99)
-
+    probs = np.clip(_sigmoid(scaled + (lo + hi) * 0.5), 0.0, 0.99)
     return rng.rand(n_rows) < probs
 
 

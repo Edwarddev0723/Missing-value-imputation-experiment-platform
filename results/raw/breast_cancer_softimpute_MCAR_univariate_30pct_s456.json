@@ -1,0 +1,37 @@
+{
+  "dataset_id": "PN5",
+  "dataset_name": "breast_cancer",
+  "method_id": "",
+  "method_name": "softimpute",
+  "mechanism": "MCAR",
+  "pattern": "univariate",
+  "missing_rate": 0.3,
+  "seed": 456,
+  "n_samples": 546,
+  "n_features": 9,
+  "runtime_seconds": 0.09632250001595821,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.6734751419661853,
+      "mae": 0.4382468857750314
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.948905109489051,
+      "f1_weighted": 0.9494314690318869,
+      "f1_macro": 0.945115320780633,
+      "roc_auc": 0.9885299625468165
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.008019026813096606,
+    "jsd_mean": null
+  }
+}

@@ -33,7 +33,7 @@ class MissForestImputer(BaseImputer):
         self,
         n_estimators: int = 100,
         max_iter: int = 10,
-        max_depth: int | None = None,
+        max_depth: int = 12,
         n_jobs: int = -1,
         **kwargs: Any,
     ) -> None:

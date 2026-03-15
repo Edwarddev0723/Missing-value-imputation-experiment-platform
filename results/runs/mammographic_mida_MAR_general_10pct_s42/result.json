@@ -1,0 +1,133 @@
+{
+  "experiment_id": "mammographic_mida_MAR_general_10pct_s42",
+  "dataset_name": "mammographic",
+  "method_name": "mida",
+  "method_family": "dl",
+  "missing_mechanism": "MAR",
+  "missing_rate": 0.1,
+  "missing_pattern": "general",
+  "scenario_tag": "",
+  "seed": 42,
+  "imputation_metrics": {
+    "test_numerical_rmse": 0.19289509296840052,
+    "test_numerical_mae": 0.11545629702511447,
+    "test_wasserstein_distance_mean": 0.009480695093970376,
+    "test_n_missing_values": 1373,
+    "train_numerical_rmse": 0.16935703405682126,
+    "train_numerical_mae": 0.1044285399189691,
+    "train_wasserstein_distance_mean": 0.00855129433381894,
+    "train_n_missing_values": 5348
+  },
+  "downstream_metrics": {
+    "downstream_accuracy": 0.981671881984801,
+    "downstream_f1_weighted": 0.9766880719829372,
+    "downstream_f1_macro": 0.6893781602538702,
+    "downstream_roc_auc": 0.886212814645309
+  },
+  "runtime_metrics": {
+    "fit_time_seconds": 2.354548082992551,
+    "impute_time_seconds": 0.047920208002324216,
+    "total_time_seconds": 2.402468290994875
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 42,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "dataset": {
+      "split": {
+        "train_ratio": 0.8,
+        "valid_ratio": 0.0,
+        "test_ratio": 0.2,
+        "stratify": true
+      },
+      "name": "mammographic",
+      "dataset_id": "MX4",
+      "source": "uci",
+      "target_col": "severity",
+      "task_type": "classification"
+    },
+    "downstream": {
+      "enabled": true,
+      "model": "random_forest",
+      "params": {
+        "n_estimators": 100,
+        "random_state": 42
+      }
+    },
+    "missingness": {
+      "protocol": "controlled",
+      "mechanism": "MAR",
+      "pattern": "general",
+      "rate": 0.1,
+      "options": {
+        "exclude_target": true
+      }
+    },
+    "method": {
+      "name": "mida",
+      "family": "dl",
+      "device": "mps",
+      "params": {
+        "hidden_layers": [
+          256,
+          128,
+          256
+        ],
+        "epochs": 100,
+        "learning_rate": 0.001,
+        "corruption_rate": 0.5,
+        "batch_size": 512,
+        "early_stopping_patience": 5
+      }
+    },
+    "summary": {
+      "test_numerical_rmse": 0.19289509296840052,
+      "test_numerical_mae": 0.11545629702511447,
+      "test_wasserstein_distance_mean": 0.009480695093970376,
+      "test_n_missing_values": 1373,
+      "train_numerical_rmse": 0.16935703405682126,
+      "train_numerical_mae": 0.1044285399189691,
+      "train_wasserstein_distance_mean": 0.00855129433381894,
+      "train_n_missing_values": 5348,
+      "downstream_accuracy": 0.981671881984801,
+      "downstream_f1_weighted": 0.9766880719829372,
+      "downstream_f1_macro": 0.6893781602538702,
+      "downstream_roc_auc": 0.886212814645309,
+      "fit_time_seconds": 2.354548082992551,
+      "impute_time_seconds": 0.047920208002324216,
+      "total_time_seconds": 2.402468290994875
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}

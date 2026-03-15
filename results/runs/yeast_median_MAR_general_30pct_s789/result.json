@@ -1,0 +1,123 @@
+{
+  "experiment_id": "yeast_median_MAR_general_30pct_s789",
+  "dataset_name": "yeast",
+  "method_name": "median",
+  "method_family": "statistical",
+  "missing_mechanism": "MAR",
+  "missing_rate": 0.3,
+  "missing_pattern": "general",
+  "scenario_tag": "",
+  "seed": 789,
+  "imputation_metrics": {
+    "test_numerical_rmse": 0.1448168234559739,
+    "test_numerical_mae": 0.08214181605459335,
+    "test_wasserstein_distance_mean": 0.0235777434971518,
+    "test_n_missing_values": 682,
+    "train_numerical_rmse": 0.12044186893552918,
+    "train_numerical_mae": 0.07039353145088462,
+    "train_wasserstein_distance_mean": 0.020837849295328212,
+    "train_n_missing_values": 2811
+  },
+  "downstream_metrics": {
+    "downstream_accuracy": 0.5016835016835017,
+    "downstream_f1_weighted": 0.4821827960700503,
+    "downstream_f1_macro": 0.2822353362440567
+  },
+  "runtime_metrics": {
+    "fit_time_seconds": 0.00043541600462049246,
+    "impute_time_seconds": 0.0008005420095287263,
+    "total_time_seconds": 0.0012359580141492188
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 789,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "dataset": {
+      "split": {
+        "train_ratio": 0.8,
+        "valid_ratio": 0.0,
+        "test_ratio": 0.2,
+        "stratify": true
+      },
+      "name": "yeast",
+      "dataset_id": "PN4",
+      "source": "uci",
+      "target_col": "localization_site",
+      "task_type": "classification"
+    },
+    "downstream": {
+      "enabled": true,
+      "model": "random_forest",
+      "params": {
+        "n_estimators": 100,
+        "random_state": 42
+      }
+    },
+    "missingness": {
+      "protocol": "controlled",
+      "mechanism": "MAR",
+      "pattern": "general",
+      "rate": 0.3,
+      "options": {
+        "exclude_target": true
+      }
+    },
+    "method": {
+      "name": "median",
+      "family": "statistical",
+      "device": "cpu",
+      "params": {
+        "n_jobs": 2,
+        "device": "cpu"
+      }
+    },
+    "summary": {
+      "test_numerical_rmse": 0.1448168234559739,
+      "test_numerical_mae": 0.08214181605459335,
+      "test_wasserstein_distance_mean": 0.0235777434971518,
+      "test_n_missing_values": 682,
+      "train_numerical_rmse": 0.12044186893552918,
+      "train_numerical_mae": 0.07039353145088462,
+      "train_wasserstein_distance_mean": 0.020837849295328212,
+      "train_n_missing_values": 2811,
+      "downstream_accuracy": 0.5016835016835017,
+      "downstream_f1_weighted": 0.4821827960700503,
+      "downstream_f1_macro": 0.2822353362440567,
+      "fit_time_seconds": 0.00043541600462049246,
+      "impute_time_seconds": 0.0008005420095287263,
+      "total_time_seconds": 0.0012359580141492188
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}

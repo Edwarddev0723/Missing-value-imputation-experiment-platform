@@ -1,0 +1,36 @@
+{
+  "dataset_id": "PN4",
+  "dataset_name": "yeast",
+  "method_id": "",
+  "method_name": "mean",
+  "mechanism": "MAR",
+  "pattern": "general",
+  "missing_rate": 0.5,
+  "seed": 789,
+  "n_samples": 1187,
+  "n_features": 8,
+  "runtime_seconds": 0.000916124990908429,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.1293057690130231,
+      "mae": 0.07772620079828559
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.45454545454545453,
+      "f1_weighted": 0.4321368212496682,
+      "f1_macro": 0.2316689664948552
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.03784899592744799,
+    "jsd_mean": null
+  }
+}

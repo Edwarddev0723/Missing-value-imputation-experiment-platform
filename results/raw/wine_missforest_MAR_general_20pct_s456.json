@@ -1,0 +1,32 @@
+{
+  "dataset_id": "PN1",
+  "dataset_name": "wine",
+  "method_id": "",
+  "method_name": "missforest",
+  "mechanism": "MAR",
+  "pattern": "general",
+  "missing_rate": 0.2,
+  "seed": 456,
+  "n_samples": 3918,
+  "n_features": 12,
+  "runtime_seconds": 39.058732458011946,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.08299153420983824,
+      "mae": 0.053463380456454136
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "regression",
+    "model": "RandomForest",
+    "metrics": {}
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.005128234938540239,
+    "jsd_mean": null
+  }
+}

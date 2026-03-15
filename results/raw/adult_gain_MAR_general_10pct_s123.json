@@ -1,0 +1,37 @@
+{
+  "dataset_id": "MX1",
+  "dataset_name": "adult",
+  "method_id": "",
+  "method_name": "gain",
+  "mechanism": "MAR",
+  "pattern": "general",
+  "missing_rate": 0.1,
+  "seed": 123,
+  "n_samples": 36177,
+  "n_features": 14,
+  "runtime_seconds": 3.2787922080024146,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.13142254183177698,
+      "mae": 0.07697417309840791
+    },
+    "categorical": {
+      "accuracy": 0.3251559251559252,
+      "macro_f1": 0.07095692817882124
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.8516307352128247,
+      "f1_weighted": 0.8457609544098449,
+      "f1_macro": 0.7860018690473656,
+      "roc_auc": 0.8970386877385128
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.007924358119622414,
+    "jsd_mean": 0.18949906812933803
+  }
+}

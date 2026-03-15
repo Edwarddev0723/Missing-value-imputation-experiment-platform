@@ -1,0 +1,36 @@
+{
+  "dataset_id": "MX2",
+  "dataset_name": "bank",
+  "method_id": "",
+  "method_name": "mice",
+  "mechanism": "MNAR",
+  "pattern": "general",
+  "missing_rate": 0.3,
+  "seed": 1024,
+  "n_samples": 36168,
+  "n_features": 16,
+  "runtime_seconds": 5.746657124997,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.20467951341025892,
+      "mae": 0.12025613919334306
+    },
+    "categorical": {
+      "accuracy": 0.3723579241713957,
+      "macro_f1": 0.1304148191449877
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 1.0,
+      "f1_weighted": 1.0,
+      "f1_macro": 1.0
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.0341127649417888,
+    "jsd_mean": 0.3708008257864398
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "dataset_id": "PN4",
+  "dataset_name": "yeast",
+  "method_id": "",
+  "method_name": "tabcsdi",
+  "mechanism": "MCAR",
+  "pattern": "general",
+  "missing_rate": 0.1,
+  "seed": 123,
+  "n_samples": 1933,
+  "n_features": 117,
+  "runtime_seconds": 0.3008479590062052,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 1.6035998005674656,
+      "mae": 1.2694561157547823
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {}
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.11763438483710831,
+    "jsd_mean": null
+  }
+}

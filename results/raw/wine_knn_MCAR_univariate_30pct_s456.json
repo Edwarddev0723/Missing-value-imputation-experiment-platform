@@ -1,0 +1,32 @@
+{
+  "dataset_id": "PN1",
+  "dataset_name": "wine",
+  "method_id": "",
+  "method_name": "knn",
+  "mechanism": "MCAR",
+  "pattern": "univariate",
+  "missing_rate": 0.3,
+  "seed": 456,
+  "n_samples": 3918,
+  "n_features": 12,
+  "runtime_seconds": 0.09996974900423083,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.11544472214434533,
+      "mae": 0.07264620758675154
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "regression",
+    "model": "RandomForest",
+    "metrics": {}
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.0006622588117450326,
+    "jsd_mean": null
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "dataset_id": "PN6",
+  "dataset_name": "letter",
+  "method_id": "",
+  "method_name": "mida",
+  "mechanism": "MCAR",
+  "pattern": "univariate",
+  "missing_rate": 0.3,
+  "seed": 789,
+  "n_samples": 16000,
+  "n_features": 16,
+  "runtime_seconds": 12.9947151249944,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.2079064307279997,
+      "mae": 0.17290410535978445
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.96375,
+      "f1_weighted": 0.9638609599798572,
+      "f1_macro": 0.9637246223880594
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.002955975988623689,
+    "jsd_mean": null
+  }
+}

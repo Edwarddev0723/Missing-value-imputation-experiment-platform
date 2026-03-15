@@ -1,0 +1,139 @@
+{
+  "experiment_id": "titanic_em_MNAR_general_30pct_s456",
+  "dataset_name": "titanic",
+  "method_name": "em",
+  "method_family": "statistical",
+  "missing_mechanism": "MNAR",
+  "missing_rate": 0.3,
+  "missing_pattern": "general",
+  "scenario_tag": "",
+  "seed": 456,
+  "imputation_metrics": {
+    "test_numerical_rmse": 0.25548011289501044,
+    "test_numerical_mae": 0.18983692203565575,
+    "test_categorical_accuracy": 0.48760330578512395,
+    "test_categorical_macro_f1": 0.3333333333333333,
+    "test_wasserstein_distance_mean": 0.051147141073768235,
+    "test_jsd_mean": 0.10578242962002869,
+    "test_n_missing_values": 425,
+    "train_numerical_rmse": 0.24520590746583018,
+    "train_numerical_mae": 0.1771515375983662,
+    "train_categorical_accuracy": 0.5030425963488844,
+    "train_categorical_macro_f1": 0.34760767608966914,
+    "train_wasserstein_distance_mean": 0.04902441133323155,
+    "train_jsd_mean": 0.1069111316227167,
+    "train_n_missing_values": 1744
+  },
+  "downstream_metrics": {
+    "downstream_accuracy": 0.7177033492822966,
+    "downstream_f1_weighted": 0.7139330873193832,
+    "downstream_f1_macro": 0.7005657949054176,
+    "downstream_roc_auc": 0.754032258064516
+  },
+  "runtime_metrics": {
+    "fit_time_seconds": 0.03429633300402202,
+    "impute_time_seconds": 0.003885166996042244,
+    "total_time_seconds": 0.03818150000006426
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 456,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "dataset": {
+      "split": {
+        "train_ratio": 0.8,
+        "valid_ratio": 0.0,
+        "test_ratio": 0.2,
+        "stratify": true
+      },
+      "name": "titanic",
+      "dataset_id": "MX3",
+      "source": "kaggle/openml",
+      "target_col": "survived",
+      "task_type": "classification"
+    },
+    "downstream": {
+      "enabled": true,
+      "model": "random_forest",
+      "params": {
+        "n_estimators": 100,
+        "random_state": 42
+      }
+    },
+    "missingness": {
+      "protocol": "controlled",
+      "mechanism": "MNAR",
+      "pattern": "general",
+      "rate": 0.3,
+      "options": {
+        "exclude_target": true
+      }
+    },
+    "method": {
+      "name": "em",
+      "family": "statistical",
+      "device": "cpu",
+      "params": {
+        "max_iterations": 100,
+        "convergence_threshold": 0.0001,
+        "n_jobs": 2,
+        "device": "cpu"
+      }
+    },
+    "summary": {
+      "test_numerical_rmse": 0.25548011289501044,
+      "test_numerical_mae": 0.18983692203565575,
+      "test_categorical_accuracy": 0.48760330578512395,
+      "test_categorical_macro_f1": 0.3333333333333333,
+      "test_wasserstein_distance_mean": 0.051147141073768235,
+      "test_jsd_mean": 0.10578242962002869,
+      "test_n_missing_values": 425,
+      "train_numerical_rmse": 0.24520590746583018,
+      "train_numerical_mae": 0.1771515375983662,
+      "train_categorical_accuracy": 0.5030425963488844,
+      "train_categorical_macro_f1": 0.34760767608966914,
+      "train_wasserstein_distance_mean": 0.04902441133323155,
+      "train_jsd_mean": 0.1069111316227167,
+      "train_n_missing_values": 1744,
+      "downstream_accuracy": 0.7177033492822966,
+      "downstream_f1_weighted": 0.7139330873193832,
+      "downstream_f1_macro": 0.7005657949054176,
+      "downstream_roc_auc": 0.754032258064516,
+      "fit_time_seconds": 0.03429633300402202,
+      "impute_time_seconds": 0.003885166996042244,
+      "total_time_seconds": 0.03818150000006426
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}

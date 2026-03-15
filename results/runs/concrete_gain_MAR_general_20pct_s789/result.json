@@ -1,0 +1,135 @@
+{
+  "experiment_id": "concrete_gain_MAR_general_20pct_s789",
+  "dataset_name": "concrete",
+  "method_name": "gain",
+  "method_family": "dl",
+  "missing_mechanism": "MAR",
+  "missing_rate": 0.2,
+  "missing_pattern": "general",
+  "scenario_tag": "",
+  "seed": 789,
+  "imputation_metrics": {
+    "test_numerical_rmse": 0.310443279672264,
+    "test_numerical_mae": 0.2515622280381069,
+    "test_wasserstein_distance_mean": 0.04707259780757811,
+    "test_n_missing_values": 325,
+    "train_numerical_rmse": 0.2981354626028273,
+    "train_numerical_mae": 0.2376912194627264,
+    "train_wasserstein_distance_mean": 0.04479382831599005,
+    "train_n_missing_values": 1310
+  },
+  "downstream_metrics": {
+    "downstream_rmse": 9.679865672760448,
+    "downstream_mae": 7.386659546925568,
+    "downstream_r2": 0.6234128752240777
+  },
+  "runtime_metrics": {
+    "fit_time_seconds": 0.28379320800013375,
+    "impute_time_seconds": 0.007775749996653758,
+    "total_time_seconds": 0.2915689579967875
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 789,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "dataset": {
+      "split": {
+        "train_ratio": 0.8,
+        "valid_ratio": 0.0,
+        "test_ratio": 0.2,
+        "stratify": false
+      },
+      "name": "concrete",
+      "dataset_id": "PN2",
+      "source": "uci",
+      "target_col": "compressive_strength",
+      "task_type": "regression"
+    },
+    "downstream": {
+      "enabled": true,
+      "model": "random_forest",
+      "params": {
+        "n_estimators": 100,
+        "random_state": 42
+      }
+    },
+    "missingness": {
+      "protocol": "controlled",
+      "mechanism": "MAR",
+      "pattern": "general",
+      "rate": 0.2,
+      "options": {
+        "exclude_target": true
+      }
+    },
+    "method": {
+      "name": "gain",
+      "family": "dl",
+      "device": "mps",
+      "params": {
+        "generator_hidden": [
+          256,
+          128
+        ],
+        "discriminator_hidden": [
+          256,
+          128
+        ],
+        "epochs": 150,
+        "learning_rate": 0.001,
+        "alpha": 100,
+        "batch_size": 512,
+        "early_stopping_patience": 5,
+        "hint_rate": 0.9
+      }
+    },
+    "summary": {
+      "test_numerical_rmse": 0.310443279672264,
+      "test_numerical_mae": 0.2515622280381069,
+      "test_wasserstein_distance_mean": 0.04707259780757811,
+      "test_n_missing_values": 325,
+      "train_numerical_rmse": 0.2981354626028273,
+      "train_numerical_mae": 0.2376912194627264,
+      "train_wasserstein_distance_mean": 0.04479382831599005,
+      "train_n_missing_values": 1310,
+      "downstream_rmse": 9.679865672760448,
+      "downstream_mae": 7.386659546925568,
+      "downstream_r2": 0.6234128752240777,
+      "fit_time_seconds": 0.28379320800013375,
+      "impute_time_seconds": 0.007775749996653758,
+      "total_time_seconds": 0.2915689579967875
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}

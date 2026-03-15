@@ -31,7 +31,7 @@ class MICEImputer(BaseImputer):
     def __init__(
         self,
         max_iterations: int = 10,
-        n_imputations: int = 5,
+        n_imputations: int = 3,
         **kwargs: Any,
     ) -> None:
         super().__init__(

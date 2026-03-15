@@ -1,0 +1,36 @@
+{
+  "dataset_id": "PN2",
+  "dataset_name": "concrete",
+  "method_id": "",
+  "method_name": "tabcsdi",
+  "mechanism": "MAR",
+  "pattern": "general",
+  "missing_rate": 0.5,
+  "seed": 42,
+  "n_samples": 824,
+  "n_features": 8,
+  "runtime_seconds": 0.9185819169797469,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.273124636016319,
+      "mae": 0.21917668021226522
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "regression",
+    "model": "RandomForest",
+    "metrics": {
+      "rmse": 13.918818234962067,
+      "mae": 11.150136407766988,
+      "r2": 0.24815338396315678
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.0419463965563739,
+    "jsd_mean": null
+  }
+}

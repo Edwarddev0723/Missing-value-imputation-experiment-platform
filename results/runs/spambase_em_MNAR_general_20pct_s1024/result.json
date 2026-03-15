@@ -1,0 +1,126 @@
+{
+  "experiment_id": "spambase_em_MNAR_general_20pct_s1024",
+  "dataset_name": "spambase",
+  "method_name": "em",
+  "method_family": "statistical",
+  "missing_mechanism": "MNAR",
+  "missing_rate": 0.2,
+  "missing_pattern": "general",
+  "scenario_tag": "",
+  "seed": 1024,
+  "imputation_metrics": {
+    "test_numerical_rmse": 0.14435902712781035,
+    "test_numerical_mae": 0.05771590869777586,
+    "test_wasserstein_distance_mean": 0.01073530332594709,
+    "test_n_missing_values": 10377,
+    "train_numerical_rmse": 0.12973420650454104,
+    "train_numerical_mae": 0.05575236906663815,
+    "train_wasserstein_distance_mean": 0.010493406433153907,
+    "train_n_missing_values": 41867
+  },
+  "downstream_metrics": {
+    "downstream_accuracy": 0.9109663409337676,
+    "downstream_f1_weighted": 0.9102701382878343,
+    "downstream_f1_macro": 0.9054215841465125,
+    "downstream_roc_auc": 0.9602106105038657
+  },
+  "runtime_metrics": {
+    "fit_time_seconds": 22.37288266699761,
+    "impute_time_seconds": 0.29145379200053867,
+    "total_time_seconds": 22.66433645899815
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 1024,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "dataset": {
+      "split": {
+        "train_ratio": 0.8,
+        "valid_ratio": 0.0,
+        "test_ratio": 0.2,
+        "stratify": true
+      },
+      "name": "spambase",
+      "dataset_id": "PN3",
+      "source": "uci",
+      "target_col": "is_spam",
+      "task_type": "classification"
+    },
+    "downstream": {
+      "enabled": true,
+      "model": "random_forest",
+      "params": {
+        "n_estimators": 100,
+        "random_state": 42
+      }
+    },
+    "missingness": {
+      "protocol": "controlled",
+      "mechanism": "MNAR",
+      "pattern": "general",
+      "rate": 0.2,
+      "options": {
+        "exclude_target": true
+      }
+    },
+    "method": {
+      "name": "em",
+      "family": "statistical",
+      "device": "cpu",
+      "params": {
+        "max_iterations": 100,
+        "convergence_threshold": 0.0001,
+        "n_jobs": 1
+      }
+    },
+    "summary": {
+      "test_numerical_rmse": 0.14435902712781035,
+      "test_numerical_mae": 0.05771590869777586,
+      "test_wasserstein_distance_mean": 0.01073530332594709,
+      "test_n_missing_values": 10377,
+      "train_numerical_rmse": 0.12973420650454104,
+      "train_numerical_mae": 0.05575236906663815,
+      "train_wasserstein_distance_mean": 0.010493406433153907,
+      "train_n_missing_values": 41867,
+      "downstream_accuracy": 0.9109663409337676,
+      "downstream_f1_weighted": 0.9102701382878343,
+      "downstream_f1_macro": 0.9054215841465125,
+      "downstream_roc_auc": 0.9602106105038657,
+      "fit_time_seconds": 22.37288266699761,
+      "impute_time_seconds": 0.29145379200053867,
+      "total_time_seconds": 22.66433645899815
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}

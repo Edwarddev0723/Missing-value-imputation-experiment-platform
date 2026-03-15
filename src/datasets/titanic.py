@@ -10,7 +10,7 @@ from sklearn.datasets import fetch_openml
 
 from src.constants import CATEGORICAL, CLASSIFICATION, NUMERICAL
 from src.datasets.base import BaseDataset
-from src.datasets.utils import stratified_split
+from src.datasets.utils import atomic_save_csv, stratified_split
 from src.registry import DATASET_REGISTRY
 from src.utils.logging import get_logger
 
@@ -40,7 +40,7 @@ class TitanicDataset(BaseDataset):
             data = fetch_openml("titanic", version=1, as_frame=True, parser="auto")
             df = data.frame  # type: ignore
             self.data_dir.mkdir(parents=True, exist_ok=True)
-            df.to_csv(cache_path, index=False)
+            atomic_save_csv(df, cache_path)
             logger.info(f"Cached Titanic dataset to {cache_path}")
 
         # Standardize column names to lowercase
@@ -60,13 +60,14 @@ class TitanicDataset(BaseDataset):
             df = df.dropna(subset=[target_col])
             df[target_col] = df[target_col].astype(int)
 
-        # Remove rows with missing values to get complete subset
-        # Spec: Age, Cabin, Embarked have natural missing
-        df = df.dropna().reset_index(drop=True)
-
-        # Drop non-informative columns (name, ticket, cabin can be noisy)
-        drop_cols = [c for c in ["name", "ticket", "cabin"] if c in df.columns]
+        # Drop non-informative / high-missingness columns BEFORE dropna
+        # cabin (77%), body (91%), boat (63%), home.dest (43%) would eliminate all rows
+        drop_cols = [c for c in ["name", "ticket", "cabin", "boat", "body", "home.dest"]
+                     if c in df.columns]
         df = df.drop(columns=drop_cols, errors="ignore")
+
+        # Remove rows with remaining missing values to get complete subset
+        df = df.dropna().reset_index(drop=True)
 
         # Determine actual numerical and categorical features
         feature_cols = [c for c in df.columns if c != target_col]

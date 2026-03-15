@@ -1,0 +1,32 @@
+{
+  "dataset_id": "PN1",
+  "dataset_name": "wine",
+  "method_id": "",
+  "method_name": "gain",
+  "mechanism": "MNAR",
+  "pattern": "univariate",
+  "missing_rate": 0.2,
+  "seed": 123,
+  "n_samples": 3918,
+  "n_features": 12,
+  "runtime_seconds": 0.37290120900433976,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.33727691548679023,
+      "mae": 0.30658208313772156
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "regression",
+    "model": "RandomForest",
+    "metrics": {}
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.0052139857713921186,
+    "jsd_mean": null
+  }
+}

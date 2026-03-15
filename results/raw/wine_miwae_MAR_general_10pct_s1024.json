@@ -1,0 +1,32 @@
+{
+  "dataset_id": "PN1",
+  "dataset_name": "wine",
+  "method_id": "",
+  "method_name": "miwae",
+  "mechanism": "MAR",
+  "pattern": "general",
+  "missing_rate": 0.1,
+  "seed": 1024,
+  "n_samples": 3918,
+  "n_features": 12,
+  "runtime_seconds": 13.24458583300293,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.13367509835778832,
+      "mae": 0.09430118099495527
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "regression",
+    "model": "RandomForest",
+    "metrics": {}
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.00785276819366663,
+    "jsd_mean": null
+  }
+}

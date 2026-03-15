@@ -10,7 +10,7 @@ from sklearn.datasets import fetch_openml
 
 from src.constants import NUMERICAL, CLASSIFICATION
 from src.datasets.base import BaseDataset
-from src.datasets.utils import stratified_split
+from src.datasets.utils import atomic_save_csv, stratified_split
 from src.registry import DATASET_REGISTRY
 from src.utils.logging import get_logger
 
@@ -41,7 +41,7 @@ class LetterDataset(BaseDataset):
             elif "lettr" in df.columns:
                 df = df.rename(columns={"lettr": "letter"})
             self.data_dir.mkdir(parents=True, exist_ok=True)
-            df.to_csv(cache_path, index=False)
+            atomic_save_csv(df, cache_path)
             logger.info(f"Cached Letter Recognition dataset to {cache_path}")
 
         target_col = "letter"

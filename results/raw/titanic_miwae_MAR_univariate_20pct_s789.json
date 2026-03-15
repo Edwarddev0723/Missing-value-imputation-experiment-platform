@@ -1,0 +1,37 @@
+{
+  "dataset_id": "MX3",
+  "dataset_name": "titanic",
+  "method_id": "",
+  "method_name": "miwae",
+  "mechanism": "MAR",
+  "pattern": "univariate",
+  "missing_rate": 0.2,
+  "seed": 789,
+  "n_samples": 834,
+  "n_features": 7,
+  "runtime_seconds": 1.7715249579923693,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.3971695164335405,
+      "mae": 0.3108428955078125
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.7942583732057417,
+      "f1_weighted": 0.7940628059646644,
+      "f1_macro": 0.7864356835626529,
+      "roc_auc": 0.8526091081593928
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.008844317709392069,
+    "jsd_mean": 0.0
+  }
+}

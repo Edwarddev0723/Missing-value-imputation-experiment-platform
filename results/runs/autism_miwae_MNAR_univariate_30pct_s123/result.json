@@ -1,0 +1,136 @@
+{
+  "experiment_id": "autism_miwae_MNAR_univariate_30pct_s123",
+  "dataset_name": "autism",
+  "method_name": "miwae",
+  "method_family": "dl",
+  "missing_mechanism": "MNAR",
+  "missing_rate": 0.3,
+  "missing_pattern": "univariate",
+  "scenario_tag": "",
+  "seed": 123,
+  "imputation_metrics": {
+    "test_numerical_rmse": 0.41593612230114496,
+    "test_numerical_mae": 0.3875944018363953,
+    "test_wasserstein_distance_mean": 0.050832052565668306,
+    "test_jsd_mean": 0.0,
+    "test_n_missing_values": 32,
+    "train_numerical_rmse": 0.40284684167017465,
+    "train_numerical_mae": 0.36483072990026233,
+    "train_wasserstein_distance_mean": 0.05843284823643699,
+    "train_jsd_mean": 0.0,
+    "train_n_missing_values": 156
+  },
+  "downstream_metrics": {
+    "downstream_accuracy": 0.9672131147540983,
+    "downstream_f1_weighted": 0.9669331610541334,
+    "downstream_f1_macro": 0.9599343185550082,
+    "downstream_roc_auc": 0.9920865633074935
+  },
+  "runtime_metrics": {
+    "fit_time_seconds": 2.0463175410113763,
+    "impute_time_seconds": 0.0019006669899681583,
+    "total_time_seconds": 2.0482182080013445
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 123,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "dataset": {
+      "split": {
+        "train_ratio": 0.8,
+        "valid_ratio": 0.0,
+        "test_ratio": 0.2,
+        "stratify": true
+      },
+      "name": "autism",
+      "dataset_id": "MX5",
+      "source": "uci",
+      "target_col": "asd_class",
+      "task_type": "classification"
+    },
+    "downstream": {
+      "enabled": true,
+      "model": "random_forest",
+      "params": {
+        "n_estimators": 100,
+        "random_state": 42
+      }
+    },
+    "missingness": {
+      "protocol": "controlled",
+      "mechanism": "MNAR",
+      "pattern": "univariate",
+      "rate": 0.3,
+      "options": {
+        "exclude_target": true
+      }
+    },
+    "method": {
+      "name": "miwae",
+      "family": "dl",
+      "device": "cpu",
+      "params": {
+        "latent_dim": 32,
+        "n_hidden": 128,
+        "n_samples": 20,
+        "epochs": 100,
+        "learning_rate": 0.001,
+        "batch_size": 512,
+        "early_stopping_patience": 5,
+        "n_jobs": 2,
+        "device": "cpu"
+      }
+    },
+    "summary": {
+      "test_numerical_rmse": 0.41593612230114496,
+      "test_numerical_mae": 0.3875944018363953,
+      "test_wasserstein_distance_mean": 0.050832052565668306,
+      "test_jsd_mean": 0.0,
+      "test_n_missing_values": 32,
+      "train_numerical_rmse": 0.40284684167017465,
+      "train_numerical_mae": 0.36483072990026233,
+      "train_wasserstein_distance_mean": 0.05843284823643699,
+      "train_jsd_mean": 0.0,
+      "train_n_missing_values": 156,
+      "downstream_accuracy": 0.9672131147540983,
+      "downstream_f1_weighted": 0.9669331610541334,
+      "downstream_f1_macro": 0.9599343185550082,
+      "downstream_roc_auc": 0.9920865633074935,
+      "fit_time_seconds": 2.0463175410113763,
+      "impute_time_seconds": 0.0019006669899681583,
+      "total_time_seconds": 2.0482182080013445
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}

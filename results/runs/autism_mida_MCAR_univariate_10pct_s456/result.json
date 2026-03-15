@@ -1,0 +1,139 @@
+{
+  "experiment_id": "autism_mida_MCAR_univariate_10pct_s456",
+  "dataset_name": "autism",
+  "method_name": "mida",
+  "method_family": "dl",
+  "missing_mechanism": "MCAR",
+  "missing_rate": 0.1,
+  "missing_pattern": "univariate",
+  "scenario_tag": "",
+  "seed": 456,
+  "imputation_metrics": {
+    "test_numerical_rmse": 0.5286831789401799,
+    "test_numerical_mae": 0.4791415719424977,
+    "test_wasserstein_distance_mean": 0.03338281590641333,
+    "test_jsd_mean": 0.0,
+    "test_n_missing_values": 17,
+    "train_numerical_rmse": 0.6078934612393222,
+    "train_numerical_mae": 0.5492000146345659,
+    "train_wasserstein_distance_mean": 0.024809859139208877,
+    "train_jsd_mean": 0.0,
+    "train_n_missing_values": 44
+  },
+  "downstream_metrics": {
+    "downstream_accuracy": 0.9836065573770492,
+    "downstream_f1_weighted": 0.9834665805270667,
+    "downstream_f1_macro": 0.9799671592775041,
+    "downstream_roc_auc": 0.9998385012919896
+  },
+  "runtime_metrics": {
+    "fit_time_seconds": 0.339573624994955,
+    "impute_time_seconds": 0.0021130840032128617,
+    "total_time_seconds": 0.3416867089981679
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 456,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "dataset": {
+      "split": {
+        "train_ratio": 0.8,
+        "valid_ratio": 0.0,
+        "test_ratio": 0.2,
+        "stratify": true
+      },
+      "name": "autism",
+      "dataset_id": "MX5",
+      "source": "uci",
+      "target_col": "asd_class",
+      "task_type": "classification"
+    },
+    "downstream": {
+      "enabled": true,
+      "model": "random_forest",
+      "params": {
+        "n_estimators": 100,
+        "random_state": 42
+      }
+    },
+    "missingness": {
+      "protocol": "controlled",
+      "mechanism": "MCAR",
+      "pattern": "univariate",
+      "rate": 0.1,
+      "options": {
+        "exclude_target": true
+      }
+    },
+    "method": {
+      "name": "mida",
+      "family": "dl",
+      "device": "cpu",
+      "params": {
+        "hidden_layers": [
+          256,
+          128,
+          256
+        ],
+        "epochs": 100,
+        "learning_rate": 0.001,
+        "corruption_rate": 0.5,
+        "batch_size": 512,
+        "early_stopping_patience": 5,
+        "n_jobs": 2,
+        "device": "cpu"
+      }
+    },
+    "summary": {
+      "test_numerical_rmse": 0.5286831789401799,
+      "test_numerical_mae": 0.4791415719424977,
+      "test_wasserstein_distance_mean": 0.03338281590641333,
+      "test_jsd_mean": 0.0,
+      "test_n_missing_values": 17,
+      "train_numerical_rmse": 0.6078934612393222,
+      "train_numerical_mae": 0.5492000146345659,
+      "train_wasserstein_distance_mean": 0.024809859139208877,
+      "train_jsd_mean": 0.0,
+      "train_n_missing_values": 44,
+      "downstream_accuracy": 0.9836065573770492,
+      "downstream_f1_weighted": 0.9834665805270667,
+      "downstream_f1_macro": 0.9799671592775041,
+      "downstream_roc_auc": 0.9998385012919896,
+      "fit_time_seconds": 0.339573624994955,
+      "impute_time_seconds": 0.0021130840032128617,
+      "total_time_seconds": 0.3416867089981679
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}

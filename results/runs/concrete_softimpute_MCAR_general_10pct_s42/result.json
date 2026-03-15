@@ -1,0 +1,125 @@
+{
+  "experiment_id": "concrete_softimpute_MCAR_general_10pct_s42",
+  "dataset_name": "concrete",
+  "method_name": "softimpute",
+  "method_family": "ml",
+  "missing_mechanism": "MCAR",
+  "missing_rate": 0.1,
+  "missing_pattern": "general",
+  "scenario_tag": "",
+  "seed": 42,
+  "imputation_metrics": {
+    "test_numerical_rmse": 0.26594752853926723,
+    "test_numerical_mae": 0.19203261882424766,
+    "test_wasserstein_distance_mean": 0.01097798373028312,
+    "test_n_missing_values": 155,
+    "train_numerical_rmse": 0.2949553095392891,
+    "train_numerical_mae": 0.20600682576376003,
+    "train_wasserstein_distance_mean": 0.011039645417665698,
+    "train_n_missing_values": 692
+  },
+  "downstream_metrics": {
+    "downstream_rmse": 7.590935968235891,
+    "downstream_mae": 5.626824017568192,
+    "downstream_r2": 0.7763776646864556
+  },
+  "runtime_metrics": {
+    "fit_time_seconds": 3.662498784251511e-05,
+    "impute_time_seconds": 0.098578750010347,
+    "total_time_seconds": 0.09861537499818951
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 42,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "dataset": {
+      "split": {
+        "train_ratio": 0.8,
+        "valid_ratio": 0.0,
+        "test_ratio": 0.2,
+        "stratify": false
+      },
+      "name": "concrete",
+      "dataset_id": "PN2",
+      "source": "uci",
+      "target_col": "compressive_strength",
+      "task_type": "regression"
+    },
+    "downstream": {
+      "enabled": true,
+      "model": "random_forest",
+      "params": {
+        "n_estimators": 100,
+        "random_state": 42
+      }
+    },
+    "missingness": {
+      "protocol": "controlled",
+      "mechanism": "MCAR",
+      "pattern": "general",
+      "rate": 0.1,
+      "options": {
+        "exclude_target": true
+      }
+    },
+    "method": {
+      "name": "softimpute",
+      "family": "ml",
+      "device": "cpu",
+      "params": {
+        "max_rank": 50,
+        "lam": 0.0,
+        "max_iter": 100,
+        "tol": 1e-05
+      }
+    },
+    "summary": {
+      "test_numerical_rmse": 0.26594752853926723,
+      "test_numerical_mae": 0.19203261882424766,
+      "test_wasserstein_distance_mean": 0.01097798373028312,
+      "test_n_missing_values": 155,
+      "train_numerical_rmse": 0.2949553095392891,
+      "train_numerical_mae": 0.20600682576376003,
+      "train_wasserstein_distance_mean": 0.011039645417665698,
+      "train_n_missing_values": 692,
+      "downstream_rmse": 7.590935968235891,
+      "downstream_mae": 5.626824017568192,
+      "downstream_r2": 0.7763776646864556,
+      "fit_time_seconds": 3.662498784251511e-05,
+      "impute_time_seconds": 0.098578750010347,
+      "total_time_seconds": 0.09861537499818951
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}

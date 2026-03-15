@@ -1,0 +1,37 @@
+{
+  "dataset_id": "MX4",
+  "dataset_name": "mammographic",
+  "method_id": "",
+  "method_name": "miracle",
+  "mechanism": "MNAR",
+  "pattern": "general",
+  "missing_rate": 0.5,
+  "seed": 123,
+  "n_samples": 8946,
+  "n_features": 6,
+  "runtime_seconds": 15.93541937500413,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.29102201053041066,
+      "mae": 0.1775397581368562
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.9767545820295038,
+      "f1_weighted": 0.9706963485483944,
+      "f1_macro": 0.6117460147926624,
+      "roc_auc": 0.7992518922724873
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.08482896234263981,
+    "jsd_mean": null
+  }
+}

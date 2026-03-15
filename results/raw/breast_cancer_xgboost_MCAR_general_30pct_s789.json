@@ -1,0 +1,37 @@
+{
+  "dataset_id": "PN5",
+  "dataset_name": "breast_cancer",
+  "method_id": "",
+  "method_name": "xgboost",
+  "mechanism": "MCAR",
+  "pattern": "general",
+  "missing_rate": 0.3,
+  "seed": 789,
+  "n_samples": 546,
+  "n_features": 9,
+  "runtime_seconds": 2.966903498978354,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.1993176585377288,
+      "mae": 0.13276600766957833
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.9708029197080292,
+      "f1_weighted": 0.9709349565971047,
+      "f1_macro": 0.9682282003710575,
+      "roc_auc": 0.9956694756554307
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.022278334653337176,
+    "jsd_mean": null
+  }
+}

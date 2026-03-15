@@ -1,0 +1,156 @@
+{
+  "experiment_id": "bank_tabcsdi_MAR_univariate_30pct_s1024",
+  "dataset_name": "bank",
+  "method_name": "tabcsdi",
+  "method_family": "dl",
+  "missing_mechanism": "MAR",
+  "missing_rate": 0.3,
+  "missing_pattern": "univariate",
+  "scenario_tag": "",
+  "seed": 1024,
+  "imputation_metrics": {
+    "test_numerical_rmse": 0.2912648148553534,
+    "test_numerical_mae": 0.24467547281260713,
+    "test_wasserstein_distance_mean": 0.006962475042264593,
+    "test_jsd_mean": 0.0,
+    "test_n_missing_values": 2682,
+    "train_numerical_rmse": 0.3062717689950883,
+    "train_numerical_mae": 0.25860402427343243,
+    "train_wasserstein_distance_mean": 0.007898894599575953,
+    "train_jsd_mean": 0.0,
+    "train_n_missing_values": 10880
+  },
+  "downstream_metrics": {
+    "downstream_accuracy": 1.0,
+    "downstream_f1_weighted": 1.0,
+    "downstream_f1_macro": 1.0
+  },
+  "runtime_metrics": {
+    "fit_time_seconds": 27.374029958999017,
+    "impute_time_seconds": 2.2459902910050005,
+    "total_time_seconds": 29.620020250004018
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 1024,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "dataset": {
+      "split": {
+        "train_ratio": 0.8,
+        "valid_ratio": 0.0,
+        "test_ratio": 0.2,
+        "stratify": true
+      },
+      "name": "bank",
+      "dataset_id": "MX2",
+      "source": "uci",
+      "target_col": "deposit",
+      "task_type": "classification",
+      "feature_types": {
+        "numerical": [
+          "age",
+          "balance",
+          "day",
+          "duration",
+          "campaign",
+          "pdays",
+          "previous"
+        ],
+        "categorical": [
+          "job",
+          "marital",
+          "education",
+          "default",
+          "housing",
+          "loan",
+          "contact",
+          "month",
+          "poutcome"
+        ]
+      }
+    },
+    "downstream": {
+      "enabled": true,
+      "model": "random_forest",
+      "params": {
+        "n_estimators": 100,
+        "random_state": 42
+      }
+    },
+    "missingness": {
+      "protocol": "controlled",
+      "mechanism": "MAR",
+      "pattern": "univariate",
+      "rate": 0.3,
+      "options": {
+        "exclude_target": true
+      }
+    },
+    "method": {
+      "name": "tabcsdi",
+      "family": "dl",
+      "device": "cpu",
+      "params": {
+        "diffusion_steps": 50,
+        "hidden_dim": 128,
+        "n_layers": 4,
+        "epochs": 100,
+        "learning_rate": 0.001,
+        "batch_size": 512,
+        "early_stopping_patience": 5,
+        "n_jobs": 2,
+        "device": "cpu"
+      }
+    },
+    "summary": {
+      "test_numerical_rmse": 0.2912648148553534,
+      "test_numerical_mae": 0.24467547281260713,
+      "test_wasserstein_distance_mean": 0.006962475042264593,
+      "test_jsd_mean": 0.0,
+      "test_n_missing_values": 2682,
+      "train_numerical_rmse": 0.3062717689950883,
+      "train_numerical_mae": 0.25860402427343243,
+      "train_wasserstein_distance_mean": 0.007898894599575953,
+      "train_jsd_mean": 0.0,
+      "train_n_missing_values": 10880,
+      "downstream_accuracy": 1.0,
+      "downstream_f1_weighted": 1.0,
+      "downstream_f1_macro": 1.0,
+      "fit_time_seconds": 27.374029958999017,
+      "impute_time_seconds": 2.2459902910050005,
+      "total_time_seconds": 29.620020250004018
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}

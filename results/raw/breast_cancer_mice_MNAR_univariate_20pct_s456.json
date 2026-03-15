@@ -1,0 +1,37 @@
+{
+  "dataset_id": "PN5",
+  "dataset_name": "breast_cancer",
+  "method_id": "",
+  "method_name": "mice",
+  "mechanism": "MNAR",
+  "pattern": "univariate",
+  "missing_rate": 0.2,
+  "seed": 456,
+  "n_samples": 546,
+  "n_features": 9,
+  "runtime_seconds": 0.1401052930013975,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.4527738178694812,
+      "mae": 0.3971613976300243
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.9562043795620438,
+      "f1_weighted": 0.9565768940347343,
+      "f1_macro": 0.9527586206896552,
+      "roc_auc": 0.9902855805243445
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.00960980528741985,
+    "jsd_mean": null
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "dataset_id": "PN3",
+  "dataset_name": "spambase",
+  "method_id": "",
+  "method_name": "miwae",
+  "mechanism": "MNAR",
+  "pattern": "general",
+  "missing_rate": 0.1,
+  "seed": 1024,
+  "n_samples": 3680,
+  "n_features": 57,
+  "runtime_seconds": 6.5920579160010675,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.1986143195088263,
+      "mae": 0.09644602429702659
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.9283387622149837,
+      "f1_weighted": 0.9279117386923742,
+      "f1_macro": 0.9241267574692442,
+      "roc_auc": 0.9692970763351995
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.009445934988978421,
+    "jsd_mean": null
+  }
+}

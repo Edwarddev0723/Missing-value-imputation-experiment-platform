@@ -1,0 +1,32 @@
+{
+  "dataset_id": "PN1",
+  "dataset_name": "wine",
+  "method_id": "",
+  "method_name": "miracle",
+  "mechanism": "MCAR",
+  "pattern": "general",
+  "missing_rate": 0.5,
+  "seed": 456,
+  "n_samples": 3918,
+  "n_features": 12,
+  "runtime_seconds": 3.2494581670034677,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.22081324858461107,
+      "mae": 0.16877796639068643
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "regression",
+    "model": "RandomForest",
+    "metrics": {}
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.08242136987905443,
+    "jsd_mean": null
+  }
+}

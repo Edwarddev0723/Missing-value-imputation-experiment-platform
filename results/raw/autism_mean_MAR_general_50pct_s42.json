@@ -1,0 +1,37 @@
+{
+  "dataset_id": "MX5",
+  "dataset_name": "autism",
+  "method_id": "",
+  "method_name": "mean",
+  "mechanism": "MAR",
+  "pattern": "general",
+  "missing_rate": 0.5,
+  "seed": 42,
+  "n_samples": 487,
+  "n_features": 20,
+  "runtime_seconds": 0.0024109170044539496,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.19185955169881078,
+      "mae": 0.12195627424826533
+    },
+    "categorical": {
+      "accuracy": 0.6318181818181818,
+      "macro_f1": 0.13734029855312896
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.8934426229508197,
+      "f1_weighted": 0.8884805982894923,
+      "f1_macro": 0.860913794615452,
+      "roc_auc": 0.9163436692506459
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.05747939155143652,
+    "jsd_mean": 0.1531378953973647
+  }
+}

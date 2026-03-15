@@ -1,0 +1,36 @@
+{
+  "dataset_id": "MX2",
+  "dataset_name": "bank",
+  "method_id": "",
+  "method_name": "missforest",
+  "mechanism": "MCAR",
+  "pattern": "general",
+  "missing_rate": 0.5,
+  "seed": 1024,
+  "n_samples": 36168,
+  "n_features": 16,
+  "runtime_seconds": 312.2397723749891,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.1378444488934445,
+      "mae": 0.07324344083184427
+    },
+    "categorical": {
+      "accuracy": 0.5616458704693998,
+      "macro_f1": 0.3018392599053605
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 1.0,
+      "f1_weighted": 1.0,
+      "f1_macro": 1.0
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.014489604258385047,
+    "jsd_mean": 0.4268348440624488
+  }
+}

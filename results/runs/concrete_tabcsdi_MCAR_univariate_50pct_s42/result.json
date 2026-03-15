@@ -1,0 +1,128 @@
+{
+  "experiment_id": "concrete_tabcsdi_MCAR_univariate_50pct_s42",
+  "dataset_name": "concrete",
+  "method_name": "tabcsdi",
+  "method_family": "dl",
+  "missing_mechanism": "MCAR",
+  "missing_rate": 0.5,
+  "missing_pattern": "univariate",
+  "scenario_tag": "",
+  "seed": 42,
+  "imputation_metrics": {
+    "test_numerical_rmse": 0.41292759336188095,
+    "test_numerical_mae": 0.3503469727337551,
+    "test_wasserstein_distance_mean": 0.011174475702617816,
+    "test_n_missing_values": 100,
+    "train_numerical_rmse": 0.3887120411417761,
+    "train_numerical_mae": 0.32687311834385147,
+    "train_wasserstein_distance_mean": 0.010298266322360354,
+    "train_n_missing_values": 403
+  },
+  "downstream_metrics": {
+    "downstream_rmse": 5.542311426195777,
+    "downstream_mae": 3.9206899456773017,
+    "downstream_r2": 0.880791733302891
+  },
+  "runtime_metrics": {
+    "fit_time_seconds": 0.6678387499996461,
+    "impute_time_seconds": 0.08536283299326897,
+    "total_time_seconds": 0.7532015829929151
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 42,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "dataset": {
+      "split": {
+        "train_ratio": 0.8,
+        "valid_ratio": 0.0,
+        "test_ratio": 0.2,
+        "stratify": false
+      },
+      "name": "concrete",
+      "dataset_id": "PN2",
+      "source": "uci",
+      "target_col": "compressive_strength",
+      "task_type": "regression"
+    },
+    "downstream": {
+      "enabled": true,
+      "model": "random_forest",
+      "params": {
+        "n_estimators": 100,
+        "random_state": 42
+      }
+    },
+    "missingness": {
+      "protocol": "controlled",
+      "mechanism": "MCAR",
+      "pattern": "univariate",
+      "rate": 0.5,
+      "options": {
+        "exclude_target": true
+      }
+    },
+    "method": {
+      "name": "tabcsdi",
+      "family": "dl",
+      "device": "mps",
+      "params": {
+        "diffusion_steps": 50,
+        "hidden_dim": 128,
+        "n_layers": 4,
+        "epochs": 100,
+        "learning_rate": 0.001,
+        "batch_size": 512,
+        "early_stopping_patience": 5
+      }
+    },
+    "summary": {
+      "test_numerical_rmse": 0.41292759336188095,
+      "test_numerical_mae": 0.3503469727337551,
+      "test_wasserstein_distance_mean": 0.011174475702617816,
+      "test_n_missing_values": 100,
+      "train_numerical_rmse": 0.3887120411417761,
+      "train_numerical_mae": 0.32687311834385147,
+      "train_wasserstein_distance_mean": 0.010298266322360354,
+      "train_n_missing_values": 403,
+      "downstream_rmse": 5.542311426195777,
+      "downstream_mae": 3.9206899456773017,
+      "downstream_r2": 0.880791733302891,
+      "fit_time_seconds": 0.6678387499996461,
+      "impute_time_seconds": 0.08536283299326897,
+      "total_time_seconds": 0.7532015829929151
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}

@@ -1,0 +1,154 @@
+{
+  "experiment_id": "adult_tabcsdi_MNAR_univariate_30pct_s456",
+  "dataset_name": "adult",
+  "method_name": "tabcsdi",
+  "method_family": "dl",
+  "missing_mechanism": "MNAR",
+  "missing_rate": 0.3,
+  "missing_pattern": "univariate",
+  "scenario_tag": "",
+  "seed": 456,
+  "imputation_metrics": {
+    "test_numerical_rmse": 0.650753724844349,
+    "test_numerical_mae": 0.5574619482517534,
+    "test_wasserstein_distance_mean": 0.02660200158105963,
+    "test_jsd_mean": 0.0,
+    "test_n_missing_values": 2707,
+    "train_numerical_rmse": 0.6546297262963691,
+    "train_numerical_mae": 0.5620912737666555,
+    "train_wasserstein_distance_mean": 0.027030796596651783,
+    "train_jsd_mean": 0.0,
+    "train_n_missing_values": 10878
+  },
+  "downstream_metrics": {
+    "downstream_accuracy": 0.8504145936981757,
+    "downstream_f1_weighted": 0.8454772879526586,
+    "downstream_f1_macro": 0.7866808088265401,
+    "downstream_roc_auc": 0.9045797342647934
+  },
+  "runtime_metrics": {
+    "fit_time_seconds": 9.97456124999735,
+    "impute_time_seconds": 0.23454504199617077,
+    "total_time_seconds": 10.209106291993521
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 456,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "dataset": {
+      "split": {
+        "train_ratio": 0.8,
+        "valid_ratio": 0.0,
+        "test_ratio": 0.2,
+        "stratify": true
+      },
+      "name": "adult",
+      "dataset_id": "MX1",
+      "source": "uci",
+      "target_col": "income",
+      "task_type": "classification",
+      "feature_types": {
+        "numerical": [
+          "age",
+          "fnlwgt",
+          "education-num",
+          "capital-gain",
+          "capital-loss",
+          "hours-per-week"
+        ],
+        "categorical": [
+          "workclass",
+          "education",
+          "marital-status",
+          "occupation",
+          "relationship",
+          "race",
+          "sex",
+          "native-country"
+        ]
+      }
+    },
+    "downstream": {
+      "enabled": true,
+      "model": "random_forest",
+      "params": {
+        "n_estimators": 100,
+        "random_state": 42
+      }
+    },
+    "missingness": {
+      "protocol": "controlled",
+      "mechanism": "MNAR",
+      "pattern": "univariate",
+      "rate": 0.3,
+      "options": {
+        "exclude_target": true
+      }
+    },
+    "method": {
+      "name": "tabcsdi",
+      "family": "dl",
+      "device": "mps",
+      "params": {
+        "diffusion_steps": 50,
+        "hidden_dim": 128,
+        "n_layers": 4,
+        "epochs": 100,
+        "learning_rate": 0.001,
+        "batch_size": 512,
+        "early_stopping_patience": 5
+      }
+    },
+    "summary": {
+      "test_numerical_rmse": 0.650753724844349,
+      "test_numerical_mae": 0.5574619482517534,
+      "test_wasserstein_distance_mean": 0.02660200158105963,
+      "test_jsd_mean": 0.0,
+      "test_n_missing_values": 2707,
+      "train_numerical_rmse": 0.6546297262963691,
+      "train_numerical_mae": 0.5620912737666555,
+      "train_wasserstein_distance_mean": 0.027030796596651783,
+      "train_jsd_mean": 0.0,
+      "train_n_missing_values": 10878,
+      "downstream_accuracy": 0.8504145936981757,
+      "downstream_f1_weighted": 0.8454772879526586,
+      "downstream_f1_macro": 0.7866808088265401,
+      "downstream_roc_auc": 0.9045797342647934,
+      "fit_time_seconds": 9.97456124999735,
+      "impute_time_seconds": 0.23454504199617077,
+      "total_time_seconds": 10.209106291993521
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}

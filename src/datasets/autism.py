@@ -6,11 +6,10 @@ from pathlib import Path
 from typing import Any
 
 import pandas as pd
-from sklearn.datasets import fetch_openml
 
 from src.constants import CATEGORICAL, CLASSIFICATION, NUMERICAL
 from src.datasets.base import BaseDataset
-from src.datasets.utils import stratified_split
+from src.datasets.utils import atomic_save_csv, stratified_split
 from src.registry import DATASET_REGISTRY
 from src.utils.logging import get_logger
 
@@ -32,14 +31,22 @@ class AutismDataset(BaseDataset):
     def load(self) -> pd.DataFrame:
         cache_path = self.data_dir / "autism.csv"
         if cache_path.exists():
-            logger.info(f"Loading Autism dataset from cache: {cache_path}")
             df = pd.read_csv(cache_path)
-        else:
-            logger.info("Downloading Autism Screening Adult dataset from OpenML...")
-            data = fetch_openml(data_id=43134, as_frame=True, parser="auto")
-            df = data.frame  # type: ignore
+            # Detect wrong cache (car evaluation dataset cached by mistake)
+            if "buying" in df.columns or "lug_boot" in df.columns:
+                logger.warning("Cached autism.csv contains wrong dataset — re-downloading.")
+                cache_path.unlink()
+                df = None
+            else:
+                logger.info(f"Loading Autism dataset from cache: {cache_path}")
+
+        if not cache_path.exists():
+            logger.info("Downloading Autism Screening Adult dataset from UCI (id=426)...")
+            from ucimlrepo import fetch_ucirepo
+            data = fetch_ucirepo(id=426)
+            df = data.data.original
             self.data_dir.mkdir(parents=True, exist_ok=True)
-            df.to_csv(cache_path, index=False)
+            atomic_save_csv(df, cache_path)
             logger.info(f"Cached Autism dataset to {cache_path}")
 
         # Standardize column names

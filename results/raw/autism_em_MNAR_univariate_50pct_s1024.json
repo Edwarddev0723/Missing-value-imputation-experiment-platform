@@ -1,0 +1,37 @@
+{
+  "dataset_id": "MX5",
+  "dataset_name": "autism",
+  "method_id": "",
+  "method_name": "em",
+  "mechanism": "MNAR",
+  "pattern": "univariate",
+  "missing_rate": 0.5,
+  "seed": 1024,
+  "n_samples": 487,
+  "n_features": 20,
+  "runtime_seconds": 0.007785623995005153,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.9437617392744764,
+      "mae": 0.3125821619256769
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.9508196721311475,
+      "f1_weighted": 0.9503997415812001,
+      "f1_macro": 0.9399014778325123,
+      "roc_auc": 0.9964470284237726
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.06472277844703656,
+    "jsd_mean": 0.0
+  }
+}

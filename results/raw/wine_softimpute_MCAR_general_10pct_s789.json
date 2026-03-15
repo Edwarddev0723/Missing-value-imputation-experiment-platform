@@ -1,0 +1,32 @@
+{
+  "dataset_id": "PN1",
+  "dataset_name": "wine",
+  "method_id": "",
+  "method_name": "softimpute",
+  "mechanism": "MCAR",
+  "pattern": "general",
+  "missing_rate": 0.1,
+  "seed": 789,
+  "n_samples": 3918,
+  "n_features": 12,
+  "runtime_seconds": 1.9782797079969896,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.10322175759448915,
+      "mae": 0.06827198753178715
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "regression",
+    "model": "RandomForest",
+    "metrics": {}
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.0054113554267846455,
+    "jsd_mean": null
+  }
+}

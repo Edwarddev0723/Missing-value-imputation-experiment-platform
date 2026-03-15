@@ -1,0 +1,36 @@
+{
+  "dataset_id": "PN6",
+  "dataset_name": "letter",
+  "method_id": "",
+  "method_name": "mice",
+  "mechanism": "MAR",
+  "pattern": "general",
+  "missing_rate": 0.3,
+  "seed": 456,
+  "n_samples": 16000,
+  "n_features": 16,
+  "runtime_seconds": 2.879892500001006,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.14166707648625368,
+      "mae": 0.10771708610616673
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.677,
+      "f1_weighted": 0.679207792373683,
+      "f1_macro": 0.679180359476262
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.010448416242260113,
+    "jsd_mean": null
+  }
+}

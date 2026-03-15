@@ -1,0 +1,37 @@
+{
+  "dataset_id": "MX4",
+  "dataset_name": "mammographic",
+  "method_id": "",
+  "method_name": "tabcsdi",
+  "mechanism": "MAR",
+  "pattern": "general",
+  "missing_rate": 0.5,
+  "seed": 456,
+  "n_samples": 8946,
+  "n_features": 6,
+  "runtime_seconds": 10.529217999996035,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.17853649793246834,
+      "mae": 0.10589437512206355
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.9772016092981672,
+      "f1_weighted": 0.9671723622983994,
+      "f1_macro": 0.5305931000432018,
+      "roc_auc": 0.8292202077099102
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.04577322261712879,
+    "jsd_mean": null
+  }
+}

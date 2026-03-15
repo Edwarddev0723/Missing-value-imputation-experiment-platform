@@ -1,0 +1,37 @@
+{
+  "dataset_id": "MX1",
+  "dataset_name": "adult",
+  "method_id": "",
+  "method_name": "miracle",
+  "mechanism": "MNAR",
+  "pattern": "general",
+  "missing_rate": 0.3,
+  "seed": 42,
+  "n_samples": 36177,
+  "n_features": 14,
+  "runtime_seconds": 37.307499833012116,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.3788142103297582,
+      "mae": 0.270325680805747
+    },
+    "categorical": {
+      "accuracy": 0.010048848569434752,
+      "macro_f1": 0.0008323298492365493
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.8119402985074626,
+      "f1_weighted": 0.8034118699950961,
+      "f1_macro": 0.7260795390907149,
+      "roc_auc": 0.8542668836215538
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.08012444308013573,
+    "jsd_mean": 0.36507849663040803
+  }
+}

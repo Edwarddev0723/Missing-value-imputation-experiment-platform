@@ -1,0 +1,37 @@
+{
+  "dataset_id": "MX3",
+  "dataset_name": "titanic",
+  "method_id": "",
+  "method_name": "mice",
+  "mechanism": "MNAR",
+  "pattern": "univariate",
+  "missing_rate": 0.1,
+  "seed": 123,
+  "n_samples": 834,
+  "n_features": 7,
+  "runtime_seconds": 0.1144054589967709,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.35313535294182913,
+      "mae": 0.3101827363814324
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.7320574162679426,
+      "f1_weighted": 0.7280656718364914,
+      "f1_macro": 0.7150925024342746,
+      "roc_auc": 0.7991461100569259
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.006233337286134053,
+    "jsd_mean": 0.0
+  }
+}

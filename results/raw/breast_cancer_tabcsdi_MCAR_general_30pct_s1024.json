@@ -1,0 +1,37 @@
+{
+  "dataset_id": "PN5",
+  "dataset_name": "breast_cancer",
+  "method_id": "",
+  "method_name": "tabcsdi",
+  "mechanism": "MCAR",
+  "pattern": "general",
+  "missing_rate": 0.3,
+  "seed": 1024,
+  "n_samples": 546,
+  "n_features": 9,
+  "runtime_seconds": 0.9524807090056129,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 1.529374739932121,
+      "mae": 1.2123861775235754
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.9416058394160584,
+      "f1_weighted": 0.9421025253796458,
+      "f1_macro": 0.9370114942528736,
+      "roc_auc": 0.9857209737827716
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.2826700759274457,
+    "jsd_mean": null
+  }
+}

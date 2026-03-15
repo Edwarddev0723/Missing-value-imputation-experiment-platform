@@ -1,0 +1,152 @@
+{
+  "experiment_id": "bank_missforest_MCAR_univariate_50pct_s42",
+  "dataset_name": "bank",
+  "method_name": "missforest",
+  "method_family": "ml",
+  "missing_mechanism": "MCAR",
+  "missing_rate": 0.5,
+  "missing_pattern": "univariate",
+  "scenario_tag": "",
+  "seed": 42,
+  "imputation_metrics": {
+    "test_numerical_rmse": 0.22326276687453206,
+    "test_numerical_mae": 0.1750029997486799,
+    "test_wasserstein_distance_mean": 0.007011664056309509,
+    "test_jsd_mean": 0.0,
+    "test_n_missing_values": 4425,
+    "train_numerical_rmse": 0.2229015479911497,
+    "train_numerical_mae": 0.17459125369444514,
+    "train_wasserstein_distance_mean": 0.007046834273140701,
+    "train_jsd_mean": 0.0,
+    "train_n_missing_values": 18066
+  },
+  "downstream_metrics": {
+    "downstream_accuracy": 1.0,
+    "downstream_f1_weighted": 1.0,
+    "downstream_f1_macro": 1.0
+  },
+  "runtime_metrics": {
+    "fit_time_seconds": 56.042201082993415,
+    "impute_time_seconds": 0.16502587500144728,
+    "total_time_seconds": 56.20722695799486
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 42,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "dataset": {
+      "split": {
+        "train_ratio": 0.8,
+        "valid_ratio": 0.0,
+        "test_ratio": 0.2,
+        "stratify": true
+      },
+      "name": "bank",
+      "dataset_id": "MX2",
+      "source": "uci",
+      "target_col": "deposit",
+      "task_type": "classification",
+      "feature_types": {
+        "numerical": [
+          "age",
+          "balance",
+          "day",
+          "duration",
+          "campaign",
+          "pdays",
+          "previous"
+        ],
+        "categorical": [
+          "job",
+          "marital",
+          "education",
+          "default",
+          "housing",
+          "loan",
+          "contact",
+          "month",
+          "poutcome"
+        ]
+      }
+    },
+    "downstream": {
+      "enabled": true,
+      "model": "random_forest",
+      "params": {
+        "n_estimators": 100,
+        "random_state": 42
+      }
+    },
+    "missingness": {
+      "protocol": "controlled",
+      "mechanism": "MCAR",
+      "pattern": "univariate",
+      "rate": 0.5,
+      "options": {
+        "exclude_target": true
+      }
+    },
+    "method": {
+      "name": "missforest",
+      "family": "ml",
+      "device": "cpu",
+      "params": {
+        "n_estimators": 50,
+        "max_depth": 12,
+        "max_iter": 10,
+        "n_jobs": 2,
+        "device": "cpu"
+      }
+    },
+    "summary": {
+      "test_numerical_rmse": 0.22326276687453206,
+      "test_numerical_mae": 0.1750029997486799,
+      "test_wasserstein_distance_mean": 0.007011664056309509,
+      "test_jsd_mean": 0.0,
+      "test_n_missing_values": 4425,
+      "train_numerical_rmse": 0.2229015479911497,
+      "train_numerical_mae": 0.17459125369444514,
+      "train_wasserstein_distance_mean": 0.007046834273140701,
+      "train_jsd_mean": 0.0,
+      "train_n_missing_values": 18066,
+      "downstream_accuracy": 1.0,
+      "downstream_f1_weighted": 1.0,
+      "downstream_f1_macro": 1.0,
+      "fit_time_seconds": 56.042201082993415,
+      "impute_time_seconds": 0.16502587500144728,
+      "total_time_seconds": 56.20722695799486
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}

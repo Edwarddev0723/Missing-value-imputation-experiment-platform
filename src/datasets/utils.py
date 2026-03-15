@@ -2,11 +2,33 @@
 
 from __future__ import annotations
 
+import tempfile
 from pathlib import Path
 from typing import Any
 
 import pandas as pd
 from sklearn.model_selection import train_test_split
+
+
+def atomic_save_csv(df: pd.DataFrame, path: Path) -> None:
+    """Write a DataFrame to CSV atomically (write-to-tmp + rename).
+
+    Prevents race conditions where concurrent readers see a partial file.
+    """
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fd, tmp = tempfile.mkstemp(dir=path.parent, suffix=".tmp")
+    try:
+        df.to_csv(tmp, index=False)
+        Path(tmp).replace(path)
+    except BaseException:
+        Path(tmp).unlink(missing_ok=True)
+        raise
+    finally:
+        import os
+        try:
+            os.close(fd)
+        except OSError:
+            pass
 
 
 def stratified_split(

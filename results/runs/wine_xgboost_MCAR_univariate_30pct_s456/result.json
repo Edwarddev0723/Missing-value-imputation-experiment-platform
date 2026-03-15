@@ -1,0 +1,119 @@
+{
+  "experiment_id": "wine_xgboost_MCAR_univariate_30pct_s456",
+  "dataset_name": "wine",
+  "method_name": "xgboost",
+  "method_family": "ml",
+  "missing_mechanism": "MCAR",
+  "missing_rate": 0.3,
+  "missing_pattern": "univariate",
+  "scenario_tag": "",
+  "seed": 456,
+  "imputation_metrics": {
+    "test_numerical_rmse": 0.05793772436129052,
+    "test_numerical_mae": 0.043997707166812644,
+    "test_wasserstein_distance_mean": 0.00037309116559842574,
+    "test_n_missing_values": 302,
+    "train_numerical_rmse": 0.05614006144236954,
+    "train_numerical_mae": 0.03956322294629254,
+    "train_wasserstein_distance_mean": 0.00029807870930931545,
+    "train_n_missing_values": 1179
+  },
+  "downstream_metrics": {},
+  "runtime_metrics": {
+    "fit_time_seconds": 1.0643259159987792,
+    "impute_time_seconds": 0.0037348750047385693,
+    "total_time_seconds": 1.0680607910035178
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 456,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "dataset": {
+      "split": {
+        "train_ratio": 0.8,
+        "valid_ratio": 0.0,
+        "test_ratio": 0.2,
+        "stratify": false
+      },
+      "name": "wine",
+      "dataset_id": "PN1",
+      "source": "uci",
+      "target_col": "quality",
+      "task_type": "regression"
+    },
+    "downstream": {
+      "enabled": true,
+      "model": "random_forest",
+      "params": {
+        "n_estimators": 100,
+        "random_state": 42
+      }
+    },
+    "missingness": {
+      "protocol": "controlled",
+      "mechanism": "MCAR",
+      "pattern": "univariate",
+      "rate": 0.3,
+      "options": {
+        "exclude_target": true
+      }
+    },
+    "method": {
+      "name": "xgboost",
+      "family": "ml",
+      "device": "cpu",
+      "params": {
+        "n_estimators": 100,
+        "max_depth": 6,
+        "learning_rate": 0.1,
+        "max_iterations": 10,
+        "convergence_threshold": 0.0001
+      }
+    },
+    "summary": {
+      "test_numerical_rmse": 0.05793772436129052,
+      "test_numerical_mae": 0.043997707166812644,
+      "test_wasserstein_distance_mean": 0.00037309116559842574,
+      "test_n_missing_values": 302,
+      "train_numerical_rmse": 0.05614006144236954,
+      "train_numerical_mae": 0.03956322294629254,
+      "train_wasserstein_distance_mean": 0.00029807870930931545,
+      "train_n_missing_values": 1179,
+      "fit_time_seconds": 1.0643259159987792,
+      "impute_time_seconds": 0.0037348750047385693,
+      "total_time_seconds": 1.0680607910035178
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}

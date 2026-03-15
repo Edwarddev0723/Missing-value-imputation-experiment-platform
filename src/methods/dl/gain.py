@@ -34,7 +34,7 @@ class GAINImputer(BaseImputer):
         learning_rate: float = 1e-3,
         alpha: float = 100.0,
         batch_size: int = 256,
-        device: str = "mps",
+        device: str = "cpu",
         early_stopping_patience: int = 10,
         hint_rate: float = 0.9,
         **kwargs: Any,
@@ -76,9 +76,8 @@ class GAINImputer(BaseImputer):
         X_arr = X_train.values.astype(np.float32)
         mask = (~np.isnan(X_arr)).astype(np.float32)  # 1=observed, 0=missing
         self._init_values = np.nanmean(X_arr, axis=0)
-        X_filled = X_arr.copy()
-        for j in range(X_filled.shape[1]):
-            X_filled[np.isnan(X_filled[:, j]), j] = self._init_values[j]
+        fill_row = self._init_values[np.newaxis, :]
+        X_filled = np.where(np.isnan(X_arr), fill_row, X_arr)
 
         dim = X_filled.shape[1]
         rng = np.random.RandomState(self._seed)
@@ -113,6 +112,9 @@ class GAINImputer(BaseImputer):
 
         best_g_loss = float("inf")
         patience_counter = 0
+        _amp_dtype = torch.float16
+        _use_amp = 'mps' not in str(torch_device)
+        _amp_device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
         for epoch in range(self.epochs):
             g_loss_sum = 0.0
@@ -123,39 +125,39 @@ class GAINImputer(BaseImputer):
                 bs = batch_x.shape[0]
 
                 # Random noise
-                z = torch.rand(bs, dim).to(torch_device)
+                z = torch.rand(bs, dim, device=torch_device)
                 # Hint vector
                 hint_mask = torch.tensor(
                     rng.binomial(1, self.hint_rate, (bs, dim)),
                     dtype=torch.float32,
-                ).to(torch_device)
+                    device=torch_device,
+                )
                 h = batch_m * hint_mask
 
-                # Generator
-                g_input = torch.cat([batch_x * batch_m + z * (1 - batch_m), batch_m], dim=1)
-                g_out = generator(g_input)
-                x_hat = batch_x * batch_m + g_out * (1 - batch_m)
+                # ── D step (mixed precision forward) ──
+                with torch.autocast(device_type=_amp_device, dtype=_amp_dtype, enabled=_use_amp):
+                    g_input = torch.cat([batch_x * batch_m + z * (1 - batch_m), batch_m], dim=1)
+                    g_out = generator(g_input)
+                    x_hat = batch_x * batch_m + g_out * (1 - batch_m)
 
-                # Discriminator
-                d_input = torch.cat([x_hat.detach(), h], dim=1)
-                d_out = discriminator(d_input)
-
-                # D loss: binary cross-entropy on whether position is real
-                d_loss = -torch.mean(
-                    batch_m * torch.log(d_out + 1e-8)
-                    + (1 - batch_m) * torch.log(1 - d_out + 1e-8)
-                )
+                    d_input = torch.cat([x_hat.detach(), h], dim=1)
+                    d_out = discriminator(d_input)
+                    d_loss = -torch.mean(
+                        batch_m * torch.log(d_out + 1e-8)
+                        + (1 - batch_m) * torch.log(1 - d_out + 1e-8)
+                    )
 
                 D_opt.zero_grad()
                 d_loss.backward()
                 D_opt.step()
 
-                # G loss
-                d_input_g = torch.cat([x_hat, h], dim=1)
-                d_out_g = discriminator(d_input_g)
-                g_loss_adv = -torch.mean((1 - batch_m) * torch.log(d_out_g + 1e-8))
-                g_loss_mse = torch.mean((batch_m * (batch_x - g_out)) ** 2) / (batch_m.sum() + 1e-8)
-                g_loss = g_loss_adv + self.alpha * g_loss_mse
+                # ── G step (mixed precision forward) ──
+                with torch.autocast(device_type=_amp_device, dtype=_amp_dtype, enabled=_use_amp):
+                    d_input_g = torch.cat([x_hat, h], dim=1)
+                    d_out_g = discriminator(d_input_g)
+                    g_loss_adv = -torch.mean((1 - batch_m) * torch.log(d_out_g + 1e-8))
+                    g_loss_mse = torch.mean((batch_m * (batch_x - g_out)) ** 2) / (batch_m.sum() + 1e-8)
+                    g_loss = g_loss_adv + self.alpha * g_loss_mse
 
                 G_opt.zero_grad()
                 g_loss.backward()
@@ -186,15 +188,16 @@ class GAINImputer(BaseImputer):
 
         X_arr = X_missing.values.astype(np.float32)
         mask = (~np.isnan(X_arr)).astype(np.float32)
-        X_filled = X_arr.copy()
-        for j in range(X_filled.shape[1]):
-            X_filled[np.isnan(X_filled[:, j]), j] = self._init_values[j]
+        fill_row = self._init_values[np.newaxis, :]
+        X_filled = np.where(np.isnan(X_arr), fill_row, X_arr)
 
         self._generator.eval()
-        with torch.no_grad():
-            z = torch.rand(X_filled.shape[0], self._dim).to(self._device)
-            m_tensor = torch.tensor(mask, dtype=torch.float32).to(self._device)
-            x_tensor = torch.tensor(X_filled, dtype=torch.float32).to(self._device)
+        _use_amp = 'mps' not in str(self._device)
+        _amp_device = 'cuda' if torch.cuda.is_available() else 'cpu'
+        with torch.inference_mode(), torch.autocast(device_type=_amp_device, dtype=torch.float16, enabled=_use_amp):
+            z = torch.rand(X_filled.shape[0], self._dim, device=self._device)
+            m_tensor = torch.tensor(mask, dtype=torch.float32, device=self._device)
+            x_tensor = torch.tensor(X_filled, dtype=torch.float32, device=self._device)
             g_input = torch.cat([x_tensor * m_tensor + z * (1 - m_tensor), m_tensor], dim=1)
             g_out = self._generator(g_input).cpu().numpy()
 
@@ -202,9 +205,9 @@ class GAINImputer(BaseImputer):
         miss_mask = np.isnan(result)
         result[miss_mask] = g_out[miss_mask]
 
-        for j in range(result.shape[1]):
-            still_nan = np.isnan(result[:, j])
-            if still_nan.any():
-                result[still_nan, j] = self._init_values[j]
+        still_nan = np.isnan(result)
+        if still_nan.any():
+            fill_row = self._init_values[np.newaxis, :]
+            result = np.where(still_nan, fill_row, result)
 
         return pd.DataFrame(result, columns=self._columns, index=X_missing.index)

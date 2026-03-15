@@ -1,0 +1,37 @@
+{
+  "dataset_id": "PN5",
+  "dataset_name": "breast_cancer",
+  "method_id": "",
+  "method_name": "miracle",
+  "mechanism": "MNAR",
+  "pattern": "univariate",
+  "missing_rate": 0.2,
+  "seed": 42,
+  "n_samples": 546,
+  "n_features": 9,
+  "runtime_seconds": 3.7684359590057284,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.7056511957640511,
+      "mae": 0.6687288637514467
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.948905109489051,
+      "f1_weighted": 0.9490241493644335,
+      "f1_macro": 0.9441435144737609,
+      "roc_auc": 0.9884129213483145
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.012904156001771997,
+    "jsd_mean": null
+  }
+}

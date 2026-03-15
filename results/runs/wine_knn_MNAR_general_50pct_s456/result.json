@@ -1,0 +1,116 @@
+{
+  "experiment_id": "wine_knn_MNAR_general_50pct_s456",
+  "dataset_name": "wine",
+  "method_name": "knn",
+  "method_family": "ml",
+  "missing_mechanism": "MNAR",
+  "missing_rate": 0.5,
+  "missing_pattern": "general",
+  "scenario_tag": "",
+  "seed": 456,
+  "imputation_metrics": {
+    "test_numerical_rmse": 0.1746778429422979,
+    "test_numerical_mae": 0.12354564234705463,
+    "test_wasserstein_distance_mean": 0.05647633817870564,
+    "test_n_missing_values": 5914,
+    "train_numerical_rmse": 0.17483648307860464,
+    "train_numerical_mae": 0.12457510987937949,
+    "train_wasserstein_distance_mean": 0.05663733369372517,
+    "train_n_missing_values": 23575
+  },
+  "downstream_metrics": {},
+  "runtime_metrics": {
+    "fit_time_seconds": 0.00021204199583735317,
+    "impute_time_seconds": 0.94009541599371,
+    "total_time_seconds": 0.9403074579895474
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 456,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "dataset": {
+      "split": {
+        "train_ratio": 0.8,
+        "valid_ratio": 0.0,
+        "test_ratio": 0.2,
+        "stratify": false
+      },
+      "name": "wine",
+      "dataset_id": "PN1",
+      "source": "uci",
+      "target_col": "quality",
+      "task_type": "regression"
+    },
+    "downstream": {
+      "enabled": true,
+      "model": "random_forest",
+      "params": {
+        "n_estimators": 100,
+        "random_state": 42
+      }
+    },
+    "missingness": {
+      "protocol": "controlled",
+      "mechanism": "MNAR",
+      "pattern": "general",
+      "rate": 0.5,
+      "options": {
+        "exclude_target": true
+      }
+    },
+    "method": {
+      "name": "knn",
+      "family": "ml",
+      "device": "cpu",
+      "params": {
+        "n_neighbors": 5,
+        "weights": "distance"
+      }
+    },
+    "summary": {
+      "test_numerical_rmse": 0.1746778429422979,
+      "test_numerical_mae": 0.12354564234705463,
+      "test_wasserstein_distance_mean": 0.05647633817870564,
+      "test_n_missing_values": 5914,
+      "train_numerical_rmse": 0.17483648307860464,
+      "train_numerical_mae": 0.12457510987937949,
+      "train_wasserstein_distance_mean": 0.05663733369372517,
+      "train_n_missing_values": 23575,
+      "fit_time_seconds": 0.00021204199583735317,
+      "impute_time_seconds": 0.94009541599371,
+      "total_time_seconds": 0.9403074579895474
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}

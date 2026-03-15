@@ -10,11 +10,19 @@ from sklearn.datasets import fetch_openml
 
 from src.constants import NUMERICAL, REGRESSION
 from src.datasets.base import BaseDataset
-from src.datasets.utils import stratified_split
+from src.datasets.utils import atomic_save_csv, stratified_split
 from src.registry import DATASET_REGISTRY
 from src.utils.logging import get_logger
 
 logger = get_logger(__name__)
+
+# OpenML sometimes returns generic V1..V11 column names; map them back.
+_WINE_COL_RENAME = {
+    "V1": "fixed_acidity", "V2": "volatile_acidity", "V3": "citric_acid",
+    "V4": "residual_sugar", "V5": "chlorides", "V6": "free_sulfur_dioxide",
+    "V7": "total_sulfur_dioxide", "V8": "density", "V9": "pH",
+    "V10": "sulphates", "V11": "alcohol", "Class": "quality",
+}
 
 
 @DATASET_REGISTRY.register("wine")
@@ -37,8 +45,12 @@ class WineDataset(BaseDataset):
             data = fetch_openml("wine-quality-white", version=1, as_frame=True, parser="auto")
             df = data.frame  # type: ignore
             self.data_dir.mkdir(parents=True, exist_ok=True)
-            df.to_csv(cache_path, index=False)
+            atomic_save_csv(df, cache_path)
             logger.info(f"Cached Wine White dataset to {cache_path}")
+
+        # Rename generic OpenML column names if present
+        if "V1" in df.columns:
+            df = df.rename(columns=_WINE_COL_RENAME)
 
         target_col = "quality"
         df = df.dropna().reset_index(drop=True)

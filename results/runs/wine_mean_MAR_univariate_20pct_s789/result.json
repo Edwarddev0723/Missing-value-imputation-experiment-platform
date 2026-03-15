@@ -1,0 +1,113 @@
+{
+  "experiment_id": "wine_mean_MAR_univariate_20pct_s789",
+  "dataset_name": "wine",
+  "method_name": "mean",
+  "method_family": "statistical",
+  "missing_mechanism": "MAR",
+  "missing_rate": 0.2,
+  "missing_pattern": "univariate",
+  "scenario_tag": "",
+  "seed": 789,
+  "imputation_metrics": {
+    "test_numerical_rmse": 0.187563254577867,
+    "test_numerical_mae": 0.1607564240033086,
+    "test_wasserstein_distance_mean": 0.0027339527891719144,
+    "test_n_missing_values": 200,
+    "train_numerical_rmse": 0.22724409016387198,
+    "train_numerical_mae": 0.20526923532051808,
+    "train_wasserstein_distance_mean": 0.0034840235193502934,
+    "train_n_missing_values": 798
+  },
+  "downstream_metrics": {},
+  "runtime_metrics": {
+    "fit_time_seconds": 0.0002087079919874668,
+    "impute_time_seconds": 0.0009206669928971678,
+    "total_time_seconds": 0.0011293749848846346
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 789,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "dataset": {
+      "split": {
+        "train_ratio": 0.8,
+        "valid_ratio": 0.0,
+        "test_ratio": 0.2,
+        "stratify": false
+      },
+      "name": "wine",
+      "dataset_id": "PN1",
+      "source": "uci",
+      "target_col": "quality",
+      "task_type": "regression"
+    },
+    "downstream": {
+      "enabled": true,
+      "model": "random_forest",
+      "params": {
+        "n_estimators": 100,
+        "random_state": 42
+      }
+    },
+    "missingness": {
+      "protocol": "controlled",
+      "mechanism": "MAR",
+      "pattern": "univariate",
+      "rate": 0.2,
+      "options": {
+        "exclude_target": true
+      }
+    },
+    "method": {
+      "name": "mean",
+      "family": "statistical",
+      "device": "cpu",
+      "params": {}
+    },
+    "summary": {
+      "test_numerical_rmse": 0.187563254577867,
+      "test_numerical_mae": 0.1607564240033086,
+      "test_wasserstein_distance_mean": 0.0027339527891719144,
+      "test_n_missing_values": 200,
+      "train_numerical_rmse": 0.22724409016387198,
+      "train_numerical_mae": 0.20526923532051808,
+      "train_wasserstein_distance_mean": 0.0034840235193502934,
+      "train_n_missing_values": 798,
+      "fit_time_seconds": 0.0002087079919874668,
+      "impute_time_seconds": 0.0009206669928971678,
+      "total_time_seconds": 0.0011293749848846346
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}

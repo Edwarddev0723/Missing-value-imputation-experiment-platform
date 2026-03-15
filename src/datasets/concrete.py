@@ -10,7 +10,7 @@ from sklearn.datasets import fetch_openml
 
 from src.constants import NUMERICAL, REGRESSION
 from src.datasets.base import BaseDataset
-from src.datasets.utils import stratified_split
+from src.datasets.utils import atomic_save_csv, stratified_split
 from src.registry import DATASET_REGISTRY
 from src.utils.logging import get_logger
 
@@ -37,7 +37,7 @@ class ConcreteDataset(BaseDataset):
             data = fetch_openml(data_id=4353, as_frame=True, parser="auto")
             df = data.frame  # type: ignore
             self.data_dir.mkdir(parents=True, exist_ok=True)
-            df.to_csv(cache_path, index=False)
+            atomic_save_csv(df, cache_path)
             logger.info(f"Cached Concrete dataset to {cache_path}")
 
         # Standardize column names

@@ -1,0 +1,37 @@
+{
+  "dataset_id": "PN5",
+  "dataset_name": "breast_cancer",
+  "method_id": "",
+  "method_name": "mida",
+  "mechanism": "MAR",
+  "pattern": "univariate",
+  "missing_rate": 0.1,
+  "seed": 42,
+  "n_samples": 546,
+  "n_features": 9,
+  "runtime_seconds": 1.696084332987084,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.7022048028144117,
+      "mae": 0.5976170292607059
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.9562043795620438,
+      "f1_weighted": 0.9564024348956571,
+      "f1_macro": 0.9523423005565863,
+      "roc_auc": 0.9865402621722846
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.00628738430995625,
+    "jsd_mean": null
+  }
+}

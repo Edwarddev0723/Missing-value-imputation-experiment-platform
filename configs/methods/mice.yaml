@@ -4,4 +4,4 @@ method:
   device: cpu
   params:
     max_iterations: 10
-    n_imputations: 5
+    n_imputations: 3

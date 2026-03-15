@@ -1,0 +1,139 @@
+{
+  "experiment_id": "autism_mice_MNAR_general_10pct_s42",
+  "dataset_name": "autism",
+  "method_name": "mice",
+  "method_family": "statistical",
+  "missing_mechanism": "MNAR",
+  "missing_rate": 0.1,
+  "missing_pattern": "general",
+  "scenario_tag": "",
+  "seed": 42,
+  "imputation_metrics": {
+    "test_numerical_rmse": 0.075617379218538,
+    "test_numerical_mae": 0.06072448305524274,
+    "test_categorical_accuracy": 0.685,
+    "test_categorical_macro_f1": 0.14680229669378975,
+    "test_wasserstein_distance_mean": 0.004230804147291507,
+    "test_jsd_mean": 0.18815626632492555,
+    "test_n_missing_values": 217,
+    "train_numerical_rmse": 0.11202814024658206,
+    "train_numerical_mae": 0.05305293329592465,
+    "train_categorical_accuracy": 0.6972067039106146,
+    "train_categorical_macro_f1": 0.052537043048972,
+    "train_wasserstein_distance_mean": 0.004979670698703471,
+    "train_jsd_mean": 0.2013600434803569,
+    "train_n_missing_values": 1001
+  },
+  "downstream_metrics": {
+    "downstream_accuracy": 1.0,
+    "downstream_f1_weighted": 1.0,
+    "downstream_f1_macro": 1.0,
+    "downstream_roc_auc": 1.0
+  },
+  "runtime_metrics": {
+    "fit_time_seconds": 0.5796774579939665,
+    "impute_time_seconds": 0.4086256250011502,
+    "total_time_seconds": 0.9883030829951167
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 42,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "dataset": {
+      "split": {
+        "train_ratio": 0.8,
+        "valid_ratio": 0.0,
+        "test_ratio": 0.2,
+        "stratify": true
+      },
+      "name": "autism",
+      "dataset_id": "MX5",
+      "source": "uci",
+      "target_col": "asd_class",
+      "task_type": "classification"
+    },
+    "downstream": {
+      "enabled": true,
+      "model": "random_forest",
+      "params": {
+        "n_estimators": 100,
+        "random_state": 42
+      }
+    },
+    "missingness": {
+      "protocol": "controlled",
+      "mechanism": "MNAR",
+      "pattern": "general",
+      "rate": 0.1,
+      "options": {
+        "exclude_target": true
+      }
+    },
+    "method": {
+      "name": "mice",
+      "family": "statistical",
+      "device": "cpu",
+      "params": {
+        "max_iterations": 10,
+        "n_imputations": 3,
+        "n_jobs": 2,
+        "device": "cpu"
+      }
+    },
+    "summary": {
+      "test_numerical_rmse": 0.075617379218538,
+      "test_numerical_mae": 0.06072448305524274,
+      "test_categorical_accuracy": 0.685,
+      "test_categorical_macro_f1": 0.14680229669378975,
+      "test_wasserstein_distance_mean": 0.004230804147291507,
+      "test_jsd_mean": 0.18815626632492555,
+      "test_n_missing_values": 217,
+      "train_numerical_rmse": 0.11202814024658206,
+      "train_numerical_mae": 0.05305293329592465,
+      "train_categorical_accuracy": 0.6972067039106146,
+      "train_categorical_macro_f1": 0.052537043048972,
+      "train_wasserstein_distance_mean": 0.004979670698703471,
+      "train_jsd_mean": 0.2013600434803569,
+      "train_n_missing_values": 1001,
+      "downstream_accuracy": 1.0,
+      "downstream_f1_weighted": 1.0,
+      "downstream_f1_macro": 1.0,
+      "downstream_roc_auc": 1.0,
+      "fit_time_seconds": 0.5796774579939665,
+      "impute_time_seconds": 0.4086256250011502,
+      "total_time_seconds": 0.9883030829951167
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}

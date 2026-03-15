@@ -1,0 +1,37 @@
+{
+  "dataset_id": "PN3",
+  "dataset_name": "spambase",
+  "method_id": "",
+  "method_name": "softimpute",
+  "mechanism": "MAR",
+  "pattern": "general",
+  "missing_rate": 0.5,
+  "seed": 123,
+  "n_samples": 3680,
+  "n_features": 57,
+  "runtime_seconds": 2.614024000009522,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.06554484956123939,
+      "mae": 0.026896341614318867
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.8458197611292074,
+      "f1_weighted": 0.8420049039539222,
+      "f1_macro": 0.8316729991041918,
+      "roc_auc": 0.895274840289503
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.011932499602517327,
+    "jsd_mean": null
+  }
+}

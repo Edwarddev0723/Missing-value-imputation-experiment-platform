@@ -1,0 +1,36 @@
+{
+  "dataset_id": "PN4",
+  "dataset_name": "yeast",
+  "method_id": "",
+  "method_name": "knn",
+  "mechanism": "MNAR",
+  "pattern": "general",
+  "missing_rate": 0.5,
+  "seed": 123,
+  "n_samples": 1187,
+  "n_features": 8,
+  "runtime_seconds": 0.05378654100059066,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.18229829247892637,
+      "mae": 0.11390297726977834
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.3771043771043771,
+      "f1_weighted": 0.34891149354660395,
+      "f1_macro": 0.1675522992384074
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.052939697207195824,
+    "jsd_mean": null
+  }
+}

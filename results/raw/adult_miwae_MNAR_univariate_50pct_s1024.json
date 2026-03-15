@@ -1,0 +1,37 @@
+{
+  "dataset_id": "MX1",
+  "dataset_name": "adult",
+  "method_id": "",
+  "method_name": "miwae",
+  "mechanism": "MNAR",
+  "pattern": "univariate",
+  "missing_rate": 0.5,
+  "seed": 1024,
+  "n_samples": 36177,
+  "n_features": 14,
+  "runtime_seconds": 49.748622666011215,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.2387900946541627,
+      "mae": 0.1929633113533546
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.8440022111663903,
+      "f1_weighted": 0.8398150590574365,
+      "f1_macro": 0.7799479720074745,
+      "roc_auc": 0.8920972447087743
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.015150997909654068,
+    "jsd_mean": 0.0
+  }
+}

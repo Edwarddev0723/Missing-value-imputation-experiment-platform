@@ -1,0 +1,37 @@
+{
+  "dataset_id": "MX3",
+  "dataset_name": "titanic",
+  "method_id": "",
+  "method_name": "knn",
+  "mechanism": "MCAR",
+  "pattern": "general",
+  "missing_rate": 0.3,
+  "seed": 456,
+  "n_samples": 834,
+  "n_features": 7,
+  "runtime_seconds": 0.019577376006054692,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.24053604788232782,
+      "mae": 0.1569940242810752
+    },
+    "categorical": {
+      "accuracy": 0.5289855072463768,
+      "macro_f1": 0.4989930022188087
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.7129186602870813,
+      "f1_weighted": 0.7056337014785767,
+      "f1_macro": 0.6898496240601504,
+      "roc_auc": 0.7769924098671727
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.02879120975411701,
+    "jsd_mean": 0.3051272106615379
+  }
+}

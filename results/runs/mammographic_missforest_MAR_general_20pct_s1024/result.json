@@ -1,0 +1,128 @@
+{
+  "experiment_id": "mammographic_missforest_MAR_general_20pct_s1024",
+  "dataset_name": "mammographic",
+  "method_name": "missforest",
+  "method_family": "ml",
+  "missing_mechanism": "MAR",
+  "missing_rate": 0.2,
+  "missing_pattern": "general",
+  "scenario_tag": "",
+  "seed": 1024,
+  "imputation_metrics": {
+    "test_numerical_rmse": 0.10236732584672849,
+    "test_numerical_mae": 0.05087282213872353,
+    "test_wasserstein_distance_mean": 0.004232701782881098,
+    "test_n_missing_values": 2721,
+    "train_numerical_rmse": 0.10390752282978569,
+    "train_numerical_mae": 0.045690806792819526,
+    "train_wasserstein_distance_mean": 0.004454378484061337,
+    "train_n_missing_values": 10605
+  },
+  "downstream_metrics": {
+    "downstream_accuracy": 0.9798837729101475,
+    "downstream_f1_weighted": 0.9760609428545909,
+    "downstream_f1_macro": 0.6948852011820869,
+    "downstream_roc_auc": 0.8404110191867629
+  },
+  "runtime_metrics": {
+    "fit_time_seconds": 12.166176583006745,
+    "impute_time_seconds": 1.868666291993577,
+    "total_time_seconds": 14.034842875000322
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 1024,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "dataset": {
+      "split": {
+        "train_ratio": 0.8,
+        "valid_ratio": 0.0,
+        "test_ratio": 0.2,
+        "stratify": true
+      },
+      "name": "mammographic",
+      "dataset_id": "MX4",
+      "source": "uci",
+      "target_col": "severity",
+      "task_type": "classification"
+    },
+    "downstream": {
+      "enabled": true,
+      "model": "random_forest",
+      "params": {
+        "n_estimators": 100,
+        "random_state": 42
+      }
+    },
+    "missingness": {
+      "protocol": "controlled",
+      "mechanism": "MAR",
+      "pattern": "general",
+      "rate": 0.2,
+      "options": {
+        "exclude_target": true
+      }
+    },
+    "method": {
+      "name": "missforest",
+      "family": "ml",
+      "device": "cpu",
+      "params": {
+        "n_estimators": 50,
+        "max_depth": 12,
+        "max_iter": 10,
+        "n_jobs": 2,
+        "device": "cpu"
+      }
+    },
+    "summary": {
+      "test_numerical_rmse": 0.10236732584672849,
+      "test_numerical_mae": 0.05087282213872353,
+      "test_wasserstein_distance_mean": 0.004232701782881098,
+      "test_n_missing_values": 2721,
+      "train_numerical_rmse": 0.10390752282978569,
+      "train_numerical_mae": 0.045690806792819526,
+      "train_wasserstein_distance_mean": 0.004454378484061337,
+      "train_n_missing_values": 10605,
+      "downstream_accuracy": 0.9798837729101475,
+      "downstream_f1_weighted": 0.9760609428545909,
+      "downstream_f1_macro": 0.6948852011820869,
+      "downstream_roc_auc": 0.8404110191867629,
+      "fit_time_seconds": 12.166176583006745,
+      "impute_time_seconds": 1.868666291993577,
+      "total_time_seconds": 14.034842875000322
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}

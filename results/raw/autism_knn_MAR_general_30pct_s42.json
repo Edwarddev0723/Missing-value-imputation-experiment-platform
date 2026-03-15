@@ -1,0 +1,37 @@
+{
+  "dataset_id": "MX5",
+  "dataset_name": "autism",
+  "method_id": "",
+  "method_name": "knn",
+  "mechanism": "MAR",
+  "pattern": "general",
+  "missing_rate": 0.3,
+  "seed": 42,
+  "n_samples": 487,
+  "n_features": 20,
+  "runtime_seconds": 0.01971291699737776,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.3400107071707229,
+      "mae": 0.23050272257685978
+    },
+    "categorical": {
+      "accuracy": 0.5915915915915916,
+      "macro_f1": 0.12363494366177234
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.9098360655737705,
+      "f1_weighted": 0.911413706544756,
+      "f1_macro": 0.8956372968349016,
+      "roc_auc": 0.9738372093023256
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.05213638541420043,
+    "jsd_mean": 0.23786216995711365
+  }
+}

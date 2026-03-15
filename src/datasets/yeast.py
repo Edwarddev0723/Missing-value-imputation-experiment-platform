@@ -10,7 +10,7 @@ from sklearn.datasets import fetch_openml
 
 from src.constants import NUMERICAL, CLASSIFICATION
 from src.datasets.base import BaseDataset
-from src.datasets.utils import stratified_split
+from src.datasets.utils import atomic_save_csv, stratified_split
 from src.registry import DATASET_REGISTRY
 from src.utils.logging import get_logger
 
@@ -30,19 +30,27 @@ class YeastDataset(BaseDataset):
     def load(self) -> pd.DataFrame:
         cache_path = self.data_dir / "yeast.csv"
         if cache_path.exists():
-            logger.info(f"Loading Yeast dataset from cache: {cache_path}")
             df = pd.read_csv(cache_path)
-        else:
-            logger.info("Downloading Yeast dataset from OpenML...")
-            data = fetch_openml("yeast", version=4, as_frame=True, parser="auto")
+            # Detect wrong cache (multi-label yeast v4 with 103+ columns)
+            if len(df.columns) > 20:
+                logger.warning("Cached yeast.csv is the wrong dataset version — re-downloading.")
+                cache_path.unlink()
+                df = None
+            else:
+                logger.info(f"Loading Yeast dataset from cache: {cache_path}")
+
+        if not cache_path.exists():
+            logger.info("Downloading Yeast dataset from OpenML (data_id=181)...")
+            data = fetch_openml(data_id=181, as_frame=True, parser="auto")
             df = data.frame  # type: ignore
             # Rename target
-            if "class" in df.columns:
-                df = df.rename(columns={"class": "localization_site"})
-            elif "Class" in df.columns:
-                df = df.rename(columns={"Class": "localization_site"})
+            target_candidates = ["class", "Class", "class_protein_localization"]
+            for tc in target_candidates:
+                if tc in df.columns:
+                    df = df.rename(columns={tc: "localization_site"})
+                    break
             self.data_dir.mkdir(parents=True, exist_ok=True)
-            df.to_csv(cache_path, index=False)
+            atomic_save_csv(df, cache_path)
             logger.info(f"Cached Yeast dataset to {cache_path}")
 
         target_col = "localization_site"

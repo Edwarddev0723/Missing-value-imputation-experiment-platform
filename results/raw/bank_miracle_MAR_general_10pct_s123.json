@@ -1,0 +1,36 @@
+{
+  "dataset_id": "MX2",
+  "dataset_name": "bank",
+  "method_id": "",
+  "method_name": "miracle",
+  "mechanism": "MAR",
+  "pattern": "general",
+  "missing_rate": 0.1,
+  "seed": 123,
+  "n_samples": 36168,
+  "n_features": 16,
+  "runtime_seconds": 180.59984829199675,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.23929142547925678,
+      "mae": 0.13080426102496448
+    },
+    "categorical": {
+      "accuracy": 0.40199780728468754,
+      "macro_f1": 0.04779283976364268
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 1.0,
+      "f1_weighted": 1.0,
+      "f1_macro": 1.0
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.012928903040892375,
+    "jsd_mean": 0.19083229456312542
+  }
+}

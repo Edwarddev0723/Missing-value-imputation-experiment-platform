@@ -1,0 +1,36 @@
+{
+  "dataset_id": "PN2",
+  "dataset_name": "concrete",
+  "method_id": "",
+  "method_name": "xgboost",
+  "mechanism": "MCAR",
+  "pattern": "general",
+  "missing_rate": 0.1,
+  "seed": 1024,
+  "n_samples": 824,
+  "n_features": 8,
+  "runtime_seconds": 7.791062749995035,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.12192005439496856,
+      "mae": 0.0543381674970429
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "regression",
+    "model": "RandomForest",
+    "metrics": {
+      "rmse": 6.611209550666302,
+      "mae": 4.320317271151178,
+      "r2": 0.8395090708202285
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.0030951787736022167,
+    "jsd_mean": null
+  }
+}

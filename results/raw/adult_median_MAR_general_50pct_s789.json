@@ -1,0 +1,37 @@
+{
+  "dataset_id": "MX1",
+  "dataset_name": "adult",
+  "method_id": "",
+  "method_name": "median",
+  "mechanism": "MAR",
+  "pattern": "general",
+  "missing_rate": 0.5,
+  "seed": 789,
+  "n_samples": 36177,
+  "n_features": 14,
+  "runtime_seconds": 0.006672208008239977,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.1284963388281536,
+      "mae": 0.07228515202781956
+    },
+    "categorical": {
+      "accuracy": 0.5725553364623546,
+      "macro_f1": 0.09664892409448968
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.7913764510779436,
+      "f1_weighted": 0.7826236794313446,
+      "f1_macro": 0.6978648864798838,
+      "roc_auc": 0.8208391952807723
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.03600272082756519,
+    "jsd_mean": 0.1788835900388735
+  }
+}

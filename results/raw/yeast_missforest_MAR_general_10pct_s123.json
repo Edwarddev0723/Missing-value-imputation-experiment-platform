@@ -1,0 +1,36 @@
+{
+  "dataset_id": "PN4",
+  "dataset_name": "yeast",
+  "method_id": "",
+  "method_name": "missforest",
+  "mechanism": "MAR",
+  "pattern": "general",
+  "missing_rate": 0.1,
+  "seed": 123,
+  "n_samples": 1187,
+  "n_features": 8,
+  "runtime_seconds": 7.701280166991637,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.10356352243650704,
+      "mae": 0.06745079749850412
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.5993265993265994,
+      "f1_weighted": 0.5888921955378859,
+      "f1_macro": 0.44107020268061453
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.004216935500965059,
+    "jsd_mean": null
+  }
+}

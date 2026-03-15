@@ -1,0 +1,161 @@
+{
+  "experiment_id": "adult_gain_MNAR_univariate_10pct_s789",
+  "dataset_name": "adult",
+  "method_name": "gain",
+  "method_family": "dl",
+  "missing_mechanism": "MNAR",
+  "missing_rate": 0.1,
+  "missing_pattern": "univariate",
+  "scenario_tag": "",
+  "seed": 789,
+  "imputation_metrics": {
+    "test_numerical_rmse": 0.33695967400188115,
+    "test_numerical_mae": 0.3017114212131795,
+    "test_wasserstein_distance_mean": 0.005186973424652293,
+    "test_jsd_mean": 0.0,
+    "test_n_missing_values": 933,
+    "train_numerical_rmse": 0.33090177821829264,
+    "train_numerical_mae": 0.29691380903938225,
+    "train_wasserstein_distance_mean": 0.004894264204985824,
+    "train_jsd_mean": 0.0,
+    "train_n_missing_values": 3578
+  },
+  "downstream_metrics": {
+    "downstream_accuracy": 0.8512990602542841,
+    "downstream_f1_weighted": 0.8469973053267428,
+    "downstream_f1_macro": 0.78945975628124,
+    "downstream_roc_auc": 0.903078094449332
+  },
+  "runtime_metrics": {
+    "fit_time_seconds": 2.3282703750010114,
+    "impute_time_seconds": 0.03218383400235325,
+    "total_time_seconds": 2.3604542090033647
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 789,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "dataset": {
+      "split": {
+        "train_ratio": 0.8,
+        "valid_ratio": 0.0,
+        "test_ratio": 0.2,
+        "stratify": true
+      },
+      "name": "adult",
+      "dataset_id": "MX1",
+      "source": "uci",
+      "target_col": "income",
+      "task_type": "classification",
+      "feature_types": {
+        "numerical": [
+          "age",
+          "fnlwgt",
+          "education-num",
+          "capital-gain",
+          "capital-loss",
+          "hours-per-week"
+        ],
+        "categorical": [
+          "workclass",
+          "education",
+          "marital-status",
+          "occupation",
+          "relationship",
+          "race",
+          "sex",
+          "native-country"
+        ]
+      }
+    },
+    "downstream": {
+      "enabled": true,
+      "model": "random_forest",
+      "params": {
+        "n_estimators": 100,
+        "random_state": 42
+      }
+    },
+    "missingness": {
+      "protocol": "controlled",
+      "mechanism": "MNAR",
+      "pattern": "univariate",
+      "rate": 0.1,
+      "options": {
+        "exclude_target": true
+      }
+    },
+    "method": {
+      "name": "gain",
+      "family": "dl",
+      "device": "mps",
+      "params": {
+        "generator_hidden": [
+          256,
+          128
+        ],
+        "discriminator_hidden": [
+          256,
+          128
+        ],
+        "epochs": 150,
+        "learning_rate": 0.001,
+        "alpha": 100,
+        "batch_size": 512,
+        "early_stopping_patience": 5,
+        "hint_rate": 0.9
+      }
+    },
+    "summary": {
+      "test_numerical_rmse": 0.33695967400188115,
+      "test_numerical_mae": 0.3017114212131795,
+      "test_wasserstein_distance_mean": 0.005186973424652293,
+      "test_jsd_mean": 0.0,
+      "test_n_missing_values": 933,
+      "train_numerical_rmse": 0.33090177821829264,
+      "train_numerical_mae": 0.29691380903938225,
+      "train_wasserstein_distance_mean": 0.004894264204985824,
+      "train_jsd_mean": 0.0,
+      "train_n_missing_values": 3578,
+      "downstream_accuracy": 0.8512990602542841,
+      "downstream_f1_weighted": 0.8469973053267428,
+      "downstream_f1_macro": 0.78945975628124,
+      "downstream_roc_auc": 0.903078094449332,
+      "fit_time_seconds": 2.3282703750010114,
+      "impute_time_seconds": 0.03218383400235325,
+      "total_time_seconds": 2.3604542090033647
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}

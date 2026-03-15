@@ -1,0 +1,37 @@
+{
+  "dataset_id": "PN5",
+  "dataset_name": "breast_cancer",
+  "method_id": "",
+  "method_name": "miwae",
+  "mechanism": "MCAR",
+  "pattern": "general",
+  "missing_rate": 0.2,
+  "seed": 1024,
+  "n_samples": 546,
+  "n_features": 9,
+  "runtime_seconds": 7.303134667003178,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.2428290005536163,
+      "mae": 0.1582072975449762
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.9708029197080292,
+      "f1_weighted": 0.9709349565971047,
+      "f1_macro": 0.9682282003710575,
+      "roc_auc": 0.9973080524344569
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.02756403937614897,
+    "jsd_mean": null
+  }
+}

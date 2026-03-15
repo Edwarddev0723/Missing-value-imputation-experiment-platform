@@ -1,0 +1,36 @@
+{
+  "dataset_id": "PN6",
+  "dataset_name": "letter",
+  "method_id": "",
+  "method_name": "median",
+  "mechanism": "MAR",
+  "pattern": "general",
+  "missing_rate": 0.3,
+  "seed": 123,
+  "n_samples": 16000,
+  "n_features": 16,
+  "runtime_seconds": 0.005080041999462992,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.15492612969742395,
+      "mae": 0.11275330924809036
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.69875,
+      "f1_weighted": 0.7001408859451771,
+      "f1_macro": 0.6996589964553809
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.03392641369047619,
+    "jsd_mean": null
+  }
+}

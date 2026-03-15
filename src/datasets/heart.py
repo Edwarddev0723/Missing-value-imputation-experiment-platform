@@ -10,7 +10,7 @@ from sklearn.datasets import fetch_openml
 
 from src.constants import CATEGORICAL, CLASSIFICATION, NUMERICAL
 from src.datasets.base import BaseDataset
-from src.datasets.utils import stratified_split
+from src.datasets.utils import atomic_save_csv, stratified_split
 from src.registry import DATASET_REGISTRY
 from src.utils.logging import get_logger
 
@@ -44,7 +44,7 @@ class HeartDataset(BaseDataset):
             if "class" in df.columns:
                 df = df.rename(columns={"class": "target"})
             self.data_dir.mkdir(parents=True, exist_ok=True)
-            df.to_csv(cache_path, index=False)
+            atomic_save_csv(df, cache_path)
 
         target_col = "target" if "target" in df.columns else df.columns[-1]
         df = df.dropna().reset_index(drop=True)

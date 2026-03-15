@@ -1,0 +1,36 @@
+{
+  "dataset_id": "PN6",
+  "dataset_name": "letter",
+  "method_id": "",
+  "method_name": "softimpute",
+  "mechanism": "MAR",
+  "pattern": "general",
+  "missing_rate": 0.1,
+  "seed": 123,
+  "n_samples": 16000,
+  "n_features": 16,
+  "runtime_seconds": 1.9910320410126587,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.17167796865386287,
+      "mae": 0.1281774031741362
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.864,
+      "f1_weighted": 0.8643642673942993,
+      "f1_macro": 0.8641682238121724
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.006051765985910514,
+    "jsd_mean": null
+  }
+}

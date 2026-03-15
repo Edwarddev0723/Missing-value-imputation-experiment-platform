@@ -1,0 +1,69 @@
+# Phase 3 — Pure Numerical Datasets (PN1–PN6) × all methods × all missingness
+# Expected runs: 13 × 6 × 24 × 5 = 9,360
+# Usage: python scripts/run_batch.py --config configs/experiments/phase3_pure_numerical.yaml --no-wandb
+
+project:
+  name: missing-value-imputation-benchmark
+  output_dir: results/
+
+tracking:
+  use_wandb: false
+  output_dir: results/logs
+
+downstream:
+  enabled: true
+  params:
+    n_estimators: 100
+    random_state: 42
+
+batch:
+  datasets:
+    - wine
+    - concrete
+    - spambase
+    - yeast
+    - breast_cancer
+    - letter
+  methods:
+    - mean
+    - median
+    - em
+    - mice
+    - knn
+    - missforest
+    - softimpute
+    - xgboost
+    - mida
+    - miwae
+    - gain
+    - tabcsdi
+    - miracle
+  missingness_profiles:
+    - mcar_general_10
+    - mcar_general_20
+    - mcar_general_30
+    - mcar_general_50
+    - mcar_univariate_10
+    - mcar_univariate_20
+    - mcar_univariate_30
+    - mcar_univariate_50
+    - mar_general_10
+    - mar_general_20
+    - mar_general_30
+    - mar_general_50
+    - mar_univariate_10
+    - mar_univariate_20
+    - mar_univariate_30
+    - mar_univariate_50
+    - mnar_general_10
+    - mnar_general_20
+    - mnar_general_30
+    - mnar_general_50
+    - mnar_univariate_10
+    - mnar_univariate_20
+    - mnar_univariate_30
+    - mnar_univariate_50
+  seeds: [42, 123, 456, 789, 1024]
+  parallel:
+    enabled: false
+    max_concurrent_runs: 1

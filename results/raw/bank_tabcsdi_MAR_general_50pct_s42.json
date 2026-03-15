@@ -1,0 +1,36 @@
+{
+  "dataset_id": "MX2",
+  "dataset_name": "bank",
+  "method_id": "",
+  "method_name": "tabcsdi",
+  "mechanism": "MAR",
+  "pattern": "general",
+  "missing_rate": 0.5,
+  "seed": 42,
+  "n_samples": 36168,
+  "n_features": 16,
+  "runtime_seconds": 91.48236608400475,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.13741285041350695,
+      "mae": 0.08282608490918625
+    },
+    "categorical": {
+      "accuracy": 0.5107933147906565,
+      "macro_f1": 0.22511972981504366
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 1.0,
+      "f1_weighted": 1.0,
+      "f1_macro": 1.0
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.0326839849052253,
+    "jsd_mean": 0.4643161423946183
+  }
+}

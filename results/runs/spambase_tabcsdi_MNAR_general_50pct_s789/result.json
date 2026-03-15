@@ -1,0 +1,130 @@
+{
+  "experiment_id": "spambase_tabcsdi_MNAR_general_50pct_s789",
+  "dataset_name": "spambase",
+  "method_name": "tabcsdi",
+  "method_family": "dl",
+  "missing_mechanism": "MNAR",
+  "missing_rate": 0.5,
+  "missing_pattern": "general",
+  "scenario_tag": "",
+  "seed": 789,
+  "imputation_metrics": {
+    "test_numerical_rmse": 0.8857286696013228,
+    "test_numerical_mae": 0.7029186870785812,
+    "test_wasserstein_distance_mean": 0.3376666748589415,
+    "test_n_missing_values": 26350,
+    "train_numerical_rmse": 0.8701416104271987,
+    "train_numerical_mae": 0.6907194766779768,
+    "train_wasserstein_distance_mean": 0.32874914028620217,
+    "train_n_missing_values": 104333
+  },
+  "downstream_metrics": {
+    "downstream_accuracy": 0.7795874049945711,
+    "downstream_f1_weighted": 0.7704306899888262,
+    "downstream_f1_macro": 0.7534253621210143,
+    "downstream_roc_auc": 0.8492155178372186
+  },
+  "runtime_metrics": {
+    "fit_time_seconds": 3.8602974579989677,
+    "impute_time_seconds": 0.06741933399462141,
+    "total_time_seconds": 3.927716791993589
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 789,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "dataset": {
+      "split": {
+        "train_ratio": 0.8,
+        "valid_ratio": 0.0,
+        "test_ratio": 0.2,
+        "stratify": true
+      },
+      "name": "spambase",
+      "dataset_id": "PN3",
+      "source": "uci",
+      "target_col": "is_spam",
+      "task_type": "classification"
+    },
+    "downstream": {
+      "enabled": true,
+      "model": "random_forest",
+      "params": {
+        "n_estimators": 100,
+        "random_state": 42
+      }
+    },
+    "missingness": {
+      "protocol": "controlled",
+      "mechanism": "MNAR",
+      "pattern": "general",
+      "rate": 0.5,
+      "options": {
+        "exclude_target": true
+      }
+    },
+    "method": {
+      "name": "tabcsdi",
+      "family": "dl",
+      "device": "mps",
+      "params": {
+        "diffusion_steps": 50,
+        "hidden_dim": 128,
+        "n_layers": 4,
+        "epochs": 100,
+        "learning_rate": 0.001,
+        "batch_size": 512,
+        "early_stopping_patience": 5
+      }
+    },
+    "summary": {
+      "test_numerical_rmse": 0.8857286696013228,
+      "test_numerical_mae": 0.7029186870785812,
+      "test_wasserstein_distance_mean": 0.3376666748589415,
+      "test_n_missing_values": 26350,
+      "train_numerical_rmse": 0.8701416104271987,
+      "train_numerical_mae": 0.6907194766779768,
+      "train_wasserstein_distance_mean": 0.32874914028620217,
+      "train_n_missing_values": 104333,
+      "downstream_accuracy": 0.7795874049945711,
+      "downstream_f1_weighted": 0.7704306899888262,
+      "downstream_f1_macro": 0.7534253621210143,
+      "downstream_roc_auc": 0.8492155178372186,
+      "fit_time_seconds": 3.8602974579989677,
+      "impute_time_seconds": 0.06741933399462141,
+      "total_time_seconds": 3.927716791993589
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}

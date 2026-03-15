@@ -1,0 +1,149 @@
+{
+  "experiment_id": "adult_median_MNAR_univariate_50pct_s789",
+  "dataset_name": "adult",
+  "method_name": "median",
+  "method_family": "statistical",
+  "missing_mechanism": "MNAR",
+  "missing_rate": 0.5,
+  "missing_pattern": "univariate",
+  "scenario_tag": "",
+  "seed": 789,
+  "imputation_metrics": {
+    "test_numerical_rmse": 0.29788355222021723,
+    "test_numerical_mae": 0.2554090668281238,
+    "test_wasserstein_distance_mean": 0.021295854567850752,
+    "test_jsd_mean": 0.0,
+    "test_n_missing_values": 4525,
+    "train_numerical_rmse": 0.2908985432462783,
+    "train_numerical_mae": 0.24918323113913243,
+    "train_wasserstein_distance_mean": 0.020707296179375802,
+    "train_jsd_mean": 0.0,
+    "train_n_missing_values": 18038
+  },
+  "downstream_metrics": {
+    "downstream_accuracy": 0.8483139856274184,
+    "downstream_f1_weighted": 0.8445964659018816,
+    "downstream_f1_macro": 0.7869243316563932,
+    "downstream_roc_auc": 0.8948116503672948
+  },
+  "runtime_metrics": {
+    "fit_time_seconds": 0.003004624988534488,
+    "impute_time_seconds": 0.0011784580128733069,
+    "total_time_seconds": 0.004183083001407795
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 789,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "dataset": {
+      "split": {
+        "train_ratio": 0.8,
+        "valid_ratio": 0.0,
+        "test_ratio": 0.2,
+        "stratify": true
+      },
+      "name": "adult",
+      "dataset_id": "MX1",
+      "source": "uci",
+      "target_col": "income",
+      "task_type": "classification",
+      "feature_types": {
+        "numerical": [
+          "age",
+          "fnlwgt",
+          "education-num",
+          "capital-gain",
+          "capital-loss",
+          "hours-per-week"
+        ],
+        "categorical": [
+          "workclass",
+          "education",
+          "marital-status",
+          "occupation",
+          "relationship",
+          "race",
+          "sex",
+          "native-country"
+        ]
+      }
+    },
+    "downstream": {
+      "enabled": true,
+      "model": "random_forest",
+      "params": {
+        "n_estimators": 100,
+        "random_state": 42
+      }
+    },
+    "missingness": {
+      "protocol": "controlled",
+      "mechanism": "MNAR",
+      "pattern": "univariate",
+      "rate": 0.5,
+      "options": {
+        "exclude_target": true
+      }
+    },
+    "method": {
+      "name": "median",
+      "family": "statistical",
+      "device": "cpu",
+      "params": {
+        "n_jobs": 2,
+        "device": "cpu"
+      }
+    },
+    "summary": {
+      "test_numerical_rmse": 0.29788355222021723,
+      "test_numerical_mae": 0.2554090668281238,
+      "test_wasserstein_distance_mean": 0.021295854567850752,
+      "test_jsd_mean": 0.0,
+      "test_n_missing_values": 4525,
+      "train_numerical_rmse": 0.2908985432462783,
+      "train_numerical_mae": 0.24918323113913243,
+      "train_wasserstein_distance_mean": 0.020707296179375802,
+      "train_jsd_mean": 0.0,
+      "train_n_missing_values": 18038,
+      "downstream_accuracy": 0.8483139856274184,
+      "downstream_f1_weighted": 0.8445964659018816,
+      "downstream_f1_macro": 0.7869243316563932,
+      "downstream_roc_auc": 0.8948116503672948,
+      "fit_time_seconds": 0.003004624988534488,
+      "impute_time_seconds": 0.0011784580128733069,
+      "total_time_seconds": 0.004183083001407795
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}

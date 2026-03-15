@@ -1,0 +1,36 @@
+{
+  "dataset_id": "PN4",
+  "dataset_name": "yeast",
+  "method_id": "",
+  "method_name": "softimpute",
+  "mechanism": "MAR",
+  "pattern": "general",
+  "missing_rate": 0.5,
+  "seed": 789,
+  "n_samples": 1187,
+  "n_features": 8,
+  "runtime_seconds": 0.07401666698569898,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.12944291668221197,
+      "mae": 0.0766959551374628
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.4175084175084175,
+      "f1_weighted": 0.3912021003102597,
+      "f1_macro": 0.17824113268136038
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.0373170468918633,
+    "jsd_mean": null
+  }
+}

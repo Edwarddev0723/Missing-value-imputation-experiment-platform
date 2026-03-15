@@ -1,0 +1,36 @@
+{
+  "dataset_id": "PN6",
+  "dataset_name": "letter",
+  "method_id": "",
+  "method_name": "tabcsdi",
+  "mechanism": "MNAR",
+  "pattern": "general",
+  "missing_rate": 0.2,
+  "seed": 123,
+  "n_samples": 16000,
+  "n_features": 16,
+  "runtime_seconds": 12.097607292002067,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.25577702880680814,
+      "mae": 0.21576208415270468
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.81575,
+      "f1_weighted": 0.8161937694432188,
+      "f1_macro": 0.8156609821419021
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.04233832439497096,
+    "jsd_mean": null
+  }
+}

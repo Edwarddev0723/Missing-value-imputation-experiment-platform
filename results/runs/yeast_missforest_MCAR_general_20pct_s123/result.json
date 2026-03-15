@@ -1,0 +1,126 @@
+{
+  "experiment_id": "yeast_missforest_MCAR_general_20pct_s123",
+  "dataset_name": "yeast",
+  "method_name": "missforest",
+  "method_family": "ml",
+  "missing_mechanism": "MCAR",
+  "missing_rate": 0.2,
+  "missing_pattern": "general",
+  "scenario_tag": "",
+  "seed": 123,
+  "imputation_metrics": {
+    "test_numerical_rmse": 0.10588561076519107,
+    "test_numerical_mae": 0.06726573080054317,
+    "test_wasserstein_distance_mean": 0.008374277762437378,
+    "test_n_missing_values": 486,
+    "train_numerical_rmse": 0.12688150062610226,
+    "train_numerical_mae": 0.07820249374984728,
+    "train_wasserstein_distance_mean": 0.008643568407545816,
+    "train_n_missing_values": 1954
+  },
+  "downstream_metrics": {
+    "downstream_accuracy": 0.5589225589225589,
+    "downstream_f1_weighted": 0.5470053248079384,
+    "downstream_f1_macro": 0.3998792194875821
+  },
+  "runtime_metrics": {
+    "fit_time_seconds": 4.941803582987632,
+    "impute_time_seconds": 2.344177542006946,
+    "total_time_seconds": 7.285981124994578
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 123,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "dataset": {
+      "split": {
+        "train_ratio": 0.8,
+        "valid_ratio": 0.0,
+        "test_ratio": 0.2,
+        "stratify": true
+      },
+      "name": "yeast",
+      "dataset_id": "PN4",
+      "source": "uci",
+      "target_col": "localization_site",
+      "task_type": "classification"
+    },
+    "downstream": {
+      "enabled": true,
+      "model": "random_forest",
+      "params": {
+        "n_estimators": 100,
+        "random_state": 42
+      }
+    },
+    "missingness": {
+      "protocol": "controlled",
+      "mechanism": "MCAR",
+      "pattern": "general",
+      "rate": 0.2,
+      "options": {
+        "exclude_target": true
+      }
+    },
+    "method": {
+      "name": "missforest",
+      "family": "ml",
+      "device": "cpu",
+      "params": {
+        "n_estimators": 50,
+        "max_depth": 12,
+        "max_iter": 10,
+        "n_jobs": 2,
+        "device": "cpu"
+      }
+    },
+    "summary": {
+      "test_numerical_rmse": 0.10588561076519107,
+      "test_numerical_mae": 0.06726573080054317,
+      "test_wasserstein_distance_mean": 0.008374277762437378,
+      "test_n_missing_values": 486,
+      "train_numerical_rmse": 0.12688150062610226,
+      "train_numerical_mae": 0.07820249374984728,
+      "train_wasserstein_distance_mean": 0.008643568407545816,
+      "train_n_missing_values": 1954,
+      "downstream_accuracy": 0.5589225589225589,
+      "downstream_f1_weighted": 0.5470053248079384,
+      "downstream_f1_macro": 0.3998792194875821,
+      "fit_time_seconds": 4.941803582987632,
+      "impute_time_seconds": 2.344177542006946,
+      "total_time_seconds": 7.285981124994578
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}

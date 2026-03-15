@@ -1,0 +1,36 @@
+{
+  "dataset_id": "PN6",
+  "dataset_name": "letter",
+  "method_id": "",
+  "method_name": "xgboost",
+  "mechanism": "MAR",
+  "pattern": "univariate",
+  "missing_rate": 0.5,
+  "seed": 456,
+  "n_samples": 16000,
+  "n_features": 16,
+  "runtime_seconds": 0.11391091701807454,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.09438314178499244,
+      "mae": 0.06748769692597813
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.96725,
+      "f1_weighted": 0.9672569875315296,
+      "f1_macro": 0.9671871187894925
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.0009462543352972716,
+    "jsd_mean": null
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "dataset_id": "MX4",
+  "dataset_name": "mammographic",
+  "method_id": "",
+  "method_name": "mida",
+  "mechanism": "MNAR",
+  "pattern": "general",
+  "missing_rate": 0.1,
+  "seed": 456,
+  "n_samples": 8946,
+  "n_features": 6,
+  "runtime_seconds": 8.170681625008001,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.3136374335287775,
+      "mae": 0.21338965515433936
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.9776486365668305,
+      "f1_weighted": 0.9723067274094767,
+      "f1_macro": 0.6371804852731283,
+      "roc_auc": 0.9024643548671009
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.020235926141082508,
+    "jsd_mean": null
+  }
+}

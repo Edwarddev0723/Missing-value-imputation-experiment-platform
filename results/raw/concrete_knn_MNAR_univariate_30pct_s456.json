@@ -1,0 +1,36 @@
+{
+  "dataset_id": "PN2",
+  "dataset_name": "concrete",
+  "method_id": "",
+  "method_name": "knn",
+  "mechanism": "MNAR",
+  "pattern": "univariate",
+  "missing_rate": 0.3,
+  "seed": 456,
+  "n_samples": 824,
+  "n_features": 8,
+  "runtime_seconds": 0.005174457997782156,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.14900312594080867,
+      "mae": 0.08818605958654346
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "regression",
+    "model": "RandomForest",
+    "metrics": {
+      "rmse": 4.058257527299129,
+      "mae": 2.9763978771767596,
+      "r2": 0.9417006981289344
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.0032728288810393988,
+    "jsd_mean": null
+  }
+}

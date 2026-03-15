@@ -1,0 +1,121 @@
+{
+  "experiment_id": "yeast_miracle_MCAR_general_20pct_s456",
+  "dataset_name": "yeast",
+  "method_name": "miracle",
+  "method_family": "dl",
+  "missing_mechanism": "MCAR",
+  "missing_rate": 0.2,
+  "missing_pattern": "general",
+  "scenario_tag": "",
+  "seed": 456,
+  "imputation_metrics": {
+    "test_numerical_rmse": 0.2037514004679961,
+    "test_numerical_mae": 0.1444740444070416,
+    "test_wasserstein_distance_mean": 0.02570059088547546,
+    "test_n_missing_values": 11392,
+    "train_numerical_rmse": 0.20250163265260238,
+    "train_numerical_mae": 0.14345738627583152,
+    "train_wasserstein_distance_mean": 0.025448020024288236,
+    "train_n_missing_values": 45256
+  },
+  "downstream_metrics": {},
+  "runtime_metrics": {
+    "fit_time_seconds": 0.2951076669996837,
+    "impute_time_seconds": 0.004295332997571677,
+    "total_time_seconds": 0.2994029999972554
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 456,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "dataset": {
+      "split": {
+        "train_ratio": 0.8,
+        "valid_ratio": 0.0,
+        "test_ratio": 0.2,
+        "stratify": true
+      },
+      "name": "yeast",
+      "dataset_id": "PN4",
+      "source": "uci",
+      "target_col": "localization_site",
+      "task_type": "classification"
+    },
+    "downstream": {
+      "enabled": true,
+      "model": "random_forest",
+      "params": {
+        "n_estimators": 100,
+        "random_state": 42
+      }
+    },
+    "missingness": {
+      "protocol": "controlled",
+      "mechanism": "MCAR",
+      "pattern": "general",
+      "rate": 0.2,
+      "options": {
+        "exclude_target": true
+      }
+    },
+    "method": {
+      "name": "miracle",
+      "family": "dl",
+      "device": "mps",
+      "params": {
+        "hidden_dim": 128,
+        "n_layers": 3,
+        "lambda_reg": 1.0,
+        "epochs": 100,
+        "learning_rate": 0.001,
+        "batch_size": 512,
+        "early_stopping_patience": 5
+      }
+    },
+    "summary": {
+      "test_numerical_rmse": 0.2037514004679961,
+      "test_numerical_mae": 0.1444740444070416,
+      "test_wasserstein_distance_mean": 0.02570059088547546,
+      "test_n_missing_values": 11392,
+      "train_numerical_rmse": 0.20250163265260238,
+      "train_numerical_mae": 0.14345738627583152,
+      "train_wasserstein_distance_mean": 0.025448020024288236,
+      "train_n_missing_values": 45256,
+      "fit_time_seconds": 0.2951076669996837,
+      "impute_time_seconds": 0.004295332997571677,
+      "total_time_seconds": 0.2994029999972554
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}

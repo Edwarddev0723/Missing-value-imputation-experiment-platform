@@ -1,0 +1,157 @@
+{
+  "experiment_id": "adult_median_MAR_general_50pct_s789",
+  "dataset_name": "adult",
+  "method_name": "median",
+  "method_family": "statistical",
+  "missing_mechanism": "MAR",
+  "missing_rate": 0.5,
+  "missing_pattern": "general",
+  "scenario_tag": "",
+  "seed": 789,
+  "imputation_metrics": {
+    "test_numerical_rmse": 0.1284963388281536,
+    "test_numerical_mae": 0.07228515202781956,
+    "test_categorical_accuracy": 0.5725553364623546,
+    "test_categorical_macro_f1": 0.09664892409448968,
+    "test_wasserstein_distance_mean": 0.03600272082756519,
+    "test_jsd_mean": 0.1788835900388735,
+    "test_n_missing_values": 63037,
+    "train_numerical_rmse": 0.13076129865341363,
+    "train_numerical_mae": 0.07307857281206144,
+    "train_categorical_accuracy": 0.5773961395529424,
+    "train_categorical_macro_f1": 0.09371190819993573,
+    "train_wasserstein_distance_mean": 0.03645208850700499,
+    "train_jsd_mean": 0.16653755509718232,
+    "train_n_missing_values": 252504
+  },
+  "downstream_metrics": {
+    "downstream_accuracy": 0.7913764510779436,
+    "downstream_f1_weighted": 0.7826236794313446,
+    "downstream_f1_macro": 0.6978648864798838,
+    "downstream_roc_auc": 0.8208391952807723
+  },
+  "runtime_metrics": {
+    "fit_time_seconds": 0.0047422080097021535,
+    "impute_time_seconds": 0.0019299999985378236,
+    "total_time_seconds": 0.006672208008239977
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 789,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "dataset": {
+      "split": {
+        "train_ratio": 0.8,
+        "valid_ratio": 0.0,
+        "test_ratio": 0.2,
+        "stratify": true
+      },
+      "name": "adult",
+      "dataset_id": "MX1",
+      "source": "uci",
+      "target_col": "income",
+      "task_type": "classification",
+      "feature_types": {
+        "numerical": [
+          "age",
+          "fnlwgt",
+          "education-num",
+          "capital-gain",
+          "capital-loss",
+          "hours-per-week"
+        ],
+        "categorical": [
+          "workclass",
+          "education",
+          "marital-status",
+          "occupation",
+          "relationship",
+          "race",
+          "sex",
+          "native-country"
+        ]
+      }
+    },
+    "downstream": {
+      "enabled": true,
+      "model": "random_forest",
+      "params": {
+        "n_estimators": 100,
+        "random_state": 42
+      }
+    },
+    "missingness": {
+      "protocol": "controlled",
+      "mechanism": "MAR",
+      "pattern": "general",
+      "rate": 0.5,
+      "options": {
+        "exclude_target": true
+      }
+    },
+    "method": {
+      "name": "median",
+      "family": "statistical",
+      "device": "cpu",
+      "params": {
+        "n_jobs": 2,
+        "device": "cpu"
+      }
+    },
+    "summary": {
+      "test_numerical_rmse": 0.1284963388281536,
+      "test_numerical_mae": 0.07228515202781956,
+      "test_categorical_accuracy": 0.5725553364623546,
+      "test_categorical_macro_f1": 0.09664892409448968,
+      "test_wasserstein_distance_mean": 0.03600272082756519,
+      "test_jsd_mean": 0.1788835900388735,
+      "test_n_missing_values": 63037,
+      "train_numerical_rmse": 0.13076129865341363,
+      "train_numerical_mae": 0.07307857281206144,
+      "train_categorical_accuracy": 0.5773961395529424,
+      "train_categorical_macro_f1": 0.09371190819993573,
+      "train_wasserstein_distance_mean": 0.03645208850700499,
+      "train_jsd_mean": 0.16653755509718232,
+      "train_n_missing_values": 252504,
+      "downstream_accuracy": 0.7913764510779436,
+      "downstream_f1_weighted": 0.7826236794313446,
+      "downstream_f1_macro": 0.6978648864798838,
+      "downstream_roc_auc": 0.8208391952807723,
+      "fit_time_seconds": 0.0047422080097021535,
+      "impute_time_seconds": 0.0019299999985378236,
+      "total_time_seconds": 0.006672208008239977
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}

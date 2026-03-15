@@ -1,0 +1,36 @@
+{
+  "dataset_id": "PN2",
+  "dataset_name": "concrete",
+  "method_id": "",
+  "method_name": "miracle",
+  "mechanism": "MNAR",
+  "pattern": "general",
+  "missing_rate": 0.5,
+  "seed": 789,
+  "n_samples": 824,
+  "n_features": 8,
+  "runtime_seconds": 5.251446334004868,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.4535561511752461,
+      "mae": 0.39178304589314017
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "regression",
+    "model": "RandomForest",
+    "metrics": {
+      "rmse": 12.892014495047983,
+      "mae": 9.937766437095807,
+      "r2": 0.33201243683409365
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.18738061736956893,
+    "jsd_mean": null
+  }
+}

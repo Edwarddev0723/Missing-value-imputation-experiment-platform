@@ -1,0 +1,36 @@
+{
+  "dataset_id": "PN2",
+  "dataset_name": "concrete",
+  "method_id": "",
+  "method_name": "miwae",
+  "mechanism": "MNAR",
+  "pattern": "univariate",
+  "missing_rate": 0.1,
+  "seed": 1024,
+  "n_samples": 824,
+  "n_features": 8,
+  "runtime_seconds": 12.257949166014441,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.5394739745166297,
+      "mae": 0.4991165000201264
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "regression",
+    "model": "RandomForest",
+    "metrics": {
+      "rmse": 4.388662199229805,
+      "mae": 3.1157491331484017,
+      "r2": 0.9292782573497395
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.005451521478079811,
+    "jsd_mean": null
+  }
+}

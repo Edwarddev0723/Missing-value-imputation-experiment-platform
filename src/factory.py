@@ -67,6 +67,9 @@ class ComponentFactory:
         """Create an imputer from config."""
         name = method_cfg["name"]
         params = method_cfg.get("params", {})
+        # Pass device to DL methods if specified at the method level
+        if "device" in method_cfg and "device" not in params:
+            params["device"] = method_cfg["device"]
         return METHOD_REGISTRY.create(name, **params)
 
     def create_tracker(self, tracking_cfg: dict[str, Any]) -> Any:

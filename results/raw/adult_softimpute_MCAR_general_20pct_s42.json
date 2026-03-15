@@ -1,0 +1,37 @@
+{
+  "dataset_id": "MX1",
+  "dataset_name": "adult",
+  "method_id": "",
+  "method_name": "softimpute",
+  "mechanism": "MCAR",
+  "pattern": "general",
+  "missing_rate": 0.2,
+  "seed": 42,
+  "n_samples": 36177,
+  "n_features": 14,
+  "runtime_seconds": 4.244051792004029,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.2386763901274249,
+      "mae": 0.14595360222846696
+    },
+    "categorical": {
+      "accuracy": 0.3248175182481752,
+      "macro_f1": 0.05155716335556032
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.8332780541735766,
+      "f1_weighted": 0.8249362932410285,
+      "f1_macro": 0.7552535613484419,
+      "roc_auc": 0.8806279120968172
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.015039817478342125,
+    "jsd_mean": 0.2714345539463302
+  }
+}

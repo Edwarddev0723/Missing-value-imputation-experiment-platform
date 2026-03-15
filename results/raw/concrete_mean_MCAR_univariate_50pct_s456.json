@@ -1,0 +1,36 @@
+{
+  "dataset_id": "PN2",
+  "dataset_name": "concrete",
+  "method_id": "",
+  "method_name": "mean",
+  "mechanism": "MCAR",
+  "pattern": "univariate",
+  "missing_rate": 0.5,
+  "seed": 456,
+  "n_samples": 824,
+  "n_features": 8,
+  "runtime_seconds": 0.0007485829992219806,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.32272571125741156,
+      "mae": 0.30836647303705456
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "regression",
+    "model": "RandomForest",
+    "metrics": {
+      "rmse": 4.136538259777611,
+      "mae": 3.0339593955154855,
+      "r2": 0.9394299071269656
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.018150211095020803,
+    "jsd_mean": null
+  }
+}

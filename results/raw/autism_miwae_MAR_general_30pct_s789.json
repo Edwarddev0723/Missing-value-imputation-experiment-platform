@@ -1,0 +1,37 @@
+{
+  "dataset_id": "MX5",
+  "dataset_name": "autism",
+  "method_id": "",
+  "method_name": "miwae",
+  "mechanism": "MAR",
+  "pattern": "general",
+  "missing_rate": 0.3,
+  "seed": 789,
+  "n_samples": 487,
+  "n_features": 20,
+  "runtime_seconds": 1.9075576670002192,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.2001100331069882,
+      "mae": 0.132281740361174
+    },
+    "categorical": {
+      "accuracy": 0.543247344461305,
+      "macro_f1": 0.09112644615422326
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.9672131147540983,
+      "f1_weighted": 0.9669331610541334,
+      "f1_macro": 0.9599343185550082,
+      "roc_auc": 0.9953165374677003
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.035238988569285305,
+    "jsd_mean": 0.32735341754197134
+  }
+}

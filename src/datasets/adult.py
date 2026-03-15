@@ -10,7 +10,7 @@ from sklearn.datasets import fetch_openml
 
 from src.constants import CATEGORICAL, CLASSIFICATION, NUMERICAL
 from src.datasets.base import BaseDataset
-from src.datasets.utils import stratified_split
+from src.datasets.utils import atomic_save_csv, stratified_split
 from src.registry import DATASET_REGISTRY
 from src.utils.logging import get_logger
 
@@ -48,7 +48,7 @@ class AdultDataset(BaseDataset):
             df = data.frame  # type: ignore[assignment]
             # Save cache
             self.data_dir.mkdir(parents=True, exist_ok=True)
-            df.to_csv(cache_path, index=False)
+            atomic_save_csv(df, cache_path)
             logger.info(f"Cached Adult dataset to {cache_path}")
 
         # Basic cleaning: rename target column if needed

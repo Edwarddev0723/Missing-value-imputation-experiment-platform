@@ -1,0 +1,37 @@
+{
+  "dataset_id": "PN3",
+  "dataset_name": "spambase",
+  "method_id": "",
+  "method_name": "missforest",
+  "mechanism": "MCAR",
+  "pattern": "general",
+  "missing_rate": 0.2,
+  "seed": 456,
+  "n_samples": 3680,
+  "n_features": 57,
+  "runtime_seconds": 435.5775128749956,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.05181463619351781,
+      "mae": 0.01651089012629714
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.9239956568946797,
+      "f1_weighted": 0.9237612433565844,
+      "f1_macro": 0.9199520233625365,
+      "roc_auc": 0.9738143902366776
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.0018495778541690639,
+    "jsd_mean": null
+  }
+}

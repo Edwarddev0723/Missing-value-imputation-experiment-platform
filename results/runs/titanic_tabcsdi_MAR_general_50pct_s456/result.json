@@ -1,0 +1,144 @@
+{
+  "experiment_id": "titanic_tabcsdi_MAR_general_50pct_s456",
+  "dataset_name": "titanic",
+  "method_name": "tabcsdi",
+  "method_family": "dl",
+  "missing_mechanism": "MAR",
+  "missing_rate": 0.5,
+  "missing_pattern": "general",
+  "scenario_tag": "",
+  "seed": 456,
+  "imputation_metrics": {
+    "test_numerical_rmse": 0.2554731359729356,
+    "test_numerical_mae": 0.18067937314138596,
+    "test_categorical_accuracy": 0.5612244897959183,
+    "test_categorical_macro_f1": 0.5027857077987973,
+    "test_wasserstein_distance_mean": 0.053478803810662445,
+    "test_jsd_mean": 0.4479117108972017,
+    "test_n_missing_values": 706,
+    "train_numerical_rmse": 0.2615981567268888,
+    "train_numerical_mae": 0.18421134581186788,
+    "train_categorical_accuracy": 0.47671568627450983,
+    "train_categorical_macro_f1": 0.4257933428281577,
+    "train_wasserstein_distance_mean": 0.05418340718643237,
+    "train_jsd_mean": 0.4586332169371352,
+    "train_n_missing_values": 2877
+  },
+  "downstream_metrics": {
+    "downstream_accuracy": 0.7703349282296651,
+    "downstream_f1_weighted": 0.7661655339437582,
+    "downstream_f1_macro": 0.7545507927187316,
+    "downstream_roc_auc": 0.7951612903225806
+  },
+  "runtime_metrics": {
+    "fit_time_seconds": 3.083110541992937,
+    "impute_time_seconds": 0.11186883300251793,
+    "total_time_seconds": 3.194979374995455
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 456,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "dataset": {
+      "split": {
+        "train_ratio": 0.8,
+        "valid_ratio": 0.0,
+        "test_ratio": 0.2,
+        "stratify": true
+      },
+      "name": "titanic",
+      "dataset_id": "MX3",
+      "source": "kaggle/openml",
+      "target_col": "survived",
+      "task_type": "classification"
+    },
+    "downstream": {
+      "enabled": true,
+      "model": "random_forest",
+      "params": {
+        "n_estimators": 100,
+        "random_state": 42
+      }
+    },
+    "missingness": {
+      "protocol": "controlled",
+      "mechanism": "MAR",
+      "pattern": "general",
+      "rate": 0.5,
+      "options": {
+        "exclude_target": true
+      }
+    },
+    "method": {
+      "name": "tabcsdi",
+      "family": "dl",
+      "device": "cpu",
+      "params": {
+        "diffusion_steps": 50,
+        "hidden_dim": 128,
+        "n_layers": 4,
+        "epochs": 100,
+        "learning_rate": 0.001,
+        "batch_size": 512,
+        "early_stopping_patience": 5,
+        "n_jobs": 2,
+        "device": "cpu"
+      }
+    },
+    "summary": {
+      "test_numerical_rmse": 0.2554731359729356,
+      "test_numerical_mae": 0.18067937314138596,
+      "test_categorical_accuracy": 0.5612244897959183,
+      "test_categorical_macro_f1": 0.5027857077987973,
+      "test_wasserstein_distance_mean": 0.053478803810662445,
+      "test_jsd_mean": 0.4479117108972017,
+      "test_n_missing_values": 706,
+      "train_numerical_rmse": 0.2615981567268888,
+      "train_numerical_mae": 0.18421134581186788,
+      "train_categorical_accuracy": 0.47671568627450983,
+      "train_categorical_macro_f1": 0.4257933428281577,
+      "train_wasserstein_distance_mean": 0.05418340718643237,
+      "train_jsd_mean": 0.4586332169371352,
+      "train_n_missing_values": 2877,
+      "downstream_accuracy": 0.7703349282296651,
+      "downstream_f1_weighted": 0.7661655339437582,
+      "downstream_f1_macro": 0.7545507927187316,
+      "downstream_roc_auc": 0.7951612903225806,
+      "fit_time_seconds": 3.083110541992937,
+      "impute_time_seconds": 0.11186883300251793,
+      "total_time_seconds": 3.194979374995455
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}

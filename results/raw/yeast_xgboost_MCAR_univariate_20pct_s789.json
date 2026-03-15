@@ -1,0 +1,36 @@
+{
+  "dataset_id": "PN4",
+  "dataset_name": "yeast",
+  "method_id": "",
+  "method_name": "xgboost",
+  "mechanism": "MCAR",
+  "pattern": "univariate",
+  "missing_rate": 0.2,
+  "seed": 789,
+  "n_samples": 1187,
+  "n_features": 8,
+  "runtime_seconds": 0.13719916799163911,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.12484958481606331,
+      "mae": 0.09571698948951989
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.6363636363636364,
+      "f1_weighted": 0.6256269643841945,
+      "f1_macro": 0.5546545358984167
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.0007589521659299003,
+    "jsd_mean": null
+  }
+}

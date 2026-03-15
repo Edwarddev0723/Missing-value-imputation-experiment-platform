@@ -1,0 +1,36 @@
+{
+  "dataset_id": "MX2",
+  "dataset_name": "bank",
+  "method_id": "",
+  "method_name": "xgboost",
+  "mechanism": "MAR",
+  "pattern": "general",
+  "missing_rate": 0.3,
+  "seed": 123,
+  "n_samples": 36168,
+  "n_features": 16,
+  "runtime_seconds": 9.443177915993147,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.12203976797072402,
+      "mae": 0.06615061525995393
+    },
+    "categorical": {
+      "accuracy": 0.5850240958976228,
+      "macro_f1": 0.2642414456746109
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 1.0,
+      "f1_weighted": 1.0,
+      "f1_macro": 1.0
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.010675754370674037,
+    "jsd_mean": 0.34541762396244935
+  }
+}

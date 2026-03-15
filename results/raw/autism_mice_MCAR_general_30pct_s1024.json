@@ -1,0 +1,37 @@
+{
+  "dataset_id": "MX5",
+  "dataset_name": "autism",
+  "method_id": "",
+  "method_name": "mice",
+  "mechanism": "MCAR",
+  "pattern": "general",
+  "missing_rate": 0.3,
+  "seed": 1024,
+  "n_samples": 487,
+  "n_features": 20,
+  "runtime_seconds": 0.9878962500079069,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.1481272318000595,
+      "mae": 0.10603408477885762
+    },
+    "categorical": {
+      "accuracy": 0.6545454545454545,
+      "macro_f1": 0.07412050532110993
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.9918032786885246,
+      "f1_weighted": 0.9918354535939369,
+      "f1_macro": 0.9902267083233196,
+      "roc_auc": 1.0
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.012077146398932457,
+    "jsd_mean": 0.3443254172396187
+  }
+}

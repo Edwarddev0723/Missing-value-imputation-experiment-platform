@@ -10,7 +10,7 @@ from sklearn.datasets import fetch_openml
 
 from src.constants import CATEGORICAL, CLASSIFICATION, NUMERICAL
 from src.datasets.base import BaseDataset
-from src.datasets.utils import stratified_split
+from src.datasets.utils import atomic_save_csv, stratified_split
 from src.registry import DATASET_REGISTRY
 from src.utils.logging import get_logger
 
@@ -18,6 +18,15 @@ logger = get_logger(__name__)
 
 BANK_NUMERICAL = ["age", "balance", "day", "duration", "campaign", "pdays", "previous"]
 BANK_CATEGORICAL = ["job", "marital", "education", "default", "housing", "loan", "contact", "month", "poutcome"]
+
+# OpenML sometimes returns generic V1..V16 column names; map them back.
+_BANK_COL_RENAME = {
+    "V1": "age", "V2": "job", "V3": "marital", "V4": "education",
+    "V5": "default", "V6": "balance", "V7": "housing", "V8": "loan",
+    "V9": "contact", "V10": "day", "V11": "month", "V12": "duration",
+    "V13": "campaign", "V14": "pdays", "V15": "previous", "V16": "poutcome",
+    "Class": "deposit",
+}
 
 
 @DATASET_REGISTRY.register("bank")
@@ -40,8 +49,12 @@ class BankDataset(BaseDataset):
             data = fetch_openml("bank-marketing", version=1, as_frame=True, parser="auto")
             df = data.frame  # type: ignore
             self.data_dir.mkdir(parents=True, exist_ok=True)
-            df.to_csv(cache_path, index=False)
+            atomic_save_csv(df, cache_path)
             logger.info(f"Cached Bank Marketing dataset to {cache_path}")
+
+        # Rename generic OpenML column names if present
+        if "V1" in df.columns:
+            df = df.rename(columns=_BANK_COL_RENAME)
 
         # Identify and rename target
         target_candidates = ["y", "Class", "class", "deposit"]

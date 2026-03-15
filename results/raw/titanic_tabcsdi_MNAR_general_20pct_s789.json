@@ -1,0 +1,37 @@
+{
+  "dataset_id": "MX3",
+  "dataset_name": "titanic",
+  "method_id": "",
+  "method_name": "tabcsdi",
+  "mechanism": "MNAR",
+  "pattern": "general",
+  "missing_rate": 0.2,
+  "seed": 789,
+  "n_samples": 834,
+  "n_features": 7,
+  "runtime_seconds": 0.4276321669894969,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 1.5440716912516301,
+      "mae": 1.2525242271707469
+    },
+    "categorical": {
+      "accuracy": 0.09876543209876543,
+      "macro_f1": 0.03886217948717949
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.784688995215311,
+      "f1_weighted": 0.7840417831867099,
+      "f1_macro": 0.7756280268148961,
+      "roc_auc": 0.843358633776091
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.2204139518569364,
+    "jsd_mean": 0.2751323944068236
+  }
+}

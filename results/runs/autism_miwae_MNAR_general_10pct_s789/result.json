@@ -1,0 +1,144 @@
+{
+  "experiment_id": "autism_miwae_MNAR_general_10pct_s789",
+  "dataset_name": "autism",
+  "method_name": "miwae",
+  "method_family": "dl",
+  "missing_mechanism": "MNAR",
+  "missing_rate": 0.1,
+  "missing_pattern": "general",
+  "scenario_tag": "",
+  "seed": 789,
+  "imputation_metrics": {
+    "test_numerical_rmse": 0.275994243672379,
+    "test_numerical_mae": 0.19816313386757353,
+    "test_categorical_accuracy": 0.41964285714285715,
+    "test_categorical_macro_f1": 0.11741767004924901,
+    "test_wasserstein_distance_mean": 0.01624288158552991,
+    "test_jsd_mean": 0.1801113720945829,
+    "test_n_missing_values": 244,
+    "train_numerical_rmse": 0.30166605949343694,
+    "train_numerical_mae": 0.21478849000829076,
+    "train_categorical_accuracy": 0.3528064146620848,
+    "train_categorical_macro_f1": 0.043862161901112154,
+    "train_wasserstein_distance_mean": 0.024257428060772235,
+    "train_jsd_mean": 0.18276772123091262,
+    "train_n_missing_values": 983
+  },
+  "downstream_metrics": {
+    "downstream_accuracy": 1.0,
+    "downstream_f1_weighted": 1.0,
+    "downstream_f1_macro": 1.0,
+    "downstream_roc_auc": 1.0
+  },
+  "runtime_metrics": {
+    "fit_time_seconds": 1.9368931249919115,
+    "impute_time_seconds": 0.0017820000066421926,
+    "total_time_seconds": 1.9386751249985537
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 789,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "dataset": {
+      "split": {
+        "train_ratio": 0.8,
+        "valid_ratio": 0.0,
+        "test_ratio": 0.2,
+        "stratify": true
+      },
+      "name": "autism",
+      "dataset_id": "MX5",
+      "source": "uci",
+      "target_col": "asd_class",
+      "task_type": "classification"
+    },
+    "downstream": {
+      "enabled": true,
+      "model": "random_forest",
+      "params": {
+        "n_estimators": 100,
+        "random_state": 42
+      }
+    },
+    "missingness": {
+      "protocol": "controlled",
+      "mechanism": "MNAR",
+      "pattern": "general",
+      "rate": 0.1,
+      "options": {
+        "exclude_target": true
+      }
+    },
+    "method": {
+      "name": "miwae",
+      "family": "dl",
+      "device": "cpu",
+      "params": {
+        "latent_dim": 32,
+        "n_hidden": 128,
+        "n_samples": 20,
+        "epochs": 100,
+        "learning_rate": 0.001,
+        "batch_size": 512,
+        "early_stopping_patience": 5,
+        "n_jobs": 2,
+        "device": "cpu"
+      }
+    },
+    "summary": {
+      "test_numerical_rmse": 0.275994243672379,
+      "test_numerical_mae": 0.19816313386757353,
+      "test_categorical_accuracy": 0.41964285714285715,
+      "test_categorical_macro_f1": 0.11741767004924901,
+      "test_wasserstein_distance_mean": 0.01624288158552991,
+      "test_jsd_mean": 0.1801113720945829,
+      "test_n_missing_values": 244,
+      "train_numerical_rmse": 0.30166605949343694,
+      "train_numerical_mae": 0.21478849000829076,
+      "train_categorical_accuracy": 0.3528064146620848,
+      "train_categorical_macro_f1": 0.043862161901112154,
+      "train_wasserstein_distance_mean": 0.024257428060772235,
+      "train_jsd_mean": 0.18276772123091262,
+      "train_n_missing_values": 983,
+      "downstream_accuracy": 1.0,
+      "downstream_f1_weighted": 1.0,
+      "downstream_f1_macro": 1.0,
+      "downstream_roc_auc": 1.0,
+      "fit_time_seconds": 1.9368931249919115,
+      "impute_time_seconds": 0.0017820000066421926,
+      "total_time_seconds": 1.9386751249985537
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}

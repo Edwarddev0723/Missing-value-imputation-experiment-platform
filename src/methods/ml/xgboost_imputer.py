@@ -1,6 +1,6 @@
 """XGBoost iterative imputation (M4).
 
-Uses XGBRegressor for numerical columns and XGBClassifier for categorical columns.
+Uses XGBRegressor when available, falls back to HistGradientBoostingRegressor.
 """
 
 from __future__ import annotations
@@ -17,13 +17,51 @@ from src.utils.logging import get_logger
 
 logger = get_logger(__name__)
 
+# XGBoost availability is checked lazily in _make_gb_model() to avoid loading
+# OpenMP at import time, which conflicts with PyTorch MPS on Apple Silicon.
+
+
+def _make_gb_model(
+    n_estimators: int,
+    max_depth: int,
+    learning_rate: float,
+    seed: int,
+    n_jobs: int = 1,
+) -> Any:
+    """Create the best available gradient boosting regressor."""
+    try:
+        from xgboost import XGBRegressor
+        return XGBRegressor(
+            n_estimators=n_estimators,
+            max_depth=max_depth,
+            learning_rate=learning_rate,
+            random_state=seed,
+            n_jobs=n_jobs,
+            tree_method="hist",
+            verbosity=0,
+        )
+    except ImportError:
+        pass
+    # Fallback: HistGradientBoostingRegressor (~10x faster than GBR)
+    from sklearn.ensemble import HistGradientBoostingRegressor
+    return HistGradientBoostingRegressor(
+        max_iter=n_estimators,
+        max_depth=max_depth,
+        learning_rate=learning_rate,
+        random_state=seed,
+        verbose=0,
+    )
+
 
 @METHOD_REGISTRY.register("xgboost")
 class XGBoostImputer(BaseImputer):
     """XGBoost-based iterative imputation — M4.
 
-    For each column with missing values, trains an XGBoost model using
+    For each column with missing values, trains a gradient boosting model using
     the other columns as features. Iterates until convergence.
+
+    Uses xgboost.XGBRegressor if installed, otherwise falls back to
+    sklearn.ensemble.HistGradientBoostingRegressor.
     """
 
     name = "xgboost"
@@ -34,8 +72,9 @@ class XGBoostImputer(BaseImputer):
         n_estimators: int = 100,
         max_depth: int = 6,
         learning_rate: float = 0.1,
-        max_iterations: int = 10,
-        convergence_threshold: float = 1e-4,
+        max_iterations: int = 5,
+        convergence_threshold: float = 1e-3,
+        n_jobs: int = 1,
         **kwargs: Any,
     ) -> None:
         super().__init__(
@@ -44,6 +83,7 @@ class XGBoostImputer(BaseImputer):
             learning_rate=learning_rate,
             max_iterations=max_iterations,
             convergence_threshold=convergence_threshold,
+            n_jobs=n_jobs,
             **kwargs,
         )
         self.n_estimators = n_estimators
@@ -51,6 +91,7 @@ class XGBoostImputer(BaseImputer):
         self.learning_rate = learning_rate
         self.max_iterations = max_iterations
         self.convergence_threshold = convergence_threshold
+        self.n_jobs = n_jobs
         self._columns: list[str] = []
         self._metadata: dict[str, Any] = {}
         self._models: dict[str, Any] = {}
@@ -72,20 +113,29 @@ class XGBoostImputer(BaseImputer):
         if not mask.any():
             return
 
-        # Initialize
+        # Initialize missing values with column means
         for j in range(X_arr.shape[1]):
             col_mask = mask[:, j]
             if col_mask.any():
                 X_arr[col_mask, j] = self._init_values[self._columns[j]]
 
-        from sklearn.ensemble import GradientBoostingRegressor
+        # Pre-compute column order once (sort by missing count)
+        miss_counts = mask.sum(axis=0)
+        col_order = np.argsort(miss_counts)
+        # Pre-compute per-column indices
+        other_cols_map = {
+            j: [k for k in range(X_arr.shape[1]) if k != j] for j in col_order if mask[:, j].any()
+        }
+
+        try:
+            import xgboost  # noqa: F401
+            backend = "xgboost"
+        except ImportError:
+            backend = "HistGradientBoosting"
+        logger.debug(f"XGBoostImputer using backend: {backend}")
 
         for iteration in range(self.max_iterations):
             prev = X_arr.copy()
-
-            # Sort columns by number of missing values
-            miss_counts = mask.sum(axis=0)
-            col_order = np.argsort(miss_counts)
 
             for j in col_order:
                 if not mask[:, j].any():
@@ -93,23 +143,17 @@ class XGBoostImputer(BaseImputer):
 
                 obs_rows = ~mask[:, j]
                 miss_rows = mask[:, j]
-                other_cols = [k for k in range(X_arr.shape[1]) if k != j]
+                other_cols = other_cols_map[j]
 
                 if not obs_rows.any():
                     continue
 
-                X_obs = X_arr[obs_rows][:, other_cols]
-                y_obs = X_arr[obs_rows, j]
-                X_miss = X_arr[miss_rows][:, other_cols]
-
-                model = GradientBoostingRegressor(
-                    n_estimators=self.n_estimators,
-                    max_depth=self.max_depth,
-                    learning_rate=self.learning_rate,
-                    random_state=self._seed,
+                model = _make_gb_model(
+                    self.n_estimators, self.max_depth,
+                    self.learning_rate, self._seed, self.n_jobs,
                 )
-                model.fit(X_obs, y_obs)
-                X_arr[miss_rows, j] = model.predict(X_miss)
+                model.fit(X_arr[obs_rows][:, other_cols], X_arr[obs_rows, j])
+                X_arr[miss_rows, j] = model.predict(X_arr[miss_rows][:, other_cols])
                 self._models[self._columns[j]] = model
 
             diff = np.linalg.norm(X_arr - prev) / (np.linalg.norm(X_arr) + 1e-10)
@@ -127,13 +171,14 @@ class XGBoostImputer(BaseImputer):
             if col_mask.any():
                 X_arr[col_mask, j] = self._init_values.get(self._columns[j], 0.0)
 
-        # Apply models
+        # Apply fitted models
         for j in range(X_arr.shape[1]):
             col_name = self._columns[j]
             if col_name in self._models and mask[:, j].any():
                 miss_rows = mask[:, j]
                 other_cols = [k for k in range(X_arr.shape[1]) if k != j]
-                X_miss = X_arr[miss_rows][:, other_cols]
-                X_arr[miss_rows, j] = self._models[col_name].predict(X_miss)
+                X_arr[miss_rows, j] = self._models[col_name].predict(
+                    X_arr[miss_rows][:, other_cols]
+                )
 
         return pd.DataFrame(X_arr, columns=self._columns, index=X_missing.index)

@@ -1,0 +1,37 @@
+{
+  "dataset_id": "MX1",
+  "dataset_name": "adult",
+  "method_id": "",
+  "method_name": "xgboost",
+  "mechanism": "MAR",
+  "pattern": "general",
+  "missing_rate": 0.5,
+  "seed": 456,
+  "n_samples": 36177,
+  "n_features": 14,
+  "runtime_seconds": 12.703442582016578,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.16327701326879196,
+      "mae": 0.09798506265130559
+    },
+    "categorical": {
+      "accuracy": 0.39650073246911194,
+      "macro_f1": 0.13246164521387077
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.7982310668877833,
+      "f1_weighted": 0.7818991053566251,
+      "f1_macro": 0.6889027551149121,
+      "roc_auc": 0.8323388183546563
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.030202915154910095,
+    "jsd_mean": 0.4647352396353508
+  }
+}

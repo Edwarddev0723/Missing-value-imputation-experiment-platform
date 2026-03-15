@@ -37,25 +37,23 @@ class MCARGenerator(BaseMissingnessGenerator):
         target_columns = select_target_columns(
             X, metadata, feature_cols, pattern, rng,
         )
-        col_indices = [X.columns.get_loc(c) for c in target_columns]
+        col_indices = np.array([X.columns.get_loc(c) for c in target_columns])
 
         n_rows, n_cols = X.shape
         missing_mask = np.zeros((n_rows, n_cols), dtype=bool)
 
-        # Generate random mask for target columns only
-        for idx in col_indices:
-            mask_col = rng.rand(n_rows) < rate
-            missing_mask[:, idx] = mask_col
+        # Vectorized comparison, column-first draw order to preserve RNG sequence
+        if len(col_indices) > 0:
+            rand_block = np.column_stack([rng.rand(n_rows) for _ in col_indices])
+            missing_mask[:, col_indices] = rand_block < rate
 
         # Ensure no row is entirely missing (general pattern constraint)
         if pattern == "general":
             ensure_no_empty_rows(missing_mask, col_indices, rng)
 
-        # Apply mask
+        # Apply mask — use DataFrame operations to preserve mixed dtypes
         X_missing = X.copy()
-        X_missing_values = X_missing.values.copy().astype(float)
-        X_missing_values[missing_mask] = np.nan
-        X_missing = pd.DataFrame(X_missing_values, columns=X.columns, index=X.index)
+        X_missing[missing_mask] = np.nan
 
         observed_mask = ~missing_mask
 

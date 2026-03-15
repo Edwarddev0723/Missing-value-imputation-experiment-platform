@@ -1,0 +1,36 @@
+{
+  "dataset_id": "PN2",
+  "dataset_name": "concrete",
+  "method_id": "",
+  "method_name": "mice",
+  "mechanism": "MAR",
+  "pattern": "general",
+  "missing_rate": 0.1,
+  "seed": 123,
+  "n_samples": 824,
+  "n_features": 8,
+  "runtime_seconds": 0.5393677499960177,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.12659202895963428,
+      "mae": 0.09802773926640551
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "regression",
+    "model": "RandomForest",
+    "metrics": {
+      "rmse": 7.118544702446585,
+      "mae": 4.835796294883647,
+      "r2": 0.8153585141754018
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.005946144464955153,
+    "jsd_mean": null
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "dataset_id": "PN3",
+  "dataset_name": "spambase",
+  "method_id": "",
+  "method_name": "tabcsdi",
+  "mechanism": "MCAR",
+  "pattern": "univariate",
+  "missing_rate": 0.2,
+  "seed": 456,
+  "n_samples": 3680,
+  "n_features": 57,
+  "runtime_seconds": 9.38397683299263,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 1.6069142293350918,
+      "mae": 1.267302453428877
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.9467969598262758,
+      "f1_weighted": 0.9467840832222267,
+      "f1_macro": 0.9442731454326552,
+      "roc_auc": 0.9854359825034312
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.004424503957622404,
+    "jsd_mean": null
+  }
+}

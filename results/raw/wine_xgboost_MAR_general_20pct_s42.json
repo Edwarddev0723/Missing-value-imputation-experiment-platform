@@ -1,0 +1,32 @@
+{
+  "dataset_id": "PN1",
+  "dataset_name": "wine",
+  "method_id": "",
+  "method_name": "xgboost",
+  "mechanism": "MAR",
+  "pattern": "general",
+  "missing_rate": 0.2,
+  "seed": 42,
+  "n_samples": 3918,
+  "n_features": 12,
+  "runtime_seconds": 127.09827549899637,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.11009344301543664,
+      "mae": 0.07300809206023405
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "regression",
+    "model": "RandomForest",
+    "metrics": {}
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.008000503238821429,
+    "jsd_mean": null
+  }
+}

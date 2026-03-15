@@ -73,11 +73,9 @@ class MARGenerator(BaseMissingnessGenerator):
         if pattern == "general":
             ensure_no_empty_rows(missing_mask, col_indices, rng)
 
-        # Apply mask
+        # Apply mask — use DataFrame operations to preserve mixed dtypes
         X_missing = X.copy()
-        X_missing_values = X_missing.values.copy().astype(float)
-        X_missing_values[missing_mask] = np.nan
-        X_missing = pd.DataFrame(X_missing_values, columns=X.columns, index=X.index)
+        X_missing[missing_mask] = np.nan
 
         observed_mask = ~missing_mask
 

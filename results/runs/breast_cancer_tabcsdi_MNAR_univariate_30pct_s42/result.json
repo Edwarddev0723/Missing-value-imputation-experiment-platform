@@ -1,0 +1,130 @@
+{
+  "experiment_id": "breast_cancer_tabcsdi_MNAR_univariate_30pct_s42",
+  "dataset_name": "breast_cancer",
+  "method_name": "tabcsdi",
+  "method_family": "dl",
+  "missing_mechanism": "MNAR",
+  "missing_rate": 0.3,
+  "missing_pattern": "univariate",
+  "scenario_tag": "",
+  "seed": 42,
+  "imputation_metrics": {
+    "test_numerical_rmse": 1.29307469798842,
+    "test_numerical_mae": 1.0409002627349562,
+    "test_wasserstein_distance_mean": 0.027079930143779796,
+    "test_n_missing_values": 40,
+    "train_numerical_rmse": 1.685193020538832,
+    "train_numerical_mae": 1.356711736463702,
+    "train_wasserstein_distance_mean": 0.03805101925912939,
+    "train_n_missing_values": 158
+  },
+  "downstream_metrics": {
+    "downstream_accuracy": 0.9635036496350365,
+    "downstream_f1_weighted": 0.963743798780295,
+    "downstream_f1_macro": 0.9604617604617605,
+    "downstream_roc_auc": 0.9849016853932584
+  },
+  "runtime_metrics": {
+    "fit_time_seconds": 0.11463404100504704,
+    "impute_time_seconds": 0.05170404199452605,
+    "total_time_seconds": 0.1663380829995731
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 42,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "dataset": {
+      "split": {
+        "train_ratio": 0.8,
+        "valid_ratio": 0.0,
+        "test_ratio": 0.2,
+        "stratify": true
+      },
+      "name": "breast_cancer",
+      "dataset_id": "PN5",
+      "source": "uci",
+      "target_col": "class",
+      "task_type": "classification"
+    },
+    "downstream": {
+      "enabled": true,
+      "model": "random_forest",
+      "params": {
+        "n_estimators": 100,
+        "random_state": 42
+      }
+    },
+    "missingness": {
+      "protocol": "controlled",
+      "mechanism": "MNAR",
+      "pattern": "univariate",
+      "rate": 0.3,
+      "options": {
+        "exclude_target": true
+      }
+    },
+    "method": {
+      "name": "tabcsdi",
+      "family": "dl",
+      "device": "mps",
+      "params": {
+        "diffusion_steps": 50,
+        "hidden_dim": 128,
+        "n_layers": 4,
+        "epochs": 100,
+        "learning_rate": 0.001,
+        "batch_size": 512,
+        "early_stopping_patience": 5
+      }
+    },
+    "summary": {
+      "test_numerical_rmse": 1.29307469798842,
+      "test_numerical_mae": 1.0409002627349562,
+      "test_wasserstein_distance_mean": 0.027079930143779796,
+      "test_n_missing_values": 40,
+      "train_numerical_rmse": 1.685193020538832,
+      "train_numerical_mae": 1.356711736463702,
+      "train_wasserstein_distance_mean": 0.03805101925912939,
+      "train_n_missing_values": 158,
+      "downstream_accuracy": 0.9635036496350365,
+      "downstream_f1_weighted": 0.963743798780295,
+      "downstream_f1_macro": 0.9604617604617605,
+      "downstream_roc_auc": 0.9849016853932584,
+      "fit_time_seconds": 0.11463404100504704,
+      "impute_time_seconds": 0.05170404199452605,
+      "total_time_seconds": 0.1663380829995731
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}

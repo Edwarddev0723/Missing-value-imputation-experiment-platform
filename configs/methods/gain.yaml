@@ -5,9 +5,9 @@ method:
   params:
     generator_hidden: [256, 128]
     discriminator_hidden: [256, 128]
-    epochs: 300
+    epochs: 150
     learning_rate: 1.0e-3
     alpha: 100
-    batch_size: 256
-    early_stopping_patience: 10
+    batch_size: 512
+    early_stopping_patience: 5
     hint_rate: 0.9

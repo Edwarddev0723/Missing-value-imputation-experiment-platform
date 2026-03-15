@@ -1,0 +1,152 @@
+{
+  "experiment_id": "adult_missforest_MCAR_univariate_30pct_s123",
+  "dataset_name": "adult",
+  "method_name": "missforest",
+  "method_family": "ml",
+  "missing_mechanism": "MCAR",
+  "missing_rate": 0.3,
+  "missing_pattern": "univariate",
+  "scenario_tag": "",
+  "seed": 123,
+  "imputation_metrics": {
+    "test_numerical_rmse": 0.13541091188386492,
+    "test_numerical_mae": 0.10534954456078387,
+    "test_wasserstein_distance_mean": 0.003217771254135065,
+    "test_jsd_mean": 0.0,
+    "test_n_missing_values": 2718,
+    "train_numerical_rmse": 0.13581334239845497,
+    "train_numerical_mae": 0.10471991464592345,
+    "train_wasserstein_distance_mean": 0.003120778023262579,
+    "train_jsd_mean": 0.0,
+    "train_n_missing_values": 10854
+  },
+  "downstream_metrics": {
+    "downstream_accuracy": 0.8507462686567164,
+    "downstream_f1_weighted": 0.8462996309878239,
+    "downstream_f1_macro": 0.7883535898226273,
+    "downstream_roc_auc": 0.9029552607254788
+  },
+  "runtime_metrics": {
+    "fit_time_seconds": 40.01952524999797,
+    "impute_time_seconds": 0.099550332990475,
+    "total_time_seconds": 40.119075582988444
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 123,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "dataset": {
+      "split": {
+        "train_ratio": 0.8,
+        "valid_ratio": 0.0,
+        "test_ratio": 0.2,
+        "stratify": true
+      },
+      "name": "adult",
+      "dataset_id": "MX1",
+      "source": "uci",
+      "target_col": "income",
+      "task_type": "classification",
+      "feature_types": {
+        "numerical": [
+          "age",
+          "fnlwgt",
+          "education-num",
+          "capital-gain",
+          "capital-loss",
+          "hours-per-week"
+        ],
+        "categorical": [
+          "workclass",
+          "education",
+          "marital-status",
+          "occupation",
+          "relationship",
+          "race",
+          "sex",
+          "native-country"
+        ]
+      }
+    },
+    "downstream": {
+      "enabled": true,
+      "model": "random_forest",
+      "params": {
+        "n_estimators": 100,
+        "random_state": 42
+      }
+    },
+    "missingness": {
+      "protocol": "controlled",
+      "mechanism": "MCAR",
+      "pattern": "univariate",
+      "rate": 0.3,
+      "options": {
+        "exclude_target": true
+      }
+    },
+    "method": {
+      "name": "missforest",
+      "family": "ml",
+      "device": "cpu",
+      "params": {
+        "n_estimators": 50,
+        "max_depth": 12,
+        "max_iter": 10,
+        "n_jobs": 2,
+        "device": "cpu"
+      }
+    },
+    "summary": {
+      "test_numerical_rmse": 0.13541091188386492,
+      "test_numerical_mae": 0.10534954456078387,
+      "test_wasserstein_distance_mean": 0.003217771254135065,
+      "test_jsd_mean": 0.0,
+      "test_n_missing_values": 2718,
+      "train_numerical_rmse": 0.13581334239845497,
+      "train_numerical_mae": 0.10471991464592345,
+      "train_wasserstein_distance_mean": 0.003120778023262579,
+      "train_jsd_mean": 0.0,
+      "train_n_missing_values": 10854,
+      "downstream_accuracy": 0.8507462686567164,
+      "downstream_f1_weighted": 0.8462996309878239,
+      "downstream_f1_macro": 0.7883535898226273,
+      "downstream_roc_auc": 0.9029552607254788,
+      "fit_time_seconds": 40.01952524999797,
+      "impute_time_seconds": 0.099550332990475,
+      "total_time_seconds": 40.119075582988444
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}

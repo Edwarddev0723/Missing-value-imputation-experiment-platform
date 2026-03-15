@@ -1,0 +1,125 @@
+{
+  "experiment_id": "breast_cancer_mean_MNAR_general_50pct_s456",
+  "dataset_name": "breast_cancer",
+  "method_name": "mean",
+  "method_family": "statistical",
+  "missing_mechanism": "MNAR",
+  "missing_rate": 0.5,
+  "missing_pattern": "general",
+  "scenario_tag": "",
+  "seed": 456,
+  "imputation_metrics": {
+    "test_numerical_rmse": 0.4832692005374083,
+    "test_numerical_mae": 0.356564422597705,
+    "test_wasserstein_distance_mean": 0.1755349590566155,
+    "test_n_missing_values": 607,
+    "train_numerical_rmse": 0.4820047623088288,
+    "train_numerical_mae": 0.3446898922512373,
+    "train_wasserstein_distance_mean": 0.17129277917735478,
+    "train_n_missing_values": 2442
+  },
+  "downstream_metrics": {
+    "downstream_accuracy": 0.948905109489051,
+    "downstream_f1_weighted": 0.9492413182924133,
+    "downstream_f1_macro": 0.9446464646464646,
+    "downstream_roc_auc": 0.9873595505617977
+  },
+  "runtime_metrics": {
+    "fit_time_seconds": 0.00017324999498669058,
+    "impute_time_seconds": 0.0008374169992748648,
+    "total_time_seconds": 0.0010106669942615554
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 456,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "dataset": {
+      "split": {
+        "train_ratio": 0.8,
+        "valid_ratio": 0.0,
+        "test_ratio": 0.2,
+        "stratify": true
+      },
+      "name": "breast_cancer",
+      "dataset_id": "PN5",
+      "source": "uci",
+      "target_col": "class",
+      "task_type": "classification"
+    },
+    "downstream": {
+      "enabled": true,
+      "model": "random_forest",
+      "params": {
+        "n_estimators": 100,
+        "random_state": 42
+      }
+    },
+    "missingness": {
+      "protocol": "controlled",
+      "mechanism": "MNAR",
+      "pattern": "general",
+      "rate": 0.5,
+      "options": {
+        "exclude_target": true
+      }
+    },
+    "method": {
+      "name": "mean",
+      "family": "statistical",
+      "device": "cpu",
+      "params": {
+        "n_jobs": 2,
+        "device": "cpu"
+      }
+    },
+    "summary": {
+      "test_numerical_rmse": 0.4832692005374083,
+      "test_numerical_mae": 0.356564422597705,
+      "test_wasserstein_distance_mean": 0.1755349590566155,
+      "test_n_missing_values": 607,
+      "train_numerical_rmse": 0.4820047623088288,
+      "train_numerical_mae": 0.3446898922512373,
+      "train_wasserstein_distance_mean": 0.17129277917735478,
+      "train_n_missing_values": 2442,
+      "downstream_accuracy": 0.948905109489051,
+      "downstream_f1_weighted": 0.9492413182924133,
+      "downstream_f1_macro": 0.9446464646464646,
+      "downstream_roc_auc": 0.9873595505617977,
+      "fit_time_seconds": 0.00017324999498669058,
+      "impute_time_seconds": 0.0008374169992748648,
+      "total_time_seconds": 0.0010106669942615554
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}

@@ -1,0 +1,36 @@
+{
+  "dataset_id": "PN6",
+  "dataset_name": "letter",
+  "method_id": "",
+  "method_name": "mean",
+  "mechanism": "MNAR",
+  "pattern": "general",
+  "missing_rate": 0.3,
+  "seed": 789,
+  "n_samples": 16000,
+  "n_features": 16,
+  "runtime_seconds": 0.002728375999140553,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.2356697807265805,
+      "mae": 0.19621131367745448
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.82175,
+      "f1_weighted": 0.8220932092815131,
+      "f1_macro": 0.8215054840741932
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.05883886768902667,
+    "jsd_mean": null
+  }
+}

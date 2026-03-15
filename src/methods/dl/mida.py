@@ -33,7 +33,7 @@ class MIDAImputer(BaseImputer):
         learning_rate: float = 1e-3,
         corruption_rate: float = 0.5,
         batch_size: int = 256,
-        device: str = "mps",
+        device: str = "cpu",
         early_stopping_patience: int = 10,
         **kwargs: Any,
     ) -> None:
@@ -70,10 +70,9 @@ class MIDAImputer(BaseImputer):
         X_arr = X_train.values.astype(np.float32)
         mask = np.isnan(X_arr)
         self._init_values = np.nanmean(X_arr, axis=0)
-        # Fill NaN for training
-        X_filled = X_arr.copy()
-        for j in range(X_filled.shape[1]):
-            X_filled[mask[:, j], j] = self._init_values[j]
+        # Fill NaN for training (vectorized)
+        fill_row = self._init_values[np.newaxis, :]
+        X_filled = np.where(mask, fill_row, X_arr)
 
         input_dim = X_filled.shape[1]
         rng = np.random.RandomState(self._seed)
@@ -99,21 +98,26 @@ class MIDAImputer(BaseImputer):
         best_loss = float("inf")
         patience_counter = 0
 
+        _amp_dtype = torch.float16
+        _use_amp = 'mps' not in str(torch_device)
+        _amp_device = 'cuda' if torch.cuda.is_available() else 'cpu'
+
         model.train()
         for epoch in range(self.epochs):
             epoch_loss = 0.0
             n_batches = 0
             for (batch_x,) in loader:
                 batch_x = batch_x.to(torch_device)
-                # Corrupt input
                 corruption_mask = torch.tensor(
                     rng.binomial(1, self.corruption_rate, size=batch_x.shape),
                     dtype=torch.float32,
-                ).to(torch_device)
+                    device=torch_device,
+                )
                 corrupted = batch_x * (1 - corruption_mask)
 
-                output = model(corrupted)
-                loss = loss_fn(output, batch_x)
+                with torch.autocast(device_type=_amp_device, dtype=_amp_dtype, enabled=_use_amp):
+                    output = model(corrupted)
+                    loss = loss_fn(output, batch_x)
 
                 optimizer.zero_grad()
                 loss.backward()
@@ -142,22 +146,23 @@ class MIDAImputer(BaseImputer):
 
         X_arr = X_missing.values.astype(np.float32)
         mask = np.isnan(X_arr)
-        X_filled = X_arr.copy()
-        for j in range(X_filled.shape[1]):
-            X_filled[mask[:, j], j] = self._init_values[j]
+        fill_row = self._init_values[np.newaxis, :]
+        X_filled = np.where(mask, fill_row, X_arr)
 
         self._model.eval()
-        with torch.no_grad():
-            X_tensor = torch.tensor(X_filled, dtype=torch.float32).to(self._device)
+        _use_amp = 'mps' not in str(self._device)
+        _amp_device = 'cuda' if torch.cuda.is_available() else 'cpu'
+        with torch.inference_mode(), torch.autocast(device_type=_amp_device, dtype=torch.float16, enabled=_use_amp):
+            X_tensor = torch.tensor(X_filled, dtype=torch.float32, device=self._device)
             X_imputed = self._model(X_tensor).cpu().numpy()
 
         # Only replace missing values
         result = X_arr.copy()
         result[mask] = X_imputed[mask]
-        # Fill any remaining NaN
-        for j in range(result.shape[1]):
-            still_nan = np.isnan(result[:, j])
-            if still_nan.any():
-                result[still_nan, j] = self._init_values[j]
+        # Fill any remaining NaN (vectorized)
+        still_nan = np.isnan(result)
+        if still_nan.any():
+            fill_row = self._init_values[np.newaxis, :]
+            result = np.where(still_nan, fill_row, result)
 
         return pd.DataFrame(result, columns=self._columns, index=X_missing.index)

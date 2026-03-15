@@ -10,7 +10,7 @@ from sklearn.datasets import fetch_openml
 
 from src.constants import NUMERICAL, CLASSIFICATION
 from src.datasets.base import BaseDataset
-from src.datasets.utils import stratified_split
+from src.datasets.utils import atomic_save_csv, stratified_split
 from src.registry import DATASET_REGISTRY
 from src.utils.logging import get_logger
 
@@ -39,7 +39,7 @@ class BreastCancerDataset(BaseDataset):
             )
             df = data.frame  # type: ignore
             self.data_dir.mkdir(parents=True, exist_ok=True)
-            df.to_csv(cache_path, index=False)
+            atomic_save_csv(df, cache_path)
             logger.info(f"Cached Breast Cancer dataset to {cache_path}")
 
         # Rename target
@@ -50,10 +50,10 @@ class BreastCancerDataset(BaseDataset):
         # Binarize: benign=0, malignant=1  (or legacy 2=0, 4=1)
         if target_col in df.columns:
             col = df[target_col]
-            if col.dtype.name == "category" or col.dtype == object:
+            if pd.api.types.is_string_dtype(col) or col.dtype.name == "category":
                 # String-based labels
-                df[target_col] = col.map(
-                    lambda x: 1 if str(x).lower() == "malignant" else 0
+                df[target_col] = col.astype(str).str.strip().str.lower().map(
+                    lambda x: 1 if x == "malignant" else 0
                 ).astype(int)
             else:
                 df[target_col] = pd.to_numeric(col, errors="coerce")

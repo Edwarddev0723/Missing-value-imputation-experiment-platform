@@ -1,0 +1,37 @@
+{
+  "dataset_id": "MX4",
+  "dataset_name": "mammographic",
+  "method_id": "",
+  "method_name": "gain",
+  "mechanism": "MNAR",
+  "pattern": "general",
+  "missing_rate": 0.3,
+  "seed": 42,
+  "n_samples": 8946,
+  "n_features": 6,
+  "runtime_seconds": 3.11063541600015,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.2742572283351419,
+      "mae": 0.17002434485592857
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.9785426911041574,
+      "f1_weighted": 0.9729504755831335,
+      "f1_macro": 0.6416117059624576,
+      "roc_auc": 0.8534632987150149
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.04934024913558369,
+    "jsd_mean": null
+  }
+}

@@ -1,0 +1,124 @@
+{
+  "experiment_id": "wine_mida_MCAR_general_20pct_s123",
+  "dataset_name": "wine",
+  "method_name": "mida",
+  "method_family": "dl",
+  "missing_mechanism": "MCAR",
+  "missing_rate": 0.2,
+  "missing_pattern": "general",
+  "scenario_tag": "",
+  "seed": 123,
+  "imputation_metrics": {
+    "test_numerical_rmse": 0.11556269815047993,
+    "test_numerical_mae": 0.08248499049427457,
+    "test_wasserstein_distance_mean": 0.012072976354795137,
+    "test_n_missing_values": 2390,
+    "train_numerical_rmse": 0.11146407762657942,
+    "train_numerical_mae": 0.07995322322475587,
+    "train_wasserstein_distance_mean": 0.011257506176612739,
+    "train_n_missing_values": 9352
+  },
+  "downstream_metrics": {},
+  "runtime_metrics": {
+    "fit_time_seconds": 3.2003052499931073,
+    "impute_time_seconds": 0.014023875002749264,
+    "total_time_seconds": 3.2143291249958565
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 123,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "dataset": {
+      "split": {
+        "train_ratio": 0.8,
+        "valid_ratio": 0.0,
+        "test_ratio": 0.2,
+        "stratify": false
+      },
+      "name": "wine",
+      "dataset_id": "PN1",
+      "source": "uci",
+      "target_col": "quality",
+      "task_type": "regression"
+    },
+    "downstream": {
+      "enabled": true,
+      "model": "random_forest",
+      "params": {
+        "n_estimators": 100,
+        "random_state": 42
+      }
+    },
+    "missingness": {
+      "protocol": "controlled",
+      "mechanism": "MCAR",
+      "pattern": "general",
+      "rate": 0.2,
+      "options": {
+        "exclude_target": true
+      }
+    },
+    "method": {
+      "name": "mida",
+      "family": "dl",
+      "device": "mps",
+      "params": {
+        "hidden_layers": [
+          256,
+          128,
+          256
+        ],
+        "epochs": 100,
+        "learning_rate": 0.001,
+        "corruption_rate": 0.5,
+        "batch_size": 512,
+        "early_stopping_patience": 5
+      }
+    },
+    "summary": {
+      "test_numerical_rmse": 0.11556269815047993,
+      "test_numerical_mae": 0.08248499049427457,
+      "test_wasserstein_distance_mean": 0.012072976354795137,
+      "test_n_missing_values": 2390,
+      "train_numerical_rmse": 0.11146407762657942,
+      "train_numerical_mae": 0.07995322322475587,
+      "train_wasserstein_distance_mean": 0.011257506176612739,
+      "train_n_missing_values": 9352,
+      "fit_time_seconds": 3.2003052499931073,
+      "impute_time_seconds": 0.014023875002749264,
+      "total_time_seconds": 3.2143291249958565
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}

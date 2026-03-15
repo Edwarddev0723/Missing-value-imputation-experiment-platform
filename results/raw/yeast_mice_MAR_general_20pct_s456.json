@@ -1,0 +1,36 @@
+{
+  "dataset_id": "PN4",
+  "dataset_name": "yeast",
+  "method_id": "",
+  "method_name": "mice",
+  "mechanism": "MAR",
+  "pattern": "general",
+  "missing_rate": 0.2,
+  "seed": 456,
+  "n_samples": 1187,
+  "n_features": 8,
+  "runtime_seconds": 0.3567872929997975,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.13878927958451168,
+      "mae": 0.08970676258826144
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.5151515151515151,
+      "f1_weighted": 0.5029239439004161,
+      "f1_macro": 0.3623667048758848
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.00822616108504914,
+    "jsd_mean": null
+  }
+}

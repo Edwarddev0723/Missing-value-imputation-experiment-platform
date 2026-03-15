@@ -1,0 +1,37 @@
+{
+  "dataset_id": "PN3",
+  "dataset_name": "spambase",
+  "method_id": "",
+  "method_name": "gain",
+  "mechanism": "MNAR",
+  "pattern": "univariate",
+  "missing_rate": 0.5,
+  "seed": 123,
+  "n_samples": 3680,
+  "n_features": 57,
+  "runtime_seconds": 0.322116666007787,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.20289870439360624,
+      "mae": 0.1384959243933272
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.9500542888165038,
+      "f1_weighted": 0.9498444934636998,
+      "f1_macro": 0.9472876126014035,
+      "roc_auc": 0.984586826229055
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.0012531303025715937,
+    "jsd_mean": null
+  }
+}

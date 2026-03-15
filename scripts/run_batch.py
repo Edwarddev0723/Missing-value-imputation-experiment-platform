@@ -9,15 +9,15 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import os
 import sys
 from pathlib import Path
 
+# Prevent OpenMP (loaded by xgboost) from conflicting with PyTorch MPS on Apple Silicon
+os.environ.setdefault("OMP_NUM_THREADS", "1")
+
+# Only set up path — defer ALL heavy imports to main() for spawn-safety
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-
-from src.orchestration.batch_runner import BatchExperimentRunner
-from src.utils.logging import setup_logging
-
-logger = setup_logging()
 
 
 def main() -> None:
@@ -34,6 +34,11 @@ def main() -> None:
         "--no-wandb", action="store_true",
         help="Disable W&B tracking.",
     )
+    parser.add_argument(
+        "--workers", type=int, default=1,
+        help="Number of parallel worker processes. Default 1 (sequential). "
+             "Recommended: 8-10 for non-DL methods, 2-3 for DL methods.",
+    )
     args = parser.parse_args()
 
     # If --no-wandb, set env before import
@@ -41,11 +46,17 @@ def main() -> None:
         import os
         os.environ["WANDB_MODE"] = "disabled"
 
+    # Heavy imports INSIDE main() so spawn workers don't trigger them
+    from src.orchestration.batch_runner import BatchExperimentRunner
+    from src.utils.logging import setup_logging
+
+    logger = setup_logging()
+
     runner = BatchExperimentRunner(
         config_path=args.config,
         config_dir=args.config_dir,
     )
-    results = runner.run_from_config()
+    results = runner.run_from_config(max_workers=args.workers)
 
     # Summary
     completed = sum(1 for r in results if r.status == "completed")

@@ -35,7 +35,7 @@ class MIRACLEImputer(BaseImputer):
         learning_rate: float = 1e-3,
         lambda_reg: float = 1.0,
         batch_size: int = 256,
-        device: str = "mps",
+        device: str = "cpu",
         early_stopping_patience: int = 10,
         **kwargs: Any,
     ) -> None:
@@ -75,9 +75,8 @@ class MIRACLEImputer(BaseImputer):
         X_arr = X_train.values.astype(np.float32)
         obs_mask = (~np.isnan(X_arr)).astype(np.float32)
         self._init_values = np.nanmean(X_arr, axis=0)
-        X_filled = X_arr.copy()
-        for j in range(X_filled.shape[1]):
-            X_filled[np.isnan(X_filled[:, j]), j] = self._init_values[j]
+        fill_row = self._init_values[np.newaxis, :]
+        X_filled = np.where(np.isnan(X_arr), fill_row, X_arr)
 
         input_dim = X_filled.shape[1]
 
@@ -103,6 +102,11 @@ class MIRACLEImputer(BaseImputer):
         best_loss = float("inf")
         patience_counter = 0
 
+        _amp_dtype = torch.float16
+        _use_amp = 'mps' not in str(torch_device)
+        _amp_device = 'cuda' if torch.cuda.is_available() else 'cpu'
+        _eye = torch.eye(input_dim, device=torch_device)
+
         for epoch in range(self.epochs):
             epoch_loss = 0.0
             n_batches = 0
@@ -110,29 +114,19 @@ class MIRACLEImputer(BaseImputer):
                 batch_x = batch_x.to(torch_device)
                 batch_m = batch_m.to(torch_device)
 
-                # Impute
-                net_input = torch.cat([batch_x * batch_m, batch_m], dim=1)
-                x_imputed = imputer_net(net_input)
+                with torch.autocast(device_type=_amp_device, dtype=_amp_dtype, enabled=_use_amp):
+                    net_input = torch.cat([batch_x * batch_m, batch_m], dim=1)
+                    x_imputed = imputer_net(net_input)
+                    recon_loss = ((x_imputed - batch_x) ** 2 * batch_m).sum() / (batch_m.sum() + 1e-8)
 
-                # Reconstruction loss (on observed values)
-                recon_loss = ((x_imputed - batch_x) ** 2 * batch_m).sum() / (batch_m.sum() + 1e-8)
-
-                # Causal regularization: DAG constraint (acyclicity)
-                # A = sigmoid(adj_raw) with zero diagonal
-                A = torch.sigmoid(adj_raw) * (1 - torch.eye(input_dim, device=torch_device))
-
-                # h(A) = tr(e^A) - d  (NOTEARS acyclicity constraint)
-                # Use matrix exponential approximation
-                M_matrix = torch.eye(input_dim, device=torch_device) + A / input_dim
-                M_pow = M_matrix
-                for _ in range(input_dim - 1):
-                    M_pow = M_pow @ M_matrix
-                dag_loss = torch.trace(M_pow) - input_dim
-
-                # Sparsity regularization
-                sparsity_loss = A.abs().sum()
-
-                loss = recon_loss + self.lambda_reg * (dag_loss + 0.01 * sparsity_loss)
+                    A = torch.sigmoid(adj_raw) * (1 - _eye)
+                    M_matrix = _eye + A / input_dim
+                    M_pow = M_matrix
+                    for _ in range(input_dim - 1):
+                        M_pow = M_pow @ M_matrix
+                    dag_loss = torch.trace(M_pow) - input_dim
+                    sparsity_loss = A.abs().sum()
+                    loss = recon_loss + self.lambda_reg * (dag_loss + 0.01 * sparsity_loss)
 
                 optimizer.zero_grad()
                 loss.backward()
@@ -162,14 +156,15 @@ class MIRACLEImputer(BaseImputer):
 
         X_arr = X_missing.values.astype(np.float32)
         obs_mask = (~np.isnan(X_arr)).astype(np.float32)
-        X_filled = X_arr.copy()
-        for j in range(X_filled.shape[1]):
-            X_filled[np.isnan(X_filled[:, j]), j] = self._init_values[j]
+        fill_row = self._init_values[np.newaxis, :]
+        X_filled = np.where(np.isnan(X_arr), fill_row, X_arr)
 
         self._model.eval()
-        with torch.no_grad():
-            x_tensor = torch.tensor(X_filled, dtype=torch.float32).to(self._device)
-            m_tensor = torch.tensor(obs_mask, dtype=torch.float32).to(self._device)
+        _use_amp = 'mps' not in str(self._device)
+        _amp_device = 'cuda' if torch.cuda.is_available() else 'cpu'
+        with torch.inference_mode(), torch.autocast(device_type=_amp_device, dtype=torch.float16, enabled=_use_amp):
+            x_tensor = torch.tensor(X_filled, dtype=torch.float32, device=self._device)
+            m_tensor = torch.tensor(obs_mask, dtype=torch.float32, device=self._device)
             net_input = torch.cat([x_tensor * m_tensor, m_tensor], dim=1)
             x_imputed = self._model(net_input).cpu().numpy()
 
@@ -177,9 +172,9 @@ class MIRACLEImputer(BaseImputer):
         nan_mask = np.isnan(result)
         result[nan_mask] = x_imputed[nan_mask]
 
-        for j in range(result.shape[1]):
-            still_nan = np.isnan(result[:, j])
-            if still_nan.any():
-                result[still_nan, j] = self._init_values[j]
+        still_nan = np.isnan(result)
+        if still_nan.any():
+            fill_row = self._init_values[np.newaxis, :]
+            result = np.where(still_nan, fill_row, result)
 
         return pd.DataFrame(result, columns=self._columns, index=X_missing.index)

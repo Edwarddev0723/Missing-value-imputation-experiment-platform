@@ -1,0 +1,36 @@
+{
+  "dataset_id": "MX2",
+  "dataset_name": "bank",
+  "method_id": "",
+  "method_name": "em",
+  "mechanism": "MCAR",
+  "pattern": "general",
+  "missing_rate": 0.1,
+  "seed": 456,
+  "n_samples": 36168,
+  "n_features": 16,
+  "runtime_seconds": 0.18446145800407976,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.12741151244854393,
+      "mae": 0.07081730767324869
+    },
+    "categorical": {
+      "accuracy": 0.6171592467888765,
+      "macro_f1": 0.2228322126700829
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 1.0,
+      "f1_weighted": 1.0,
+      "f1_macro": 1.0
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.006259586814398915,
+    "jsd_mean": 0.029607747349492484
+  }
+}

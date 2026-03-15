@@ -1,0 +1,36 @@
+{
+  "dataset_id": "PN2",
+  "dataset_name": "concrete",
+  "method_id": "",
+  "method_name": "em",
+  "mechanism": "MNAR",
+  "pattern": "univariate",
+  "missing_rate": 0.2,
+  "seed": 789,
+  "n_samples": 824,
+  "n_features": 8,
+  "runtime_seconds": 0.00888279199716635,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.16845235753460353,
+      "mae": 0.12821368084660895
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "regression",
+    "model": "RandomForest",
+    "metrics": {
+      "rmse": 5.18362968279489,
+      "mae": 3.70815427877947,
+      "r2": 0.8920072146628542
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.0026323474681422426,
+    "jsd_mean": null
+  }
+}

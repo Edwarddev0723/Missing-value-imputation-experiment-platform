@@ -1,0 +1,37 @@
+{
+  "dataset_id": "MX5",
+  "dataset_name": "autism",
+  "method_id": "",
+  "method_name": "softimpute",
+  "mechanism": "MAR",
+  "pattern": "general",
+  "missing_rate": 0.3,
+  "seed": 456,
+  "n_samples": 487,
+  "n_features": 20,
+  "runtime_seconds": 0.00197124999249354,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.2066046801353846,
+      "mae": 0.13349436650228566
+    },
+    "categorical": {
+      "accuracy": 0.6266025641025641,
+      "macro_f1": 0.12443090433359898
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.8934426229508197,
+      "f1_weighted": 0.8959032114043528,
+      "f1_macro": 0.8783275795934025,
+      "roc_auc": 0.9344315245478035
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.042127320576540686,
+    "jsd_mean": 0.31535319640294873
+  }
+}

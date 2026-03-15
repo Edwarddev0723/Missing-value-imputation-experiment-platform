@@ -1,0 +1,37 @@
+{
+  "dataset_id": "MX1",
+  "dataset_name": "adult",
+  "method_id": "",
+  "method_name": "knn",
+  "mechanism": "MAR",
+  "pattern": "univariate",
+  "missing_rate": 0.2,
+  "seed": 42,
+  "n_samples": 36177,
+  "n_features": 14,
+  "runtime_seconds": 13.656158834011876,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.14427402404833756,
+      "mae": 0.11305721552483097
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.8487562189054726,
+      "f1_weighted": 0.8443374587247648,
+      "f1_macro": 0.7857503506311361,
+      "roc_auc": 0.9013370813081231
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.001216558743025123,
+    "jsd_mean": 0.0
+  }
+}

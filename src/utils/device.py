@@ -2,10 +2,20 @@
 
 from __future__ import annotations
 
+import multiprocessing as mp
+import os
+
 
 def get_device(requested: str = "cpu") -> str:
-    """Return a valid device string, falling back to CPU if requested device is unavailable."""
+    """Return a valid device string, falling back to CPU if requested device is unavailable.
+
+    MPS is disabled in spawned worker processes (causes segfaults with multiprocessing).
+    """
     requested = requested.lower()
+
+    # Force CPU in spawned worker processes — MPS + spawn = segfault
+    if mp.current_process().name != "MainProcess":
+        return "cpu"
 
     if requested == "mps":
         try:

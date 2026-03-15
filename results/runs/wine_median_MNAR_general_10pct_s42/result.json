@@ -1,0 +1,113 @@
+{
+  "experiment_id": "wine_median_MNAR_general_10pct_s42",
+  "dataset_name": "wine",
+  "method_name": "median",
+  "method_family": "statistical",
+  "missing_mechanism": "MNAR",
+  "missing_rate": 0.1,
+  "missing_pattern": "general",
+  "scenario_tag": "",
+  "seed": 42,
+  "imputation_metrics": {
+    "test_numerical_rmse": 0.24568954418751687,
+    "test_numerical_mae": 0.19824318438348282,
+    "test_wasserstein_distance_mean": 0.019301738615568696,
+    "test_n_missing_values": 1145,
+    "train_numerical_rmse": 0.23577818565517586,
+    "train_numerical_mae": 0.1942123920475225,
+    "train_wasserstein_distance_mean": 0.01944767614768878,
+    "train_n_missing_values": 4708
+  },
+  "downstream_metrics": {},
+  "runtime_metrics": {
+    "fit_time_seconds": 0.0009395829983986914,
+    "impute_time_seconds": 0.0011511250049807131,
+    "total_time_seconds": 0.0020907080033794045
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 42,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "dataset": {
+      "split": {
+        "train_ratio": 0.8,
+        "valid_ratio": 0.0,
+        "test_ratio": 0.2,
+        "stratify": false
+      },
+      "name": "wine",
+      "dataset_id": "PN1",
+      "source": "uci",
+      "target_col": "quality",
+      "task_type": "regression"
+    },
+    "downstream": {
+      "enabled": true,
+      "model": "random_forest",
+      "params": {
+        "n_estimators": 100,
+        "random_state": 42
+      }
+    },
+    "missingness": {
+      "protocol": "controlled",
+      "mechanism": "MNAR",
+      "pattern": "general",
+      "rate": 0.1,
+      "options": {
+        "exclude_target": true
+      }
+    },
+    "method": {
+      "name": "median",
+      "family": "statistical",
+      "device": "cpu",
+      "params": {}
+    },
+    "summary": {
+      "test_numerical_rmse": 0.24568954418751687,
+      "test_numerical_mae": 0.19824318438348282,
+      "test_wasserstein_distance_mean": 0.019301738615568696,
+      "test_n_missing_values": 1145,
+      "train_numerical_rmse": 0.23577818565517586,
+      "train_numerical_mae": 0.1942123920475225,
+      "train_wasserstein_distance_mean": 0.01944767614768878,
+      "train_n_missing_values": 4708,
+      "fit_time_seconds": 0.0009395829983986914,
+      "impute_time_seconds": 0.0011511250049807131,
+      "total_time_seconds": 0.0020907080033794045
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}

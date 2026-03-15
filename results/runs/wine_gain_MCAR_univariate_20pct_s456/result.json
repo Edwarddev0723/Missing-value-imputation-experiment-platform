@@ -1,0 +1,128 @@
+{
+  "experiment_id": "wine_gain_MCAR_univariate_20pct_s456",
+  "dataset_name": "wine",
+  "method_name": "gain",
+  "method_family": "dl",
+  "missing_mechanism": "MCAR",
+  "missing_rate": 0.2,
+  "missing_pattern": "univariate",
+  "scenario_tag": "",
+  "seed": 456,
+  "imputation_metrics": {
+    "test_numerical_rmse": 0.21994307749537334,
+    "test_numerical_mae": 0.1871131920559095,
+    "test_wasserstein_distance_mean": 0.0032776675887596063,
+    "test_n_missing_values": 206,
+    "train_numerical_rmse": 0.21396034599264482,
+    "train_numerical_mae": 0.18068657860801648,
+    "train_wasserstein_distance_mean": 0.003062944906110555,
+    "train_n_missing_values": 797
+  },
+  "downstream_metrics": {},
+  "runtime_metrics": {
+    "fit_time_seconds": 0.31879687499895226,
+    "impute_time_seconds": 0.0061472919915104285,
+    "total_time_seconds": 0.3249441669904627
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 456,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "dataset": {
+      "split": {
+        "train_ratio": 0.8,
+        "valid_ratio": 0.0,
+        "test_ratio": 0.2,
+        "stratify": false
+      },
+      "name": "wine",
+      "dataset_id": "PN1",
+      "source": "uci",
+      "target_col": "quality",
+      "task_type": "regression"
+    },
+    "downstream": {
+      "enabled": true,
+      "model": "random_forest",
+      "params": {
+        "n_estimators": 100,
+        "random_state": 42
+      }
+    },
+    "missingness": {
+      "protocol": "controlled",
+      "mechanism": "MCAR",
+      "pattern": "univariate",
+      "rate": 0.2,
+      "options": {
+        "exclude_target": true
+      }
+    },
+    "method": {
+      "name": "gain",
+      "family": "dl",
+      "device": "mps",
+      "params": {
+        "generator_hidden": [
+          256,
+          128
+        ],
+        "discriminator_hidden": [
+          256,
+          128
+        ],
+        "epochs": 150,
+        "learning_rate": 0.001,
+        "alpha": 100,
+        "batch_size": 512,
+        "early_stopping_patience": 5,
+        "hint_rate": 0.9
+      }
+    },
+    "summary": {
+      "test_numerical_rmse": 0.21994307749537334,
+      "test_numerical_mae": 0.1871131920559095,
+      "test_wasserstein_distance_mean": 0.0032776675887596063,
+      "test_n_missing_values": 206,
+      "train_numerical_rmse": 0.21396034599264482,
+      "train_numerical_mae": 0.18068657860801648,
+      "train_wasserstein_distance_mean": 0.003062944906110555,
+      "train_n_missing_values": 797,
+      "fit_time_seconds": 0.31879687499895226,
+      "impute_time_seconds": 0.0061472919915104285,
+      "total_time_seconds": 0.3249441669904627
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}

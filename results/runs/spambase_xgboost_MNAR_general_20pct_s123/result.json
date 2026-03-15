@@ -1,0 +1,129 @@
+{
+  "experiment_id": "spambase_xgboost_MNAR_general_20pct_s123",
+  "dataset_name": "spambase",
+  "method_name": "xgboost",
+  "method_family": "ml",
+  "missing_mechanism": "MNAR",
+  "missing_rate": 0.2,
+  "missing_pattern": "general",
+  "scenario_tag": "",
+  "seed": 123,
+  "imputation_metrics": {
+    "test_numerical_rmse": 0.13854614356665368,
+    "test_numerical_mae": 0.056370314548526104,
+    "test_wasserstein_distance_mean": 0.011007073522650351,
+    "test_n_missing_values": 10676,
+    "train_numerical_rmse": 0.13072667951225653,
+    "train_numerical_mae": 0.055222886901674095,
+    "train_wasserstein_distance_mean": 0.010565568219010524,
+    "train_n_missing_values": 41891
+  },
+  "downstream_metrics": {
+    "downstream_accuracy": 0.8979370249728555,
+    "downstream_f1_weighted": 0.8972034074415747,
+    "downstream_f1_macro": 0.8917012759569678,
+    "downstream_roc_auc": 0.946011927683482
+  },
+  "runtime_metrics": {
+    "fit_time_seconds": 973.1726406670059,
+    "impute_time_seconds": 0.08346899999014568,
+    "total_time_seconds": 973.256109666996
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 123,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "dataset": {
+      "split": {
+        "train_ratio": 0.8,
+        "valid_ratio": 0.0,
+        "test_ratio": 0.2,
+        "stratify": true
+      },
+      "name": "spambase",
+      "dataset_id": "PN3",
+      "source": "uci",
+      "target_col": "is_spam",
+      "task_type": "classification"
+    },
+    "downstream": {
+      "enabled": true,
+      "model": "random_forest",
+      "params": {
+        "n_estimators": 100,
+        "random_state": 42
+      }
+    },
+    "missingness": {
+      "protocol": "controlled",
+      "mechanism": "MNAR",
+      "pattern": "general",
+      "rate": 0.2,
+      "options": {
+        "exclude_target": true
+      }
+    },
+    "method": {
+      "name": "xgboost",
+      "family": "ml",
+      "device": "cpu",
+      "params": {
+        "n_estimators": 100,
+        "max_depth": 6,
+        "learning_rate": 0.1,
+        "max_iterations": 10,
+        "convergence_threshold": 0.0001,
+        "n_jobs": 1
+      }
+    },
+    "summary": {
+      "test_numerical_rmse": 0.13854614356665368,
+      "test_numerical_mae": 0.056370314548526104,
+      "test_wasserstein_distance_mean": 0.011007073522650351,
+      "test_n_missing_values": 10676,
+      "train_numerical_rmse": 0.13072667951225653,
+      "train_numerical_mae": 0.055222886901674095,
+      "train_wasserstein_distance_mean": 0.010565568219010524,
+      "train_n_missing_values": 41891,
+      "downstream_accuracy": 0.8979370249728555,
+      "downstream_f1_weighted": 0.8972034074415747,
+      "downstream_f1_macro": 0.8917012759569678,
+      "downstream_roc_auc": 0.946011927683482,
+      "fit_time_seconds": 973.1726406670059,
+      "impute_time_seconds": 0.08346899999014568,
+      "total_time_seconds": 973.256109666996
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}

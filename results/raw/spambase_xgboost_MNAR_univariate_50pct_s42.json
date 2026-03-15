@@ -1,0 +1,37 @@
+{
+  "dataset_id": "PN3",
+  "dataset_name": "spambase",
+  "method_id": "",
+  "method_name": "xgboost",
+  "mechanism": "MNAR",
+  "pattern": "univariate",
+  "missing_rate": 0.5,
+  "seed": 42,
+  "n_samples": 3680,
+  "n_features": 57,
+  "runtime_seconds": 0.5024532499955967,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.19205306399174313,
+      "mae": 0.1091416581814705
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.9446254071661238,
+      "f1_weighted": 0.9443769685032465,
+      "f1_macro": 0.9415272308996547,
+      "roc_auc": 0.9813926162899771
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.0008657512793583814,
+    "jsd_mean": null
+  }
+}

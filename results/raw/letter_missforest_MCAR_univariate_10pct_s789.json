@@ -1,0 +1,36 @@
+{
+  "dataset_id": "PN6",
+  "dataset_name": "letter",
+  "method_id": "",
+  "method_name": "missforest",
+  "mechanism": "MCAR",
+  "pattern": "univariate",
+  "missing_rate": 0.1,
+  "seed": 789,
+  "n_samples": 16000,
+  "n_features": 16,
+  "runtime_seconds": 27.78879683300329,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.07334485122881178,
+      "mae": 0.05096071383136444
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.9665,
+      "f1_weighted": 0.9666059039725459,
+      "f1_macro": 0.9664449436900135
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.0001260491966573749,
+    "jsd_mean": null
+  }
+}

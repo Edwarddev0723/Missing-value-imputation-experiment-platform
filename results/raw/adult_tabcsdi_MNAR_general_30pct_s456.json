@@ -1,0 +1,37 @@
+{
+  "dataset_id": "MX1",
+  "dataset_name": "adult",
+  "method_id": "",
+  "method_name": "tabcsdi",
+  "mechanism": "MNAR",
+  "pattern": "general",
+  "missing_rate": 0.3,
+  "seed": 456,
+  "n_samples": 36177,
+  "n_features": 14,
+  "runtime_seconds": 24.45173633399827,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.23246693299220678,
+      "mae": 0.18462061178054695
+    },
+    "categorical": {
+      "accuracy": 0.12020706399743461,
+      "macro_f1": 0.025462195810711442
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.8237700386954119,
+      "f1_weighted": 0.8154547097008691,
+      "f1_macro": 0.7425196798083502,
+      "roc_auc": 0.8716192205700297
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.0403319774389875,
+    "jsd_mean": 0.36803508487319325
+  }
+}

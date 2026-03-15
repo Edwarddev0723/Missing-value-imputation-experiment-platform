@@ -1,0 +1,36 @@
+{
+  "dataset_id": "MX2",
+  "dataset_name": "bank",
+  "method_id": "",
+  "method_name": "knn",
+  "mechanism": "MNAR",
+  "pattern": "general",
+  "missing_rate": 0.1,
+  "seed": 123,
+  "n_samples": 36168,
+  "n_features": 16,
+  "runtime_seconds": 43.3055217910005,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.21942698441128894,
+      "mae": 0.15127822902298335
+    },
+    "categorical": {
+      "accuracy": 0.43875574921326554,
+      "macro_f1": 0.25694781816491125
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 1.0,
+      "f1_weighted": 1.0,
+      "f1_macro": 1.0
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.014732249582764784,
+    "jsd_mean": 0.15797972270484698
+  }
+}

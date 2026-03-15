@@ -47,7 +47,7 @@ class DownstreamEvaluator:
                 model = RandomForestClassifier(
                     n_estimators=model_params.get("n_estimators", 100),
                     random_state=model_params.get("random_state", seed),
-                    n_jobs=-1,
+                    n_jobs=model_params.get("n_jobs", -1),
                 )
                 model.fit(X_train, y_train)
                 y_pred = model.predict(X_test)
@@ -72,7 +72,7 @@ class DownstreamEvaluator:
                 model = RandomForestRegressor(
                     n_estimators=model_params.get("n_estimators", 100),
                     random_state=model_params.get("random_state", seed),
-                    n_jobs=-1,
+                    n_jobs=model_params.get("n_jobs", -1),
                 )
                 model.fit(X_train, y_train)
                 y_pred = model.predict(X_test)

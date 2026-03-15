@@ -1,0 +1,36 @@
+{
+  "dataset_id": "MX2",
+  "dataset_name": "bank",
+  "method_id": "",
+  "method_name": "mida",
+  "mechanism": "MCAR",
+  "pattern": "general",
+  "missing_rate": 0.3,
+  "seed": 456,
+  "n_samples": 36168,
+  "n_features": 16,
+  "runtime_seconds": 22.250000542000635,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.12966214023717118,
+      "mae": 0.07643938593473128
+    },
+    "categorical": {
+      "accuracy": 0.5434316795780452,
+      "macro_f1": 0.229908293249153
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 1.0,
+      "f1_weighted": 1.0,
+      "f1_macro": 1.0
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.01810906602735507,
+    "jsd_mean": 0.34129384885798475
+  }
+}

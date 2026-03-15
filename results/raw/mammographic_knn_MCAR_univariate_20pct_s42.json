@@ -1,0 +1,37 @@
+{
+  "dataset_id": "MX4",
+  "dataset_name": "mammographic",
+  "method_id": "",
+  "method_name": "knn",
+  "mechanism": "MCAR",
+  "pattern": "univariate",
+  "missing_rate": 0.2,
+  "seed": 42,
+  "n_samples": 8946,
+  "n_features": 6,
+  "runtime_seconds": 0.31536316699930467,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.061546768061928506,
+      "mae": 0.03225138322099064
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.9870362092087618,
+      "f1_weighted": 0.9852296076351138,
+      "f1_macro": 0.8176869486528793,
+      "roc_auc": 0.9810244675233234
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.00037778746726480577,
+    "jsd_mean": null
+  }
+}

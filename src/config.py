@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import copy
+from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
@@ -10,13 +11,19 @@ import yaml
 from omegaconf import DictConfig, OmegaConf
 
 
-def load_yaml(path: str | Path) -> dict[str, Any]:
-    """Load a YAML file and return as dict."""
-    path = Path(path)
+@lru_cache(maxsize=256)
+def _load_yaml_cached(path_str: str) -> dict[str, Any]:
+    """Load a YAML file with LRU caching (hashable key = string path)."""
+    path = Path(path_str)
     if not path.exists():
         raise FileNotFoundError(f"Config file not found: {path}")
     with open(path, "r") as f:
         return yaml.safe_load(f) or {}
+
+
+def load_yaml(path: str | Path) -> dict[str, Any]:
+    """Load a YAML file and return as dict (cached)."""
+    return copy.deepcopy(_load_yaml_cached(str(Path(path).resolve())))
 
 
 def merge_configs(*configs: dict[str, Any]) -> dict[str, Any]:
@@ -149,25 +156,37 @@ def expand_batch_config(
         if key != "batch":
             base_cfg = merge_configs(base_cfg, {key: batch_config[key]})
 
-    experiments = []
+    # Pre-load all unique configs once (avoid redundant YAML reads)
+    ds_cfgs = {}
     for ds_name in datasets:
         ds_path = config_dir / "datasets" / f"{ds_name}.yaml"
-        ds_cfg = load_yaml(ds_path).get("dataset", {"name": ds_name}) if ds_path.exists() else {"name": ds_name}
+        ds_cfgs[ds_name] = load_yaml(ds_path).get("dataset", {"name": ds_name}) if ds_path.exists() else {"name": ds_name}
 
+    miss_cfgs = {}
+    for miss_name in missingness_profiles:
+        miss_path = config_dir / "missingness" / f"{miss_name}.yaml"
+        miss_cfgs[miss_name] = load_yaml(miss_path).get("missingness", {"mechanism": miss_name}) if miss_path.exists() else {"mechanism": miss_name}
+
+    method_cfgs = {}
+    for method_name in methods:
+        method_path = config_dir / "methods" / f"{method_name}.yaml"
+        method_cfgs[method_name] = load_yaml(method_path).get("method", {"name": method_name}) if method_path.exists() else {"name": method_name}
+
+    base_project = base_cfg.get("project", {})
+
+    experiments = []
+    for ds_name in datasets:
+        ds_cfg = ds_cfgs[ds_name]
         for miss_name in missingness_profiles:
-            miss_path = config_dir / "missingness" / f"{miss_name}.yaml"
-            miss_cfg = load_yaml(miss_path).get("missingness", {"mechanism": miss_name}) if miss_path.exists() else {"mechanism": miss_name}
-
+            miss_cfg = miss_cfgs[miss_name]
             for method_name in methods:
-                method_path = config_dir / "methods" / f"{method_name}.yaml"
-                method_cfg = load_yaml(method_path).get("method", {"name": method_name}) if method_path.exists() else {"name": method_name}
-
+                method_cfg = method_cfgs[method_name]
                 for seed in seeds:
                     exp_cfg = merge_configs(base_cfg, {
                         "dataset": ds_cfg,
                         "missingness": miss_cfg,
                         "method": method_cfg,
-                        "project": {**base_cfg.get("project", {}), "seed": seed},
+                        "project": {**base_project, "seed": seed},
                     })
                     experiments.append(exp_cfg)
 

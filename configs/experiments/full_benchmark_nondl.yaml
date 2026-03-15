@@ -1,0 +1,67 @@
+# Non-DL methods only — run with 8-10 workers for maximum CPU parallelism
+# Expected: 8 methods × 11 datasets × 24 missingness × 5 seeds = 10,560 runs
+# Estimated time: ~5-7h with 8 workers
+# Usage: python scripts/run_batch.py --config configs/experiments/full_benchmark_nondl.yaml --no-wandb --workers 8
+
+project:
+  name: missing-value-imputation-benchmark
+  output_dir: results/
+
+tracking:
+  use_wandb: false
+  output_dir: results/logs
+
+downstream:
+  enabled: true
+  params:
+    n_estimators: 100
+    random_state: 42
+
+batch:
+  datasets:
+    - wine
+    - concrete
+    - spambase
+    - yeast
+    - breast_cancer
+    - letter
+    - adult
+    - bank
+    - titanic
+    - mammographic
+    - autism
+  methods:
+    - mean
+    - median
+    - em
+    - mice
+    - knn
+    - missforest
+    - softimpute
+    - xgboost
+  missingness_profiles:
+    - mcar_general_10
+    - mcar_general_20
+    - mcar_general_30
+    - mcar_general_50
+    - mcar_univariate_10
+    - mcar_univariate_20
+    - mcar_univariate_30
+    - mcar_univariate_50
+    - mar_general_10
+    - mar_general_20
+    - mar_general_30
+    - mar_general_50
+    - mar_univariate_10
+    - mar_univariate_20
+    - mar_univariate_30
+    - mar_univariate_50
+    - mnar_general_10
+    - mnar_general_20
+    - mnar_general_30
+    - mnar_general_50
+    - mnar_univariate_10
+    - mnar_univariate_20
+    - mnar_univariate_30
+    - mnar_univariate_50
+  seeds: [42, 123, 456, 789, 1024]

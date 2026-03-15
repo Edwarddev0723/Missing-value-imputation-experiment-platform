@@ -3,11 +3,17 @@
 from __future__ import annotations
 
 import hashlib
+import warnings
 from pathlib import Path
 from typing import Any
 
 import numpy as np
 import pandas as pd
+
+# Suppress harmless sklearn warnings that are noisy in batch runs
+warnings.filterwarnings("ignore", category=FutureWarning, module="sklearn")
+warnings.filterwarnings("ignore", message=".*IterativeImputer.*Early stopping.*")
+warnings.filterwarnings("ignore", message=".*sklearn.utils.parallel.delayed.*")
 
 from src.constants import STATUS_COMPLETED, STATUS_FAILED
 from src.datasets.base import BaseDataset

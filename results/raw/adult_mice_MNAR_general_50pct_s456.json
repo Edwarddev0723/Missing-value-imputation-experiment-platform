@@ -1,0 +1,37 @@
+{
+  "dataset_id": "MX1",
+  "dataset_name": "adult",
+  "method_id": "",
+  "method_name": "mice",
+  "mechanism": "MNAR",
+  "pattern": "general",
+  "missing_rate": 0.5,
+  "seed": 456,
+  "n_samples": 36177,
+  "n_features": 14,
+  "runtime_seconds": 5.151520166997216,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.18674454999033052,
+      "mae": 0.11897529361903034
+    },
+    "categorical": {
+      "accuracy": 0.24887725582036094,
+      "macro_f1": 0.035559829619397326
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.8012161415146489,
+      "f1_weighted": 0.7844077270451999,
+      "f1_macro": 0.6918193473409033,
+      "roc_auc": 0.8355602614316007
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.054181186517736755,
+    "jsd_mean": 0.49881264812636383
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "dataset_id": "MX1",
+  "dataset_name": "adult",
+  "method_id": "",
+  "method_name": "mida",
+  "mechanism": "MAR",
+  "pattern": "general",
+  "missing_rate": 0.1,
+  "seed": 42,
+  "n_samples": 36177,
+  "n_features": 14,
+  "runtime_seconds": 24.355269081992446,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.12268985140541537,
+      "mae": 0.07934268220955407
+    },
+    "categorical": {
+      "accuracy": 0.4251101321585903,
+      "macro_f1": 0.08584111738909894
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.8410171365395246,
+      "f1_weighted": 0.8362193421847871,
+      "f1_macro": 0.7744036923205007,
+      "roc_auc": 0.8942193472654598
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.006132228196571637,
+    "jsd_mean": 0.19019190295170546
+  }
+}

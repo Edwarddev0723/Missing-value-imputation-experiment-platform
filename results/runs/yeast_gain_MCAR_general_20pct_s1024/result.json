@@ -1,0 +1,128 @@
+{
+  "experiment_id": "yeast_gain_MCAR_general_20pct_s1024",
+  "dataset_name": "yeast",
+  "method_name": "gain",
+  "method_family": "dl",
+  "missing_mechanism": "MCAR",
+  "missing_rate": 0.2,
+  "missing_pattern": "general",
+  "scenario_tag": "",
+  "seed": 1024,
+  "imputation_metrics": {
+    "test_numerical_rmse": 0.5915123582892919,
+    "test_numerical_mae": 0.5438385155706181,
+    "test_wasserstein_distance_mean": 0.1072829706241024,
+    "test_n_missing_values": 11171,
+    "train_numerical_rmse": 0.5921355925394696,
+    "train_numerical_mae": 0.5443396039343467,
+    "train_wasserstein_distance_mean": 0.10883133505562217,
+    "train_n_missing_values": 45217
+  },
+  "downstream_metrics": {},
+  "runtime_metrics": {
+    "fit_time_seconds": 0.22519045800436288,
+    "impute_time_seconds": 0.0045995830005267635,
+    "total_time_seconds": 0.22979004100488964
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 1024,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "dataset": {
+      "split": {
+        "train_ratio": 0.8,
+        "valid_ratio": 0.0,
+        "test_ratio": 0.2,
+        "stratify": true
+      },
+      "name": "yeast",
+      "dataset_id": "PN4",
+      "source": "uci",
+      "target_col": "localization_site",
+      "task_type": "classification"
+    },
+    "downstream": {
+      "enabled": true,
+      "model": "random_forest",
+      "params": {
+        "n_estimators": 100,
+        "random_state": 42
+      }
+    },
+    "missingness": {
+      "protocol": "controlled",
+      "mechanism": "MCAR",
+      "pattern": "general",
+      "rate": 0.2,
+      "options": {
+        "exclude_target": true
+      }
+    },
+    "method": {
+      "name": "gain",
+      "family": "dl",
+      "device": "mps",
+      "params": {
+        "generator_hidden": [
+          256,
+          128
+        ],
+        "discriminator_hidden": [
+          256,
+          128
+        ],
+        "epochs": 150,
+        "learning_rate": 0.001,
+        "alpha": 100,
+        "batch_size": 512,
+        "early_stopping_patience": 5,
+        "hint_rate": 0.9
+      }
+    },
+    "summary": {
+      "test_numerical_rmse": 0.5915123582892919,
+      "test_numerical_mae": 0.5438385155706181,
+      "test_wasserstein_distance_mean": 0.1072829706241024,
+      "test_n_missing_values": 11171,
+      "train_numerical_rmse": 0.5921355925394696,
+      "train_numerical_mae": 0.5443396039343467,
+      "train_wasserstein_distance_mean": 0.10883133505562217,
+      "train_n_missing_values": 45217,
+      "fit_time_seconds": 0.22519045800436288,
+      "impute_time_seconds": 0.0045995830005267635,
+      "total_time_seconds": 0.22979004100488964
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}

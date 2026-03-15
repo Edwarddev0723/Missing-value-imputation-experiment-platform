@@ -1,0 +1,36 @@
+{
+  "dataset_id": "PN6",
+  "dataset_name": "letter",
+  "method_id": "",
+  "method_name": "miwae",
+  "mechanism": "MNAR",
+  "pattern": "univariate",
+  "missing_rate": 0.1,
+  "seed": 789,
+  "n_samples": 16000,
+  "n_features": 16,
+  "runtime_seconds": 55.10842245799722,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.11404071161794375,
+      "mae": 0.09248819262219041
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.9655,
+      "f1_weighted": 0.9655383628325886,
+      "f1_macro": 0.9654583081074242
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.0005172324004272649,
+    "jsd_mean": null
+  }
+}

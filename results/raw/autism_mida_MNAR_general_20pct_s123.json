@@ -1,0 +1,37 @@
+{
+  "dataset_id": "MX5",
+  "dataset_name": "autism",
+  "method_id": "",
+  "method_name": "mida",
+  "mechanism": "MNAR",
+  "pattern": "general",
+  "missing_rate": 0.2,
+  "seed": 123,
+  "n_samples": 487,
+  "n_features": 20,
+  "runtime_seconds": 0.3908114170044428,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.5226140851410557,
+      "mae": 0.40639633127262864
+    },
+    "categorical": {
+      "accuracy": 0.19347319347319347,
+      "macro_f1": 0.01645505787144811
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.9590163934426229,
+      "f1_weighted": 0.9580660188913726,
+      "f1_macro": 0.9485622733788683,
+      "roc_auc": 0.9958010335917313
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.07585631487076913,
+    "jsd_mean": 0.2873952961056851
+  }
+}

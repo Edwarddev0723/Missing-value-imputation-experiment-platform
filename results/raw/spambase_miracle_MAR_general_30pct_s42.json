@@ -1,0 +1,37 @@
+{
+  "dataset_id": "PN3",
+  "dataset_name": "spambase",
+  "method_id": "",
+  "method_name": "miracle",
+  "mechanism": "MAR",
+  "pattern": "general",
+  "missing_rate": 0.3,
+  "seed": 42,
+  "n_samples": 3680,
+  "n_features": 57,
+  "runtime_seconds": 0.37634658299793955,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.05804011333639722,
+      "mae": 0.025592703866742283
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.8664495114006515,
+      "f1_weighted": 0.864004973653303,
+      "f1_macro": 0.8556420813597422,
+      "roc_auc": 0.9232180060625809
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.0064316122473555394,
+    "jsd_mean": null
+  }
+}

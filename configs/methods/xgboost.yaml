@@ -3,8 +3,9 @@ method:
   family: ml
   device: cpu
   params:
-    n_estimators: 100
+    n_estimators: 50
     max_depth: 6
     learning_rate: 0.1
-    max_iterations: 10
-    convergence_threshold: 1.0e-4
+    max_iterations: 5
+    convergence_threshold: 1.0e-3
+    n_jobs: 1

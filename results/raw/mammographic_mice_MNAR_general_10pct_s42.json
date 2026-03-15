@@ -1,0 +1,37 @@
+{
+  "dataset_id": "MX4",
+  "dataset_name": "mammographic",
+  "method_id": "",
+  "method_name": "mice",
+  "mechanism": "MNAR",
+  "pattern": "general",
+  "missing_rate": 0.1,
+  "seed": 42,
+  "n_samples": 8946,
+  "n_features": 6,
+  "runtime_seconds": 0.38770899998780806,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.2608780197963747,
+      "mae": 0.15858643510223402
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.9821189092534645,
+      "f1_weighted": 0.9782103261380877,
+      "f1_macro": 0.7176788328537533,
+      "roc_auc": 0.9639148037317373
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.0138122856920571,
+    "jsd_mean": null
+  }
+}

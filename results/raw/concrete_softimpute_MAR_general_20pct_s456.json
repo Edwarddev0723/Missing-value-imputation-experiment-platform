@@ -1,0 +1,36 @@
+{
+  "dataset_id": "PN2",
+  "dataset_name": "concrete",
+  "method_id": "",
+  "method_name": "softimpute",
+  "mechanism": "MAR",
+  "pattern": "general",
+  "missing_rate": 0.2,
+  "seed": 456,
+  "n_samples": 824,
+  "n_features": 8,
+  "runtime_seconds": 0.09575825100182556,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.24104939231666522,
+      "mae": 0.19078284764475534
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "regression",
+    "model": "RandomForest",
+    "metrics": {
+      "rmse": 9.28249699349155,
+      "mae": 6.727751552242256,
+      "r2": 0.6949902074438954
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.021822205421211268,
+    "jsd_mean": null
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "dataset_id": "MX1",
+  "dataset_name": "adult",
+  "method_id": "",
+  "method_name": "missforest",
+  "mechanism": "MNAR",
+  "pattern": "univariate",
+  "missing_rate": 0.2,
+  "seed": 1024,
+  "n_samples": 36177,
+  "n_features": 14,
+  "runtime_seconds": 39.95411345799221,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.23668760286335944,
+      "mae": 0.198357394254479
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.8490878938640133,
+      "f1_weighted": 0.8446063707101973,
+      "f1_macro": 0.7860383847372601,
+      "roc_auc": 0.9017300705479282
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.0062597913036977785,
+    "jsd_mean": 0.0
+  }
+}

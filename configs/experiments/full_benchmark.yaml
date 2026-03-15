@@ -1,0 +1,85 @@
+# Full Experiment — All 11 datasets × 13 methods × 24 missingness profiles × 5 seeds
+# Total runs: 13 × 11 × 24 × 5 = 17,160
+# Usage: python scripts/run_batch.py --config configs/experiments/full_benchmark.yaml --no-wandb
+
+project:
+  name: missing-value-imputation-benchmark
+  output_dir: results/
+
+tracking:
+  use_wandb: false
+  output_dir: results/logs
+
+downstream:
+  enabled: true
+  params:
+    n_estimators: 100
+    random_state: 42
+
+batch:
+  datasets:
+    # Pure Numerical (PN1–PN6)
+    - wine
+    - concrete
+    - spambase
+    - yeast
+    - breast_cancer
+    - letter
+    # Mixed (MX1–MX5)
+    - adult
+    - bank
+    - titanic
+    - mammographic
+    - autism
+  methods:
+    # Statistical (S1–S4)
+    - mean
+    - median
+    - em
+    - mice
+    # Machine Learning (M1–M4)
+    - knn
+    - missforest
+    - softimpute
+    - xgboost
+    # Deep Learning (D1–D5)
+    - mida
+    - miwae
+    - gain
+    - tabcsdi
+    - miracle
+  missingness_profiles:
+    # MCAR × general × 4 rates
+    - mcar_general_10
+    - mcar_general_20
+    - mcar_general_30
+    - mcar_general_50
+    # MCAR × univariate × 4 rates
+    - mcar_univariate_10
+    - mcar_univariate_20
+    - mcar_univariate_30
+    - mcar_univariate_50
+    # MAR × general × 4 rates
+    - mar_general_10
+    - mar_general_20
+    - mar_general_30
+    - mar_general_50
+    # MAR × univariate × 4 rates
+    - mar_univariate_10
+    - mar_univariate_20
+    - mar_univariate_30
+    - mar_univariate_50
+    # MNAR × general × 4 rates
+    - mnar_general_10
+    - mnar_general_20
+    - mnar_general_30
+    - mnar_general_50
+    # MNAR × univariate × 4 rates
+    - mnar_univariate_10
+    - mnar_univariate_20
+    - mnar_univariate_30
+    - mnar_univariate_50
+  seeds: [42, 123, 456, 789, 1024]
+  parallel:
+    enabled: false
+    max_concurrent_runs: 1

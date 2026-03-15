@@ -1,0 +1,151 @@
+{
+  "experiment_id": "adult_em_MNAR_univariate_10pct_s1024",
+  "dataset_name": "adult",
+  "method_name": "em",
+  "method_family": "statistical",
+  "missing_mechanism": "MNAR",
+  "missing_rate": 0.1,
+  "missing_pattern": "univariate",
+  "scenario_tag": "",
+  "seed": 1024,
+  "imputation_metrics": {
+    "test_numerical_rmse": 0.34116311005156746,
+    "test_numerical_mae": 0.30068472999144613,
+    "test_wasserstein_distance_mean": 0.0048890092488681714,
+    "test_jsd_mean": 0.0,
+    "test_n_missing_values": 901,
+    "train_numerical_rmse": 0.3413784674074167,
+    "train_numerical_mae": 0.3002443421364923,
+    "train_wasserstein_distance_mean": 0.0049184125168639835,
+    "train_jsd_mean": 0.0,
+    "train_n_missing_values": 3620
+  },
+  "downstream_metrics": {
+    "downstream_accuracy": 0.85085682697623,
+    "downstream_f1_weighted": 0.8466844207052138,
+    "downstream_f1_macro": 0.7891909312728717,
+    "downstream_roc_auc": 0.9010164416889597
+  },
+  "runtime_metrics": {
+    "fit_time_seconds": 0.08687329199165106,
+    "impute_time_seconds": 0.02538308300427161,
+    "total_time_seconds": 0.11225637499592267
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 1024,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "dataset": {
+      "split": {
+        "train_ratio": 0.8,
+        "valid_ratio": 0.0,
+        "test_ratio": 0.2,
+        "stratify": true
+      },
+      "name": "adult",
+      "dataset_id": "MX1",
+      "source": "uci",
+      "target_col": "income",
+      "task_type": "classification",
+      "feature_types": {
+        "numerical": [
+          "age",
+          "fnlwgt",
+          "education-num",
+          "capital-gain",
+          "capital-loss",
+          "hours-per-week"
+        ],
+        "categorical": [
+          "workclass",
+          "education",
+          "marital-status",
+          "occupation",
+          "relationship",
+          "race",
+          "sex",
+          "native-country"
+        ]
+      }
+    },
+    "downstream": {
+      "enabled": true,
+      "model": "random_forest",
+      "params": {
+        "n_estimators": 100,
+        "random_state": 42
+      }
+    },
+    "missingness": {
+      "protocol": "controlled",
+      "mechanism": "MNAR",
+      "pattern": "univariate",
+      "rate": 0.1,
+      "options": {
+        "exclude_target": true
+      }
+    },
+    "method": {
+      "name": "em",
+      "family": "statistical",
+      "device": "cpu",
+      "params": {
+        "max_iterations": 100,
+        "convergence_threshold": 0.0001,
+        "n_jobs": 2,
+        "device": "cpu"
+      }
+    },
+    "summary": {
+      "test_numerical_rmse": 0.34116311005156746,
+      "test_numerical_mae": 0.30068472999144613,
+      "test_wasserstein_distance_mean": 0.0048890092488681714,
+      "test_jsd_mean": 0.0,
+      "test_n_missing_values": 901,
+      "train_numerical_rmse": 0.3413784674074167,
+      "train_numerical_mae": 0.3002443421364923,
+      "train_wasserstein_distance_mean": 0.0049184125168639835,
+      "train_jsd_mean": 0.0,
+      "train_n_missing_values": 3620,
+      "downstream_accuracy": 0.85085682697623,
+      "downstream_f1_weighted": 0.8466844207052138,
+      "downstream_f1_macro": 0.7891909312728717,
+      "downstream_roc_auc": 0.9010164416889597,
+      "fit_time_seconds": 0.08687329199165106,
+      "impute_time_seconds": 0.02538308300427161,
+      "total_time_seconds": 0.11225637499592267
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}

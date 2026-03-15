@@ -1,0 +1,144 @@
+{
+  "experiment_id": "autism_miracle_MCAR_general_30pct_s789",
+  "dataset_name": "autism",
+  "method_name": "miracle",
+  "method_family": "dl",
+  "missing_mechanism": "MCAR",
+  "missing_rate": 0.3,
+  "missing_pattern": "general",
+  "scenario_tag": "",
+  "seed": 789,
+  "imputation_metrics": {
+    "test_numerical_rmse": 0.15161235727168007,
+    "test_numerical_mae": 0.09965933324899065,
+    "test_categorical_accuracy": 0.5725552050473186,
+    "test_categorical_macro_f1": 0.06440391759540695,
+    "test_wasserstein_distance_mean": 0.02165048750485491,
+    "test_jsd_mean": 0.33599613525672845,
+    "test_n_missing_values": 702,
+    "train_numerical_rmse": 0.16147038913059497,
+    "train_numerical_mae": 0.10914231803998937,
+    "train_categorical_accuracy": 0.6044039483675019,
+    "train_categorical_macro_f1": 0.04636742411756007,
+    "train_wasserstein_distance_mean": 0.023583397810671855,
+    "train_jsd_mean": 0.3433858821136832,
+    "train_n_missing_values": 2915
+  },
+  "downstream_metrics": {
+    "downstream_accuracy": 0.9344262295081968,
+    "downstream_f1_weighted": 0.9338663221082666,
+    "downstream_f1_macro": 0.9198686371100164,
+    "downstream_roc_auc": 0.9838501291989664
+  },
+  "runtime_metrics": {
+    "fit_time_seconds": 1.0086136669997359,
+    "impute_time_seconds": 0.001286707993131131,
+    "total_time_seconds": 1.009900374992867
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 789,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "dataset": {
+      "split": {
+        "train_ratio": 0.8,
+        "valid_ratio": 0.0,
+        "test_ratio": 0.2,
+        "stratify": true
+      },
+      "name": "autism",
+      "dataset_id": "MX5",
+      "source": "uci",
+      "target_col": "asd_class",
+      "task_type": "classification"
+    },
+    "downstream": {
+      "enabled": true,
+      "model": "random_forest",
+      "params": {
+        "n_estimators": 100,
+        "random_state": 42
+      }
+    },
+    "missingness": {
+      "protocol": "controlled",
+      "mechanism": "MCAR",
+      "pattern": "general",
+      "rate": 0.3,
+      "options": {
+        "exclude_target": true
+      }
+    },
+    "method": {
+      "name": "miracle",
+      "family": "dl",
+      "device": "cpu",
+      "params": {
+        "hidden_dim": 128,
+        "n_layers": 3,
+        "lambda_reg": 1.0,
+        "epochs": 100,
+        "learning_rate": 0.001,
+        "batch_size": 512,
+        "early_stopping_patience": 5,
+        "n_jobs": 2,
+        "device": "cpu"
+      }
+    },
+    "summary": {
+      "test_numerical_rmse": 0.15161235727168007,
+      "test_numerical_mae": 0.09965933324899065,
+      "test_categorical_accuracy": 0.5725552050473186,
+      "test_categorical_macro_f1": 0.06440391759540695,
+      "test_wasserstein_distance_mean": 0.02165048750485491,
+      "test_jsd_mean": 0.33599613525672845,
+      "test_n_missing_values": 702,
+      "train_numerical_rmse": 0.16147038913059497,
+      "train_numerical_mae": 0.10914231803998937,
+      "train_categorical_accuracy": 0.6044039483675019,
+      "train_categorical_macro_f1": 0.04636742411756007,
+      "train_wasserstein_distance_mean": 0.023583397810671855,
+      "train_jsd_mean": 0.3433858821136832,
+      "train_n_missing_values": 2915,
+      "downstream_accuracy": 0.9344262295081968,
+      "downstream_f1_weighted": 0.9338663221082666,
+      "downstream_f1_macro": 0.9198686371100164,
+      "downstream_roc_auc": 0.9838501291989664,
+      "fit_time_seconds": 1.0086136669997359,
+      "impute_time_seconds": 0.001286707993131131,
+      "total_time_seconds": 1.009900374992867
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}

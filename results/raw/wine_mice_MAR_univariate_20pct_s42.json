@@ -1,0 +1,32 @@
+{
+  "dataset_id": "PN1",
+  "dataset_name": "wine",
+  "method_id": "",
+  "method_name": "mice",
+  "mechanism": "MAR",
+  "pattern": "univariate",
+  "missing_rate": 0.2,
+  "seed": 42,
+  "n_samples": 3918,
+  "n_features": 12,
+  "runtime_seconds": 0.6024325000034878,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.07415863311938216,
+      "mae": 0.054066712456815026
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "regression",
+    "model": "RandomForest",
+    "metrics": {}
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.00027982541594812646,
+    "jsd_mean": null
+  }
+}

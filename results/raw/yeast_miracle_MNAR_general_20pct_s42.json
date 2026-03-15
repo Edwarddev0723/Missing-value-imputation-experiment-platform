@@ -1,0 +1,32 @@
+{
+  "dataset_id": "PN4",
+  "dataset_name": "yeast",
+  "method_id": "",
+  "method_name": "miracle",
+  "mechanism": "MNAR",
+  "pattern": "general",
+  "missing_rate": 0.2,
+  "seed": 42,
+  "n_samples": 1933,
+  "n_features": 117,
+  "runtime_seconds": 0.3347463760001119,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.3248784340334141,
+      "mae": 0.2323918556753383
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {}
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.04468308602018711,
+    "jsd_mean": null
+  }
+}

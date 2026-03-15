@@ -1,0 +1,123 @@
+{
+  "experiment_id": "concrete_em_MNAR_general_10pct_s1024",
+  "dataset_name": "concrete",
+  "method_name": "em",
+  "method_family": "statistical",
+  "missing_mechanism": "MNAR",
+  "missing_rate": 0.1,
+  "missing_pattern": "general",
+  "scenario_tag": "",
+  "seed": 1024,
+  "imputation_metrics": {
+    "test_numerical_rmse": 0.24015297835305846,
+    "test_numerical_mae": 0.1543755847560259,
+    "test_wasserstein_distance_mean": 0.01296330000305808,
+    "test_n_missing_values": 166,
+    "train_numerical_rmse": 0.2263592856551182,
+    "train_numerical_mae": 0.14577480019966807,
+    "train_wasserstein_distance_mean": 0.011669662449311384,
+    "train_n_missing_values": 653
+  },
+  "downstream_metrics": {
+    "downstream_rmse": 5.528308404226218,
+    "downstream_mae": 3.9186023012020357,
+    "downstream_r2": 0.8877792488904898
+  },
+  "runtime_metrics": {
+    "fit_time_seconds": 0.04645845800405368,
+    "impute_time_seconds": 0.0045477920066332445,
+    "total_time_seconds": 0.05100625001068693
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 1024,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "dataset": {
+      "split": {
+        "train_ratio": 0.8,
+        "valid_ratio": 0.0,
+        "test_ratio": 0.2,
+        "stratify": false
+      },
+      "name": "concrete",
+      "dataset_id": "PN2",
+      "source": "uci",
+      "target_col": "compressive_strength",
+      "task_type": "regression"
+    },
+    "downstream": {
+      "enabled": true,
+      "model": "random_forest",
+      "params": {
+        "n_estimators": 100,
+        "random_state": 42
+      }
+    },
+    "missingness": {
+      "protocol": "controlled",
+      "mechanism": "MNAR",
+      "pattern": "general",
+      "rate": 0.1,
+      "options": {
+        "exclude_target": true
+      }
+    },
+    "method": {
+      "name": "em",
+      "family": "statistical",
+      "device": "cpu",
+      "params": {
+        "max_iterations": 100,
+        "convergence_threshold": 0.0001
+      }
+    },
+    "summary": {
+      "test_numerical_rmse": 0.24015297835305846,
+      "test_numerical_mae": 0.1543755847560259,
+      "test_wasserstein_distance_mean": 0.01296330000305808,
+      "test_n_missing_values": 166,
+      "train_numerical_rmse": 0.2263592856551182,
+      "train_numerical_mae": 0.14577480019966807,
+      "train_wasserstein_distance_mean": 0.011669662449311384,
+      "train_n_missing_values": 653,
+      "downstream_rmse": 5.528308404226218,
+      "downstream_mae": 3.9186023012020357,
+      "downstream_r2": 0.8877792488904898,
+      "fit_time_seconds": 0.04645845800405368,
+      "impute_time_seconds": 0.0045477920066332445,
+      "total_time_seconds": 0.05100625001068693
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}

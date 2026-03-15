@@ -1,0 +1,121 @@
+{
+  "experiment_id": "wine_miracle_MAR_general_10pct_s1024",
+  "dataset_name": "wine",
+  "method_name": "miracle",
+  "method_family": "dl",
+  "missing_mechanism": "MAR",
+  "missing_rate": 0.1,
+  "missing_pattern": "general",
+  "scenario_tag": "",
+  "seed": 1024,
+  "imputation_metrics": {
+    "test_numerical_rmse": 0.22000656554454023,
+    "test_numerical_mae": 0.17467653610714057,
+    "test_wasserstein_distance_mean": 0.016852863332612572,
+    "test_n_missing_values": 1148,
+    "train_numerical_rmse": 0.22563610410040352,
+    "train_numerical_mae": 0.1806344978160453,
+    "train_wasserstein_distance_mean": 0.017778381772764463,
+    "train_n_missing_values": 4659
+  },
+  "downstream_metrics": {},
+  "runtime_metrics": {
+    "fit_time_seconds": 8.469470916999853,
+    "impute_time_seconds": 0.003347082994878292,
+    "total_time_seconds": 8.472817999994732
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 1024,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "dataset": {
+      "split": {
+        "train_ratio": 0.8,
+        "valid_ratio": 0.0,
+        "test_ratio": 0.2,
+        "stratify": false
+      },
+      "name": "wine",
+      "dataset_id": "PN1",
+      "source": "uci",
+      "target_col": "quality",
+      "task_type": "regression"
+    },
+    "downstream": {
+      "enabled": true,
+      "model": "random_forest",
+      "params": {
+        "n_estimators": 100,
+        "random_state": 42
+      }
+    },
+    "missingness": {
+      "protocol": "controlled",
+      "mechanism": "MAR",
+      "pattern": "general",
+      "rate": 0.1,
+      "options": {
+        "exclude_target": true
+      }
+    },
+    "method": {
+      "name": "miracle",
+      "family": "dl",
+      "device": "mps",
+      "params": {
+        "hidden_dim": 128,
+        "n_layers": 3,
+        "lambda_reg": 1.0,
+        "epochs": 100,
+        "learning_rate": 0.001,
+        "batch_size": 512,
+        "early_stopping_patience": 5
+      }
+    },
+    "summary": {
+      "test_numerical_rmse": 0.22000656554454023,
+      "test_numerical_mae": 0.17467653610714057,
+      "test_wasserstein_distance_mean": 0.016852863332612572,
+      "test_n_missing_values": 1148,
+      "train_numerical_rmse": 0.22563610410040352,
+      "train_numerical_mae": 0.1806344978160453,
+      "train_wasserstein_distance_mean": 0.017778381772764463,
+      "train_n_missing_values": 4659,
+      "fit_time_seconds": 8.469470916999853,
+      "impute_time_seconds": 0.003347082994878292,
+      "total_time_seconds": 8.472817999994732
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}

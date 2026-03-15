@@ -6,7 +6,7 @@ method:
     latent_dim: 32
     n_hidden: 128
     n_samples: 20
-    epochs: 200
+    epochs: 100
     learning_rate: 1.0e-3
-    batch_size: 256
-    early_stopping_patience: 10
+    batch_size: 512
+    early_stopping_patience: 5

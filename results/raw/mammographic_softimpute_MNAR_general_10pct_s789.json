@@ -1,0 +1,37 @@
+{
+  "dataset_id": "MX4",
+  "dataset_name": "mammographic",
+  "method_id": "",
+  "method_name": "softimpute",
+  "mechanism": "MNAR",
+  "pattern": "general",
+  "missing_rate": 0.1,
+  "seed": 789,
+  "n_samples": 8946,
+  "n_features": 6,
+  "runtime_seconds": 0.3764617919950979,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.28485510365782674,
+      "mae": 0.1909451288450264
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.9825659365221279,
+      "f1_weighted": 0.9792528171406454,
+      "f1_macro": 0.7355671743578086,
+      "roc_auc": 0.922496039429678
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.01885076809191899,
+    "jsd_mean": null
+  }
+}

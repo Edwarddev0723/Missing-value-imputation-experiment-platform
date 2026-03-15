@@ -1,0 +1,37 @@
+{
+  "dataset_id": "PN3",
+  "dataset_name": "spambase",
+  "method_id": "",
+  "method_name": "mice",
+  "mechanism": "MNAR",
+  "pattern": "general",
+  "missing_rate": 0.2,
+  "seed": 789,
+  "n_samples": 3680,
+  "n_features": 57,
+  "runtime_seconds": 23.296003124996787,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.12857211281584255,
+      "mae": 0.05323881760890188
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.8979370249728555,
+      "f1_weighted": 0.8970732947048655,
+      "f1_macro": 0.8914590479629295,
+      "roc_auc": 0.9439087848178758
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.01021176840608747,
+    "jsd_mean": null
+  }
+}

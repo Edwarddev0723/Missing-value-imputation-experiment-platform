@@ -10,7 +10,7 @@ from sklearn.datasets import fetch_openml
 
 from src.constants import NUMERICAL, CLASSIFICATION
 from src.datasets.base import BaseDataset
-from src.datasets.utils import stratified_split
+from src.datasets.utils import atomic_save_csv, stratified_split
 from src.registry import DATASET_REGISTRY
 from src.utils.logging import get_logger
 
@@ -42,7 +42,7 @@ class SpambaseDataset(BaseDataset):
             elif "Class" in df.columns:
                 df = df.rename(columns={"Class": "is_spam"})
             self.data_dir.mkdir(parents=True, exist_ok=True)
-            df.to_csv(cache_path, index=False)
+            atomic_save_csv(df, cache_path)
             logger.info(f"Cached Spambase dataset to {cache_path}")
 
         # Ensure target is binary int

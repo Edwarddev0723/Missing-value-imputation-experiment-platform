@@ -1,0 +1,37 @@
+{
+  "dataset_id": "MX3",
+  "dataset_name": "titanic",
+  "method_id": "",
+  "method_name": "xgboost",
+  "mechanism": "MCAR",
+  "pattern": "general",
+  "missing_rate": 0.1,
+  "seed": 123,
+  "n_samples": 834,
+  "n_features": 7,
+  "runtime_seconds": 1.8429061240021838,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.13564689909271752,
+      "mae": 0.07976347373321326
+    },
+    "categorical": {
+      "accuracy": 0.5333333333333333,
+      "macro_f1": 0.4978354978354978
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.7177033492822966,
+      "f1_weighted": 0.7099872268254941,
+      "f1_macro": 0.6941488702036362,
+      "roc_auc": 0.778415559772296
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.006149793476783298,
+    "jsd_mean": 0.19728743714770933
+  }
+}

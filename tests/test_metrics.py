@@ -78,7 +78,7 @@ class TestDownstreamEvaluator:
         )
 
         assert "downstream_accuracy" in result
-        assert "downstream_f1" in result
+        assert "downstream_f1_macro" in result
         assert 0 <= result["downstream_accuracy"] <= 1
 
     def test_regression(self):

@@ -1,0 +1,37 @@
+{
+  "dataset_id": "MX5",
+  "dataset_name": "autism",
+  "method_id": "",
+  "method_name": "tabcsdi",
+  "mechanism": "MAR",
+  "pattern": "general",
+  "missing_rate": 0.1,
+  "seed": 42,
+  "n_samples": 487,
+  "n_features": 20,
+  "runtime_seconds": 0.312554457996157,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 1.3934353722890427,
+      "mae": 1.1178268984307287
+    },
+    "categorical": {
+      "accuracy": 0.21304347826086956,
+      "macro_f1": 0.04425223898908109
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.9754098360655737,
+      "f1_weighted": 0.9755063607818107,
+      "f1_macro": 0.970680124969959,
+      "roc_auc": 0.9951550387596899
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.0832053081771218,
+    "jsd_mean": 0.1955336602580844
+  }
+}

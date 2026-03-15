@@ -1,0 +1,37 @@
+{
+  "dataset_id": "MX5",
+  "dataset_name": "autism",
+  "method_id": "",
+  "method_name": "missforest",
+  "mechanism": "MNAR",
+  "pattern": "general",
+  "missing_rate": 0.5,
+  "seed": 42,
+  "n_samples": 487,
+  "n_features": 20,
+  "runtime_seconds": 15.037511624992476,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.19286855234685785,
+      "mae": 0.12959353075382807
+    },
+    "categorical": {
+      "accuracy": 0.45597775718257644,
+      "macro_f1": 0.08422464850913995
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.860655737704918,
+      "f1_weighted": 0.8588208940026474,
+      "f1_macro": 0.82824016563147,
+      "roc_auc": 0.9079457364341086
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.05630343201420939,
+    "jsd_mean": 0.37434180639500697
+  }
+}

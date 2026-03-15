@@ -1,0 +1,131 @@
+{
+  "experiment_id": "titanic_em_MAR_univariate_10pct_s456",
+  "dataset_name": "titanic",
+  "method_name": "em",
+  "method_family": "statistical",
+  "missing_mechanism": "MAR",
+  "missing_rate": 0.1,
+  "missing_pattern": "univariate",
+  "scenario_tag": "",
+  "seed": 456,
+  "imputation_metrics": {
+    "test_numerical_rmse": 0.6277191122814744,
+    "test_numerical_mae": 0.36052630232475796,
+    "test_wasserstein_distance_mean": 0.007751401947924998,
+    "test_jsd_mean": 0.0,
+    "test_n_missing_values": 24,
+    "train_numerical_rmse": 1.2030244765904945,
+    "train_numerical_mae": 0.8342487959601143,
+    "train_wasserstein_distance_mean": 0.015340526996431786,
+    "train_jsd_mean": 0.0,
+    "train_n_missing_values": 77
+  },
+  "downstream_metrics": {
+    "downstream_accuracy": 0.7799043062200957,
+    "downstream_f1_weighted": 0.7759086366961016,
+    "downstream_f1_macro": 0.7647778430221179,
+    "downstream_roc_auc": 0.8174098671726756
+  },
+  "runtime_metrics": {
+    "fit_time_seconds": 0.01777199999196455,
+    "impute_time_seconds": 0.0019269159965915605,
+    "total_time_seconds": 0.01969891598855611
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 456,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "dataset": {
+      "split": {
+        "train_ratio": 0.8,
+        "valid_ratio": 0.0,
+        "test_ratio": 0.2,
+        "stratify": true
+      },
+      "name": "titanic",
+      "dataset_id": "MX3",
+      "source": "kaggle/openml",
+      "target_col": "survived",
+      "task_type": "classification"
+    },
+    "downstream": {
+      "enabled": true,
+      "model": "random_forest",
+      "params": {
+        "n_estimators": 100,
+        "random_state": 42
+      }
+    },
+    "missingness": {
+      "protocol": "controlled",
+      "mechanism": "MAR",
+      "pattern": "univariate",
+      "rate": 0.1,
+      "options": {
+        "exclude_target": true
+      }
+    },
+    "method": {
+      "name": "em",
+      "family": "statistical",
+      "device": "cpu",
+      "params": {
+        "max_iterations": 100,
+        "convergence_threshold": 0.0001,
+        "n_jobs": 2,
+        "device": "cpu"
+      }
+    },
+    "summary": {
+      "test_numerical_rmse": 0.6277191122814744,
+      "test_numerical_mae": 0.36052630232475796,
+      "test_wasserstein_distance_mean": 0.007751401947924998,
+      "test_jsd_mean": 0.0,
+      "test_n_missing_values": 24,
+      "train_numerical_rmse": 1.2030244765904945,
+      "train_numerical_mae": 0.8342487959601143,
+      "train_wasserstein_distance_mean": 0.015340526996431786,
+      "train_jsd_mean": 0.0,
+      "train_n_missing_values": 77,
+      "downstream_accuracy": 0.7799043062200957,
+      "downstream_f1_weighted": 0.7759086366961016,
+      "downstream_f1_macro": 0.7647778430221179,
+      "downstream_roc_auc": 0.8174098671726756,
+      "fit_time_seconds": 0.01777199999196455,
+      "impute_time_seconds": 0.0019269159965915605,
+      "total_time_seconds": 0.01969891598855611
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}

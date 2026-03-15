@@ -1,0 +1,37 @@
+{
+  "dataset_id": "MX4",
+  "dataset_name": "mammographic",
+  "method_id": "",
+  "method_name": "miwae",
+  "mechanism": "MNAR",
+  "pattern": "univariate",
+  "missing_rate": 0.1,
+  "seed": 42,
+  "n_samples": 8946,
+  "n_features": 6,
+  "runtime_seconds": 14.808854458009591,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.4395936961467187,
+      "mae": 0.4273196217762677
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.9856951274027715,
+      "f1_weighted": 0.9838120084008316,
+      "f1_macro": 0.8012350615309431,
+      "roc_auc": 0.9688171096637916
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.005953567416210926,
+    "jsd_mean": null
+  }
+}

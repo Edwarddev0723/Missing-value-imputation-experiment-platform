@@ -1,0 +1,37 @@
+{
+  "dataset_id": "MX1",
+  "dataset_name": "adult",
+  "method_id": "",
+  "method_name": "mice",
+  "mechanism": "MAR",
+  "pattern": "univariate",
+  "missing_rate": 0.3,
+  "seed": 123,
+  "n_samples": 36177,
+  "n_features": 14,
+  "runtime_seconds": 3.5349298329965677,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.1790799313382953,
+      "mae": 0.14231610032765782
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.8525152017689331,
+      "f1_weighted": 0.8478640791381468,
+      "f1_macro": 0.790217964140818,
+      "roc_auc": 0.9055727303494563
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.0018886310874332492,
+    "jsd_mean": 0.0
+  }
+}

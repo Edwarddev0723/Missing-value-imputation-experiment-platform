@@ -1,0 +1,32 @@
+{
+  "dataset_id": "PN1",
+  "dataset_name": "wine",
+  "method_id": "",
+  "method_name": "mida",
+  "mechanism": "MNAR",
+  "pattern": "general",
+  "missing_rate": 0.1,
+  "seed": 42,
+  "n_samples": 3918,
+  "n_features": 12,
+  "runtime_seconds": 1.9196200419974048,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.2424793926255016,
+      "mae": 0.1917037303255031
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "regression",
+    "model": "RandomForest",
+    "metrics": {}
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.018066453339835652,
+    "jsd_mean": null
+  }
+}

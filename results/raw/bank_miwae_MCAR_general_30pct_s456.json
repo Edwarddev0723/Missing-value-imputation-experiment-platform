@@ -1,0 +1,36 @@
+{
+  "dataset_id": "MX2",
+  "dataset_name": "bank",
+  "method_id": "",
+  "method_name": "miwae",
+  "mechanism": "MCAR",
+  "pattern": "general",
+  "missing_rate": 0.3,
+  "seed": 456,
+  "n_samples": 36168,
+  "n_features": 16,
+  "runtime_seconds": 82.32872904199758,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.13201305967827595,
+      "mae": 0.07522041133400857
+    },
+    "categorical": {
+      "accuracy": 0.5229932421295533,
+      "macro_f1": 0.21699868793251578
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 1.0,
+      "f1_weighted": 1.0,
+      "f1_macro": 1.0
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.02233761408288794,
+    "jsd_mean": 0.34130185744300096
+  }
+}

@@ -1,0 +1,151 @@
+{
+  "experiment_id": "adult_knn_MNAR_univariate_50pct_s789",
+  "dataset_name": "adult",
+  "method_name": "knn",
+  "method_family": "ml",
+  "missing_mechanism": "MNAR",
+  "missing_rate": 0.5,
+  "missing_pattern": "univariate",
+  "scenario_tag": "",
+  "seed": 789,
+  "imputation_metrics": {
+    "test_numerical_rmse": 0.24079070271373657,
+    "test_numerical_mae": 0.1926744967017659,
+    "test_wasserstein_distance_mean": 0.0146459273263422,
+    "test_jsd_mean": 0.0,
+    "test_n_missing_values": 4525,
+    "train_numerical_rmse": 0.23338636765667553,
+    "train_numerical_mae": 0.18694794802774378,
+    "train_wasserstein_distance_mean": 0.014120252027939357,
+    "train_jsd_mean": 0.0,
+    "train_n_missing_values": 18038
+  },
+  "downstream_metrics": {
+    "downstream_accuracy": 0.8463239358761747,
+    "downstream_f1_weighted": 0.8416862904289667,
+    "downstream_f1_macro": 0.7819340280427649,
+    "downstream_roc_auc": 0.8982433564559268
+  },
+  "runtime_metrics": {
+    "fit_time_seconds": 0.0005859170050825924,
+    "impute_time_seconds": 24.440200750002987,
+    "total_time_seconds": 24.44078666700807
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 789,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "dataset": {
+      "split": {
+        "train_ratio": 0.8,
+        "valid_ratio": 0.0,
+        "test_ratio": 0.2,
+        "stratify": true
+      },
+      "name": "adult",
+      "dataset_id": "MX1",
+      "source": "uci",
+      "target_col": "income",
+      "task_type": "classification",
+      "feature_types": {
+        "numerical": [
+          "age",
+          "fnlwgt",
+          "education-num",
+          "capital-gain",
+          "capital-loss",
+          "hours-per-week"
+        ],
+        "categorical": [
+          "workclass",
+          "education",
+          "marital-status",
+          "occupation",
+          "relationship",
+          "race",
+          "sex",
+          "native-country"
+        ]
+      }
+    },
+    "downstream": {
+      "enabled": true,
+      "model": "random_forest",
+      "params": {
+        "n_estimators": 100,
+        "random_state": 42
+      }
+    },
+    "missingness": {
+      "protocol": "controlled",
+      "mechanism": "MNAR",
+      "pattern": "univariate",
+      "rate": 0.5,
+      "options": {
+        "exclude_target": true
+      }
+    },
+    "method": {
+      "name": "knn",
+      "family": "ml",
+      "device": "cpu",
+      "params": {
+        "n_neighbors": 5,
+        "weights": "distance",
+        "n_jobs": 2,
+        "device": "cpu"
+      }
+    },
+    "summary": {
+      "test_numerical_rmse": 0.24079070271373657,
+      "test_numerical_mae": 0.1926744967017659,
+      "test_wasserstein_distance_mean": 0.0146459273263422,
+      "test_jsd_mean": 0.0,
+      "test_n_missing_values": 4525,
+      "train_numerical_rmse": 0.23338636765667553,
+      "train_numerical_mae": 0.18694794802774378,
+      "train_wasserstein_distance_mean": 0.014120252027939357,
+      "train_jsd_mean": 0.0,
+      "train_n_missing_values": 18038,
+      "downstream_accuracy": 0.8463239358761747,
+      "downstream_f1_weighted": 0.8416862904289667,
+      "downstream_f1_macro": 0.7819340280427649,
+      "downstream_roc_auc": 0.8982433564559268,
+      "fit_time_seconds": 0.0005859170050825924,
+      "impute_time_seconds": 24.440200750002987,
+      "total_time_seconds": 24.44078666700807
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}

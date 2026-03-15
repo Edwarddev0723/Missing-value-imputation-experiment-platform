@@ -1,0 +1,130 @@
+{
+  "experiment_id": "mammographic_xgboost_MCAR_general_10pct_s1024",
+  "dataset_name": "mammographic",
+  "method_name": "xgboost",
+  "method_family": "ml",
+  "missing_mechanism": "MCAR",
+  "missing_rate": 0.1,
+  "missing_pattern": "general",
+  "scenario_tag": "",
+  "seed": 1024,
+  "imputation_metrics": {
+    "test_numerical_rmse": 0.09514550915544509,
+    "test_numerical_mae": 0.03389079813909875,
+    "test_wasserstein_distance_mean": 0.002221553842922396,
+    "test_n_missing_values": 1288,
+    "train_numerical_rmse": 0.08535728095137315,
+    "train_numerical_mae": 0.03268024976145903,
+    "train_wasserstein_distance_mean": 0.001756998422491009,
+    "train_n_missing_values": 5243
+  },
+  "downstream_metrics": {
+    "downstream_accuracy": 0.989718372820742,
+    "downstream_f1_weighted": 0.9885915043873444,
+    "downstream_f1_macro": 0.862085695522228,
+    "downstream_roc_auc": 0.9328287273367366
+  },
+  "runtime_metrics": {
+    "fit_time_seconds": 2.1826065839995863,
+    "impute_time_seconds": 0.005299541997374035,
+    "total_time_seconds": 2.1879061259969603
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 1024,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "dataset": {
+      "split": {
+        "train_ratio": 0.8,
+        "valid_ratio": 0.0,
+        "test_ratio": 0.2,
+        "stratify": true
+      },
+      "name": "mammographic",
+      "dataset_id": "MX4",
+      "source": "uci",
+      "target_col": "severity",
+      "task_type": "classification"
+    },
+    "downstream": {
+      "enabled": true,
+      "model": "random_forest",
+      "params": {
+        "n_estimators": 100,
+        "random_state": 42
+      }
+    },
+    "missingness": {
+      "protocol": "controlled",
+      "mechanism": "MCAR",
+      "pattern": "general",
+      "rate": 0.1,
+      "options": {
+        "exclude_target": true
+      }
+    },
+    "method": {
+      "name": "xgboost",
+      "family": "ml",
+      "device": "cpu",
+      "params": {
+        "n_estimators": 50,
+        "max_depth": 6,
+        "learning_rate": 0.1,
+        "max_iterations": 5,
+        "convergence_threshold": 0.001,
+        "n_jobs": 2,
+        "device": "cpu"
+      }
+    },
+    "summary": {
+      "test_numerical_rmse": 0.09514550915544509,
+      "test_numerical_mae": 0.03389079813909875,
+      "test_wasserstein_distance_mean": 0.002221553842922396,
+      "test_n_missing_values": 1288,
+      "train_numerical_rmse": 0.08535728095137315,
+      "train_numerical_mae": 0.03268024976145903,
+      "train_wasserstein_distance_mean": 0.001756998422491009,
+      "train_n_missing_values": 5243,
+      "downstream_accuracy": 0.989718372820742,
+      "downstream_f1_weighted": 0.9885915043873444,
+      "downstream_f1_macro": 0.862085695522228,
+      "downstream_roc_auc": 0.9328287273367366,
+      "fit_time_seconds": 2.1826065839995863,
+      "impute_time_seconds": 0.005299541997374035,
+      "total_time_seconds": 2.1879061259969603
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}

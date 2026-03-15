@@ -1,0 +1,37 @@
+{
+  "dataset_id": "MX4",
+  "dataset_name": "mammographic",
+  "method_id": "",
+  "method_name": "missforest",
+  "mechanism": "MCAR",
+  "pattern": "general",
+  "missing_rate": 0.5,
+  "seed": 456,
+  "n_samples": 8946,
+  "n_features": 6,
+  "runtime_seconds": 11.637957333005033,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.14135465875691017,
+      "mae": 0.055977497839300276
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.9789897183728208,
+      "f1_weighted": 0.9749969847592392,
+      "f1_macro": 0.6813245434568462,
+      "roc_auc": 0.8192483717655342
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.015265403001605482,
+    "jsd_mean": null
+  }
+}

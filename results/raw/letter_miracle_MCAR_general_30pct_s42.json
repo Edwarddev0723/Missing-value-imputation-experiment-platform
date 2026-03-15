@@ -1,0 +1,36 @@
+{
+  "dataset_id": "PN6",
+  "dataset_name": "letter",
+  "method_id": "",
+  "method_name": "miracle",
+  "mechanism": "MCAR",
+  "pattern": "general",
+  "missing_rate": 0.3,
+  "seed": 42,
+  "n_samples": 16000,
+  "n_features": 16,
+  "runtime_seconds": 17.213977042993065,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.30883114321091876,
+      "mae": 0.2607670640305663
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.713,
+      "f1_weighted": 0.7147326457416205,
+      "f1_macro": 0.7144890005325798
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.07639826893976423,
+    "jsd_mean": null
+  }
+}

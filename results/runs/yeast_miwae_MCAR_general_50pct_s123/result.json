@@ -1,0 +1,121 @@
+{
+  "experiment_id": "yeast_miwae_MCAR_general_50pct_s123",
+  "dataset_name": "yeast",
+  "method_name": "miwae",
+  "method_family": "dl",
+  "missing_mechanism": "MCAR",
+  "missing_rate": 0.5,
+  "missing_pattern": "general",
+  "scenario_tag": "",
+  "seed": 123,
+  "imputation_metrics": {
+    "test_numerical_rmse": 0.2005720679172966,
+    "test_numerical_mae": 0.1451074630335976,
+    "test_wasserstein_distance_mean": 0.06491902832329695,
+    "test_n_missing_values": 28455,
+    "train_numerical_rmse": 0.20223713104462432,
+    "train_numerical_mae": 0.14558650965515402,
+    "train_wasserstein_distance_mean": 0.0644800795329813,
+    "train_n_missing_values": 112875
+  },
+  "downstream_metrics": {},
+  "runtime_metrics": {
+    "fit_time_seconds": 4.240749417003826,
+    "impute_time_seconds": 0.01440945899230428,
+    "total_time_seconds": 4.2551588759961305
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 123,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "dataset": {
+      "split": {
+        "train_ratio": 0.8,
+        "valid_ratio": 0.0,
+        "test_ratio": 0.2,
+        "stratify": true
+      },
+      "name": "yeast",
+      "dataset_id": "PN4",
+      "source": "uci",
+      "target_col": "localization_site",
+      "task_type": "classification"
+    },
+    "downstream": {
+      "enabled": true,
+      "model": "random_forest",
+      "params": {
+        "n_estimators": 100,
+        "random_state": 42
+      }
+    },
+    "missingness": {
+      "protocol": "controlled",
+      "mechanism": "MCAR",
+      "pattern": "general",
+      "rate": 0.5,
+      "options": {
+        "exclude_target": true
+      }
+    },
+    "method": {
+      "name": "miwae",
+      "family": "dl",
+      "device": "mps",
+      "params": {
+        "latent_dim": 32,
+        "n_hidden": 128,
+        "n_samples": 20,
+        "epochs": 100,
+        "learning_rate": 0.001,
+        "batch_size": 512,
+        "early_stopping_patience": 5
+      }
+    },
+    "summary": {
+      "test_numerical_rmse": 0.2005720679172966,
+      "test_numerical_mae": 0.1451074630335976,
+      "test_wasserstein_distance_mean": 0.06491902832329695,
+      "test_n_missing_values": 28455,
+      "train_numerical_rmse": 0.20223713104462432,
+      "train_numerical_mae": 0.14558650965515402,
+      "train_wasserstein_distance_mean": 0.0644800795329813,
+      "train_n_missing_values": 112875,
+      "fit_time_seconds": 4.240749417003826,
+      "impute_time_seconds": 0.01440945899230428,
+      "total_time_seconds": 4.2551588759961305
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}

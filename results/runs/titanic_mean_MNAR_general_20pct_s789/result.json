@@ -1,0 +1,137 @@
+{
+  "experiment_id": "titanic_mean_MNAR_general_20pct_s789",
+  "dataset_name": "titanic",
+  "method_name": "mean",
+  "method_family": "statistical",
+  "missing_mechanism": "MNAR",
+  "missing_rate": 0.2,
+  "missing_pattern": "general",
+  "scenario_tag": "",
+  "seed": 789,
+  "imputation_metrics": {
+    "test_numerical_rmse": 0.3045750552968014,
+    "test_numerical_mae": 0.24855031392188548,
+    "test_categorical_accuracy": 1.0,
+    "test_categorical_macro_f1": 1.0,
+    "test_wasserstein_distance_mean": 0.04780728526153014,
+    "test_jsd_mean": 0.0,
+    "test_n_missing_values": 282,
+    "train_numerical_rmse": 0.31797136554849986,
+    "train_numerical_mae": 0.25286211803314074,
+    "train_categorical_accuracy": 0.990990990990991,
+    "train_categorical_macro_f1": 0.6635514018691588,
+    "train_wasserstein_distance_mean": 0.05105753078750708,
+    "train_jsd_mean": 0.001334670765522267,
+    "train_n_missing_values": 1175
+  },
+  "downstream_metrics": {
+    "downstream_accuracy": 0.784688995215311,
+    "downstream_f1_weighted": 0.7835542863626908,
+    "downstream_f1_macro": 0.7747035573122529,
+    "downstream_roc_auc": 0.8467741935483871
+  },
+  "runtime_metrics": {
+    "fit_time_seconds": 0.00022091600112617016,
+    "impute_time_seconds": 0.0006354579963954166,
+    "total_time_seconds": 0.0008563739975215867
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 789,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "dataset": {
+      "split": {
+        "train_ratio": 0.8,
+        "valid_ratio": 0.0,
+        "test_ratio": 0.2,
+        "stratify": true
+      },
+      "name": "titanic",
+      "dataset_id": "MX3",
+      "source": "kaggle/openml",
+      "target_col": "survived",
+      "task_type": "classification"
+    },
+    "downstream": {
+      "enabled": true,
+      "model": "random_forest",
+      "params": {
+        "n_estimators": 100,
+        "random_state": 42
+      }
+    },
+    "missingness": {
+      "protocol": "controlled",
+      "mechanism": "MNAR",
+      "pattern": "general",
+      "rate": 0.2,
+      "options": {
+        "exclude_target": true
+      }
+    },
+    "method": {
+      "name": "mean",
+      "family": "statistical",
+      "device": "cpu",
+      "params": {
+        "n_jobs": 2,
+        "device": "cpu"
+      }
+    },
+    "summary": {
+      "test_numerical_rmse": 0.3045750552968014,
+      "test_numerical_mae": 0.24855031392188548,
+      "test_categorical_accuracy": 1.0,
+      "test_categorical_macro_f1": 1.0,
+      "test_wasserstein_distance_mean": 0.04780728526153014,
+      "test_jsd_mean": 0.0,
+      "test_n_missing_values": 282,
+      "train_numerical_rmse": 0.31797136554849986,
+      "train_numerical_mae": 0.25286211803314074,
+      "train_categorical_accuracy": 0.990990990990991,
+      "train_categorical_macro_f1": 0.6635514018691588,
+      "train_wasserstein_distance_mean": 0.05105753078750708,
+      "train_jsd_mean": 0.001334670765522267,
+      "train_n_missing_values": 1175,
+      "downstream_accuracy": 0.784688995215311,
+      "downstream_f1_weighted": 0.7835542863626908,
+      "downstream_f1_macro": 0.7747035573122529,
+      "downstream_roc_auc": 0.8467741935483871,
+      "fit_time_seconds": 0.00022091600112617016,
+      "impute_time_seconds": 0.0006354579963954166,
+      "total_time_seconds": 0.0008563739975215867
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}

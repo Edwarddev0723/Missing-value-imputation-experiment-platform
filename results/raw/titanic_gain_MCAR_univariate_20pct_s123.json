@@ -1,0 +1,37 @@
+{
+  "dataset_id": "MX3",
+  "dataset_name": "titanic",
+  "method_id": "",
+  "method_name": "gain",
+  "mechanism": "MCAR",
+  "pattern": "univariate",
+  "missing_rate": 0.2,
+  "seed": 123,
+  "n_samples": 834,
+  "n_features": 7,
+  "runtime_seconds": 0.8459569999977248,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.43327959898674073,
+      "mae": 0.3958333333333333
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.7320574162679426,
+      "f1_weighted": 0.7280656718364914,
+      "f1_macro": 0.7150925024342746,
+      "roc_auc": 0.8195920303605313
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.018181820798187993,
+    "jsd_mean": 0.0
+  }
+}

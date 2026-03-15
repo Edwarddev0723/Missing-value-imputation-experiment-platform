@@ -71,12 +71,12 @@ class EMImputer(BaseImputer):
         X_num = X_train.iloc[:, num_col_indices].values.astype(float)
         n, p = X_num.shape
 
-        # Initialize with column means
+        # Initialize with column means (vectorized)
         col_means = np.nanmean(X_num, axis=0)
         X_filled = X_num.copy()
-        for j in range(p):
-            mask_j = np.isnan(X_filled[:, j])
-            X_filled[mask_j, j] = col_means[j]
+        nan_mask = np.isnan(X_filled)
+        fill_matrix = np.broadcast_to(col_means, X_filled.shape)
+        X_filled[nan_mask] = fill_matrix[nan_mask]
 
         # EM iterations
         for it in range(self.max_iterations):
@@ -88,29 +88,33 @@ class EMImputer(BaseImputer):
             cov += np.eye(p) * 1e-6
 
             # E step: impute missing with conditional expectations
+            # Group rows by identical missingness pattern → batch solve
             X_new = X_filled.copy()
             mask = np.isnan(X_num)
 
+            # Encode each row's pattern as a tuple of missing indices
+            patterns: dict[tuple[int, ...], list[int]] = {}
             for i in range(n):
-                miss_idx = np.where(mask[i])[0]
-                obs_idx = np.where(~mask[i])[0]
-                if len(miss_idx) == 0:
-                    continue
-                if len(obs_idx) == 0:
-                    X_new[i, miss_idx] = mu[miss_idx]
-                    continue
+                miss_idx = tuple(np.where(mask[i])[0])
+                if miss_idx:
+                    patterns.setdefault(miss_idx, []).append(i)
 
+            for miss_tuple, row_indices in patterns.items():
+                miss_idx = np.array(miss_tuple)
+                obs_idx = np.setdiff1d(np.arange(p), miss_idx)
+                if len(obs_idx) == 0:
+                    X_new[np.ix_(row_indices, miss_idx)] = mu[miss_idx]
+                    continue
                 cov_mo = cov[np.ix_(miss_idx, obs_idx)]
                 cov_oo = cov[np.ix_(obs_idx, obs_idx)]
                 try:
-                    cov_oo_inv = np.linalg.solve(
-                        cov_oo, np.eye(len(obs_idx))
-                    )
-                    X_new[i, miss_idx] = mu[miss_idx] + cov_mo @ cov_oo_inv @ (
-                        X_num[i, obs_idx] - mu[obs_idx]
-                    )
+                    # Solve once per pattern: weight = cov_mo @ inv(cov_oo)
+                    weight = np.linalg.solve(cov_oo, cov_mo.T).T  # (n_miss, n_obs)
+                    # Batch compute for all rows with this pattern
+                    obs_deviations = X_num[np.ix_(row_indices, obs_idx)] - mu[obs_idx]
+                    X_new[np.ix_(row_indices, miss_idx)] = mu[miss_idx] + obs_deviations @ weight.T
                 except np.linalg.LinAlgError:
-                    X_new[i, miss_idx] = mu[miss_idx]
+                    X_new[np.ix_(row_indices, miss_idx)] = mu[miss_idx]
 
             # Check convergence
             diff = np.linalg.norm(X_new - X_filled) / (np.linalg.norm(X_filled) + 1e-10)
@@ -140,25 +144,27 @@ class EMImputer(BaseImputer):
                 mask = np.isnan(X)
                 p = X.shape[1]
 
+                # Group rows by missingness pattern → batch solve
+                patterns: dict[tuple[int, ...], list[int]] = {}
                 for i in range(X.shape[0]):
-                    miss_idx = np.where(mask[i])[0]
-                    obs_idx = np.where(~mask[i])[0]
-                    if len(miss_idx) == 0:
-                        continue
+                    miss_idx = tuple(np.where(mask[i])[0])
+                    if miss_idx:
+                        patterns.setdefault(miss_idx, []).append(i)
+
+                for miss_tuple, row_indices in patterns.items():
+                    miss_idx = np.array(miss_tuple)
+                    obs_idx = np.setdiff1d(np.arange(p), miss_idx)
                     if len(obs_idx) == 0:
-                        X[i, miss_idx] = self._mean[miss_idx]
+                        X[np.ix_(row_indices, miss_idx)] = self._mean[miss_idx]
                         continue
                     cov_mo = self._cov[np.ix_(miss_idx, obs_idx)]
                     cov_oo = self._cov[np.ix_(obs_idx, obs_idx)]
                     try:
-                        cov_oo_inv = np.linalg.solve(
-                            cov_oo, np.eye(len(obs_idx))
-                        )
-                        X[i, miss_idx] = self._mean[miss_idx] + cov_mo @ cov_oo_inv @ (
-                            X[i, obs_idx] - self._mean[obs_idx]
-                        )
+                        weight = np.linalg.solve(cov_oo, cov_mo.T).T
+                        obs_deviations = X[np.ix_(row_indices, obs_idx)] - self._mean[obs_idx]
+                        X[np.ix_(row_indices, miss_idx)] = self._mean[miss_idx] + obs_deviations @ weight.T
                     except np.linalg.LinAlgError:
-                        X[i, miss_idx] = self._mean[miss_idx]
+                        X[np.ix_(row_indices, miss_idx)] = self._mean[miss_idx]
 
                 for j_idx, j_col in enumerate(num_col_indices):
                     df.iloc[:, j_col] = X[:, j_idx]

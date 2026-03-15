@@ -1,0 +1,36 @@
+{
+  "dataset_id": "PN2",
+  "dataset_name": "concrete",
+  "method_id": "",
+  "method_name": "missforest",
+  "mechanism": "MNAR",
+  "pattern": "general",
+  "missing_rate": 0.3,
+  "seed": 123,
+  "n_samples": 824,
+  "n_features": 8,
+  "runtime_seconds": 10.557740208008909,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.25510288515887797,
+      "mae": 0.16642903219220204
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "regression",
+    "model": "RandomForest",
+    "metrics": {
+      "rmse": 8.232339140094243,
+      "mae": 6.045778195792878,
+      "r2": 0.7530589105987403
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.044167827675563404,
+    "jsd_mean": null
+  }
+}

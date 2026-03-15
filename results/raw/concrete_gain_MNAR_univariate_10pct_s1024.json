@@ -1,0 +1,36 @@
+{
+  "dataset_id": "PN2",
+  "dataset_name": "concrete",
+  "method_id": "",
+  "method_name": "gain",
+  "mechanism": "MNAR",
+  "pattern": "univariate",
+  "missing_rate": 0.1,
+  "seed": 1024,
+  "n_samples": 824,
+  "n_features": 8,
+  "runtime_seconds": 1.392810165998526,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.47744886258770586,
+      "mae": 0.44663368729054614
+    },
+    "categorical": {
+      "accuracy": null,
+      "macro_f1": null
+    }
+  },
+  "downstream_performance": {
+    "task_type": "regression",
+    "model": "RandomForest",
+    "metrics": {
+      "rmse": 4.317581481018398,
+      "mae": 3.056260880721216,
+      "r2": 0.9315505866660109
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.004878286873882271,
+    "jsd_mean": null
+  }
+}

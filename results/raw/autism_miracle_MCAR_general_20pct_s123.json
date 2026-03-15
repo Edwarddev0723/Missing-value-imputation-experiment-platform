@@ -1,0 +1,37 @@
+{
+  "dataset_id": "MX5",
+  "dataset_name": "autism",
+  "method_id": "",
+  "method_name": "miracle",
+  "mechanism": "MCAR",
+  "pattern": "general",
+  "missing_rate": 0.2,
+  "seed": 123,
+  "n_samples": 487,
+  "n_features": 20,
+  "runtime_seconds": 1.0120026250078809,
+  "imputation_quality": {
+    "numerical": {
+      "rmse": 0.21390389655804745,
+      "mae": 0.14807489051193487
+    },
+    "categorical": {
+      "accuracy": 0.5934065934065934,
+      "macro_f1": 0.11860413729572607
+    }
+  },
+  "downstream_performance": {
+    "task_type": "classification",
+    "model": "RandomForest",
+    "metrics": {
+      "accuracy": 0.9508196721311475,
+      "f1_weighted": 0.9499320592618569,
+      "f1_macro": 0.9388368983957219,
+      "roc_auc": 0.9901485788113694
+    }
+  },
+  "distribution_preservation": {
+    "wasserstein_distance_mean": 0.016703417921467973,
+    "jsd_mean": 0.27879248011697755
+  }
+}

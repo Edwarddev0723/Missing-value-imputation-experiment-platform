@@ -1,0 +1,160 @@
+{
+  "experiment_id": "adult_missforest_MNAR_general_30pct_s1024",
+  "dataset_name": "adult",
+  "method_name": "missforest",
+  "method_family": "ml",
+  "missing_mechanism": "MNAR",
+  "missing_rate": 0.3,
+  "missing_pattern": "general",
+  "scenario_tag": "",
+  "seed": 1024,
+  "imputation_metrics": {
+    "test_numerical_rmse": 0.17348408794211734,
+    "test_numerical_mae": 0.09920082098595936,
+    "test_categorical_accuracy": 0.44503983970924,
+    "test_categorical_macro_f1": 0.12821346018660212,
+    "test_wasserstein_distance_mean": 0.0273256803193568,
+    "test_jsd_mean": 0.3117976493717006,
+    "test_n_missing_values": 37603,
+    "train_numerical_rmse": 0.17276490383376022,
+    "train_numerical_mae": 0.09913352490335689,
+    "train_categorical_accuracy": 0.4395556272616221,
+    "train_categorical_macro_f1": 0.12007731412493484,
+    "train_wasserstein_distance_mean": 0.027651226640471083,
+    "train_jsd_mean": 0.3140678291879191,
+    "train_n_missing_values": 151900
+  },
+  "downstream_metrics": {
+    "downstream_accuracy": 0.8161415146489773,
+    "downstream_f1_weighted": 0.8102175055104627,
+    "downstream_f1_macro": 0.7381657570284214,
+    "downstream_roc_auc": 0.8612097263066629
+  },
+  "runtime_metrics": {
+    "fit_time_seconds": 228.1415074999968,
+    "impute_time_seconds": 6.365065917008906,
+    "total_time_seconds": 234.5065734170057
+  },
+  "config": {
+    "project": {
+      "name": "missing-value-imputation-benchmark",
+      "task_name": "benchmark_core",
+      "seed": 1024,
+      "output_dir": "results/"
+    },
+    "runtime": {
+      "device": "cpu",
+      "num_workers": 4,
+      "deterministic": true
+    },
+    "tracking": {
+      "use_wandb": false,
+      "project": "missing-value-imputation-benchmark",
+      "entity": null,
+      "group": null,
+      "tags": [
+        "benchmark"
+      ],
+      "log_artifacts": true,
+      "output_dir": "results/logs"
+    },
+    "experiment": {
+      "repeat_seeds": [
+        42,
+        123,
+        456,
+        789,
+        1024
+      ],
+      "save_imputed_data": false,
+      "save_masks": true
+    },
+    "dataset": {
+      "split": {
+        "train_ratio": 0.8,
+        "valid_ratio": 0.0,
+        "test_ratio": 0.2,
+        "stratify": true
+      },
+      "name": "adult",
+      "dataset_id": "MX1",
+      "source": "uci",
+      "target_col": "income",
+      "task_type": "classification",
+      "feature_types": {
+        "numerical": [
+          "age",
+          "fnlwgt",
+          "education-num",
+          "capital-gain",
+          "capital-loss",
+          "hours-per-week"
+        ],
+        "categorical": [
+          "workclass",
+          "education",
+          "marital-status",
+          "occupation",
+          "relationship",
+          "race",
+          "sex",
+          "native-country"
+        ]
+      }
+    },
+    "downstream": {
+      "enabled": true,
+      "model": "random_forest",
+      "params": {
+        "n_estimators": 100,
+        "random_state": 42
+      }
+    },
+    "missingness": {
+      "protocol": "controlled",
+      "mechanism": "MNAR",
+      "pattern": "general",
+      "rate": 0.3,
+      "options": {
+        "exclude_target": true
+      }
+    },
+    "method": {
+      "name": "missforest",
+      "family": "ml",
+      "device": "cpu",
+      "params": {
+        "n_estimators": 50,
+        "max_depth": 12,
+        "max_iter": 10,
+        "n_jobs": 2,
+        "device": "cpu"
+      }
+    },
+    "summary": {
+      "test_numerical_rmse": 0.17348408794211734,
+      "test_numerical_mae": 0.09920082098595936,
+      "test_categorical_accuracy": 0.44503983970924,
+      "test_categorical_macro_f1": 0.12821346018660212,
+      "test_wasserstein_distance_mean": 0.0273256803193568,
+      "test_jsd_mean": 0.3117976493717006,
+      "test_n_missing_values": 37603,
+      "train_numerical_rmse": 0.17276490383376022,
+      "train_numerical_mae": 0.09913352490335689,
+      "train_categorical_accuracy": 0.4395556272616221,
+      "train_categorical_macro_f1": 0.12007731412493484,
+      "train_wasserstein_distance_mean": 0.027651226640471083,
+      "train_jsd_mean": 0.3140678291879191,
+      "train_n_missing_values": 151900,
+      "downstream_accuracy": 0.8161415146489773,
+      "downstream_f1_weighted": 0.8102175055104627,
+      "downstream_f1_macro": 0.7381657570284214,
+      "downstream_roc_auc": 0.8612097263066629,
+      "fit_time_seconds": 228.1415074999968,
+      "impute_time_seconds": 6.365065917008906,
+      "total_time_seconds": 234.5065734170057
+    }
+  },
+  "status": "completed",
+  "error_message": ""
+}
