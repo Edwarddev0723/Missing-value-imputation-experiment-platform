@@ -1,214 +1,162 @@
-# Missing Value Imputation Benchmark Platform
+# ImputeBench
 
-A reproducible, extensible, config-driven platform for systematically comparing missing value imputation methods across datasets, missingness mechanisms, and evaluation metrics.
+> A comprehensive, reproducible benchmark for missing value imputation — 13 methods · 12 datasets · 3 mechanisms · 17,160 experimental runs — with a reusable, config-driven experiment platform.
 
-## Features
+[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Tests](https://img.shields.io/badge/tests-40%20passed-brightgreen.svg)]()
 
-- **Unified API**: All imputation methods share `fit()` / `impute()` / `fit_impute()`.
-- **Config-driven**: Experiments fully defined via YAML configs — datasets, methods, missingness, evaluation.
-- **Registry pattern**: Register new datasets/methods/generators without modifying pipeline code.
-- **W&B integration**: Automatic experiment tracking, config logging, metric logging, artifact management.
-- **Reproducibility**: Shared splits, shared masks, fixed seeds across all methods.
-- **Batch execution**: Cross-product experiment matrix (dataset × missingness × method × seed).
+---
+
+## Leaderboard
+
+| Rank | Method | Type | Avg Rank ↓ | Stability (std) | RMSE Mean | Runtime |
+|:----:|--------|:----:|:----------:|:---------------:|:---------:|--------:|
+| 🥇 | **MissForest** | ML | **2.06** | 1.79 | 0.161 | 79.2 s |
+| 🥈 | **XGBoost** | ML | **2.71** | 1.75 | 0.170 | 71.6 s |
+| 🥉 | **KNN** | ML | **4.49** | 2.64 | 0.196 | 10.4 s |
+| 4 | EM | Stat | 5.05 | 2.94 | 0.219 | 2.1 s |
+| 5 | MICE | Stat | 5.52 | 2.82 | 0.209 | 3.5 s |
+| 6 | Mean | Stat | 7.23 | 2.19 | 0.273 | 0.002 s |
+| 7 | MIDA | DL | 7.66 | 2.74 | 0.298 | 8.1 s |
+| 8 | MIWAE | DL | 7.69 | 2.91 | 0.298 | 17.4 s |
+| 9 | SoftImpute | Stat | 8.41 | 2.67 | 0.312 | 1.3 s |
+| 10 | GAIN | DL | 8.64 | 2.54 | 0.333 | 1.9 s |
+| 11 | Median | Stat | 9.22 | 2.56 | 0.304 | 0.003 s |
+| 12 | MIRACLE | DL | 10.66 | 2.60 | 0.381 | 21.0 s |
+| 13 | TabCSDI | DL | 11.66 | 1.93 | 0.849 | 9.5 s |
+
+> Ranked by average within-condition rank across all 17,160 runs (lower = better). Full results in [`benchmark/`](benchmark/).
+
+## Key Findings
+
+1. **MissForest wins overall** — best imputation rank on 9 out of 11 datasets, with strong stability.
+2. **Non-DL > DL across the board** — Non-DL avg rank 5.59 vs DL 9.26, while being comparably fast.
+3. **No universal winner** — best method varies by dataset, underscoring the need for dataset-specific selection.
+4. **MNAR is the hardest mechanism** — all methods show degraded performance under Missing Not At Random.
+5. **Simple baselines remain competitive** — mean/median imputation is viable at low missing rates, and orders of magnitude faster.
+6. **XGBoost is most stable** — lowest rank standard deviation (1.75) across all experimental conditions.
+
+> All comparisons backed by Friedman + pairwise Wilcoxon signed-rank tests with Holm correction (76/78 pairs significant at α = 0.05).
+
+## What This Repository Provides
+
+| For researchers wanting results | For researchers wanting to experiment |
+|:---:|:---:|
+| Pre-computed benchmark results across 17,160 runs | Config-driven platform: define experiments in YAML, no code changes |
+| Publication-ready LaTeX tables and figures | Unified `fit()` / `impute()` API for all 13 methods |
+| Statistical significance tests (Friedman, Wilcoxon) | Easy to add new methods, datasets, or missingness mechanisms |
+| → See [`benchmark/`](benchmark/) | → See [Getting Started](docs/getting-started.md) |
 
 ## Quick Start
 
-### 1. Setup
-
 ```bash
-# Create virtual environment
-python -m venv .venv
-source .venv/bin/activate
+# 1. Install
+git clone https://github.com/yourusername/ImputeBench.git
+cd ImputeBench
+python -m venv .venv && source .venv/bin/activate
+pip install -e ".[all]"
 
-# Install dependencies
-pip install -e ".[dev]"
-
-# Copy and fill environment variables
-cp .env.example .env
-```
-
-### 2. Run a single experiment
-
-```bash
+# 2. Run a single experiment
 python scripts/run_experiment.py \
-  --config configs/experiments/single_adult_mean.yaml \
-  --no-wandb
-```
+  --config configs/experiments/single_adult_mean.yaml --no-wandb
 
-### 3. Run a batch benchmark
-
-```bash
+# 3. Run the full benchmark
 python scripts/run_batch.py \
-  --config configs/experiments/benchmark_core.yaml \
-  --no-wandb
-```
+  --config configs/experiments/full_benchmark_nondl.yaml --no-wandb --workers 8
 
-### 4. Run with W&B tracking
+# 4. Generate analysis (tables, figures, stats)
+python analysis/scripts/run_all.py
 
-```bash
-# Set WANDB_API_KEY in .env, then:
-python scripts/run_experiment.py \
-  --config configs/experiments/single_adult_mean.yaml
-```
-
-### 5. Run tests
-
-```bash
+# 5. Run tests
 pytest tests/ -v
 ```
+
+> See [docs/getting-started.md](docs/getting-started.md) for detailed setup instructions.
+
+## Benchmark Design
+
+### 13 Imputation Methods
+
+| Category | Methods |
+|----------|---------|
+| **Statistical** (6) | Mean, Median, EM, MICE, KNN, SoftImpute |
+| **Machine Learning** (2) | MissForest, XGBoost |
+| **Deep Learning** (5) | MIDA, MIWAE, GAIN, TabCSDI, MIRACLE |
+
+### 12 Datasets (UCI / OpenML)
+
+| Track | Datasets |
+|-------|----------|
+| **Pure Numerical** (6) | Wine Quality, Concrete, Spambase, Yeast, Breast Cancer, Letter Recognition |
+| **Mixed Type** (6) | Adult, Bank Marketing, Heart, Titanic, Mammographic, Autism |
+
+### Missingness Configurations
+
+- **3 mechanisms**: MCAR, MAR, MNAR
+- **2 patterns**: Univariate, General
+- **4 missing rates**: 10%, 20%, 30%, 50%
+- **5 random seeds** per setting → mean ± std reported
+
+### Evaluation
+
+- **Imputation quality**: RMSE, MAE (numerical); Accuracy, Macro-F1 (categorical)
+- **Downstream task**: RandomForest classifier/regressor on imputed data
+- **Statistical tests**: Friedman test + pairwise Wilcoxon with Holm correction
 
 ## Project Structure
 
 ```
+├── benchmark/               # 🏆 Pre-computed results, figures, and tables
+├── docs/                    # 📖 User guides and documentation
+│   ├── getting-started.md
+│   ├── adding-methods.md
+│   ├── adding-datasets.md
+│   ├── experiment-configs.md
+│   ├── analysis-pipeline.md
+│   └── design/              # Internal architecture docs
 ├── configs/                 # YAML experiment configurations
-│   ├── base.yaml            # Default settings (tracking, downstream, runtime)
-│   ├── datasets/            # Dataset configs (adult, wine, heart)
-│   ├── methods/             # Method configs (mean, knn, missforest, softimpute)
-│   ├── missingness/         # Missingness configs (mcar_10, mar_30)
-│   ├── downstream/          # Downstream task configs
-│   └── experiments/         # Full experiment / batch configs
-├── src/                     # Core source code
-│   ├── config.py            # Config loading, merging, validation
-│   ├── registry.py          # Component registry (dataset, method, missingness, tracker)
-│   ├── factory.py           # ComponentFactory for creating components from config
-│   ├── constants.py         # Platform-wide constants
-│   ├── schemas/             # Result schema (ExperimentResult dataclass)
-│   ├── datasets/            # Dataset adapters (BaseDataset, Adult, Wine, Heart)
-│   ├── preprocessing/       # Canonical preprocessing (encoding, scaling)
-│   ├── missingness/         # Missingness generators (MCAR, MAR)
-│   ├── methods/             # Imputation methods
-│   │   ├── base.py          # BaseImputer abstract class
-│   │   ├── statistical/     # Mean, KNN, softImpute
-│   │   ├── ml/              # MissForest
-│   │   └── dl/              # (placeholder for GAIN, MIWAE, CSDI)
-│   ├── evaluation/          # Imputation metrics + downstream metrics
-│   ├── tracking/            # W&B tracker + local tracker
-│   ├── orchestration/       # ExperimentRunner, BatchExperimentRunner
-│   ├── reporting/           # Summary tables (CSV, future LaTeX)
-│   └── utils/               # Seed, device, timing, I/O, logging
-├── scripts/                 # Entry points
-│   ├── run_experiment.py    # Single experiment runner
-│   └── run_batch.py         # Batch experiment runner
+│   ├── datasets/            # 12 dataset configs
+│   ├── methods/             # 13 method configs
+│   ├── missingness/         # Missingness configs (mechanism × pattern × rate)
+│   └── experiments/         # Batch & single experiment definitions
+├── src/                     # Core platform code
+│   ├── methods/             # Imputation methods (statistical / ML / DL)
+│   ├── datasets/            # Dataset adapters (auto-download + caching)
+│   ├── missingness/         # MCAR, MAR, MNAR generators
+│   ├── evaluation/          # Metrics (imputation + downstream)
+│   ├── orchestration/       # Experiment & batch runners
+│   └── ...                  # Config, registry, factory, tracking, utils
+├── analysis/                # 7-step automated analysis pipeline
+│   ├── scripts/             # Pipeline scripts (consolidate → conclusions)
+│   └── outputs/             # Generated tables, figures, reports, stats
+├── scripts/                 # CLI entry points
 ├── tests/                   # Test suite (40 tests)
-├── results/                 # Output directory (gitignored)
-├── data/                    # Data directory (gitignored, auto-downloaded)
-└── pyproject.toml           # Project dependencies
+└── paper/                   # Survey paper materials
 ```
-
-## Config System
-
-Configs are **hierarchical and composable**:
-
-- `configs/base.yaml` — defaults (tracking, downstream, runtime)
-- `configs/datasets/*.yaml` — dataset definitions
-- `configs/methods/*.yaml` — method hyperparameters
-- `configs/missingness/*.yaml` — missingness mechanism settings
-- `configs/experiments/*.yaml` — full experiments or batch definitions
-
-A batch config like `benchmark_core.yaml` expands into `datasets × missingness_profiles × methods × seeds`.
-
-## Currently Implemented
-
-### Datasets
-| Name  | Type           | Source   | Task           |
-|-------|---------------|----------|----------------|
-| adult | Mixed (num+cat)| UCI/OpenML | Classification |
-| wine  | Numerical     | UCI/OpenML | Regression     |
-| heart | Numerical     | UCI/OpenML | Classification |
-
-### Imputation Methods
-| Name       | Family      | Description                        |
-|------------|-------------|------------------------------------|
-| mean       | statistical | Mean (numerical) / Mode (categorical) |
-| knn        | statistical | K-Nearest Neighbors (sklearn)      |
-| softimpute | statistical | Iterative SVD soft-thresholding    |
-| missforest | ml          | Iterative Random Forest (sklearn)  |
-
-### Missingness Generators
-| Name | Mechanism | Strategy                    |
-|------|----------|-----------------------------|
-| MCAR | MCAR     | Uniform random masking       |
-| MAR  | MAR      | Driver-value dependent       |
-
-### Evaluation Metrics
-- **Numerical**: RMSE, MAE, NRMSE
-- **Categorical**: Accuracy
-- **Downstream**: Accuracy, F1, ROC-AUC (classification); RMSE, MAE, R² (regression)
 
 ## Extending the Platform
 
-### Add a new imputation method
+ImputeBench is designed to be extended. Add your own methods, datasets, or missingness mechanisms without modifying core pipeline code:
 
-```python
-from src.methods.base import BaseImputer
-from src.registry import METHOD_REGISTRY
+- **[Adding Methods](docs/adding-methods.md)** — Implement `fit()` + `impute()`, register with `@METHOD_REGISTRY.register()`.
+- **[Adding Datasets](docs/adding-datasets.md)** — Implement `load()` + `get_metadata()` + `get_splits()`, register with `@DATASET_REGISTRY.register()`.
+- **[Experiment Configs](docs/experiment-configs.md)** — Define experiments in YAML; batch configs expand as datasets × missingness × methods × seeds.
+- **[Analysis Pipeline](docs/analysis-pipeline.md)** — One command to generate all tables, figures, and statistical tests.
 
-@METHOD_REGISTRY.register("my_method")
-class MyImputer(BaseImputer):
-    name = "my_method"
-    family = "ml"
+## Citation
 
-    def fit(self, X_train, metadata=None):
-        # Learn from training data
-        pass
+If you use ImputeBench in your research, please cite:
 
-    def impute(self, X_missing):
-        # Return completed DataFrame
-        pass
+```bibtex
+@software{imputebench2025,
+  title     = {ImputeBench: A Comprehensive Benchmark for Missing Value Imputation},
+  author    = {Huang, Edward},
+  year      = {2025},
+  url       = {https://github.com/yourusername/ImputeBench},
+  license   = {MIT}
+}
 ```
-
-Then add `configs/methods/my_method.yaml` and use it in experiments.
-
-### Add a new dataset
-
-```python
-from src.datasets.base import BaseDataset
-from src.registry import DATASET_REGISTRY
-
-@DATASET_REGISTRY.register("my_dataset")
-class MyDataset(BaseDataset):
-    name = "my_dataset"
-
-    def load(self): ...
-    def get_metadata(self): ...
-    def get_splits(self, seed=42, train_ratio=0.7, valid_ratio=0.1): ...
-```
-
-Register the import in `src/factory.py`.
-
-## TODO / Roadmap
-
-### Phase 2 — Extended Methods
-- [ ] MICE (Multiple Imputation by Chained Equations)
-- [ ] XGBoost-based iterative imputation
-- [ ] GAIN (Generative Adversarial Imputation Nets)
-- [ ] MIWAE (Missing data IWAE)
-- [ ] CSDI (Conditional Score-based Diffusion)
-
-### Phase 2 — Extended Missingness
-- [ ] MNAR generator
-- [ ] Hybrid/Scenario-based missingness (survey-like, medical-like)
-- [ ] Robustness protocol (train/test distribution shift)
-
-### Phase 2 — Reporting & Analysis
-- [ ] LaTeX table export
-- [ ] Plots (missing rate vs. performance, method comparison, heatmaps)
-- [ ] Recommendation matrix auto-generation
-- [ ] Case study output (per-feature error analysis)
-- [ ] Critical difference diagrams
-
-### Phase 2 — Engineering
-- [ ] W&B sweep support
-- [ ] DVC data versioning
-- [ ] Parallel batch execution
-- [ ] Checkpoint/resume for long experiments
-
-## Hardware
-
-Designed for local-first development on **MacBook Pro M4 Pro / 48GB RAM**:
-- CPU is the default device for all methods
-- MPS support is preserved for PyTorch-based DL methods
-- No CUDA-only dependencies
 
 ## License
 

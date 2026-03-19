@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+title: "ImputeBench: A Comprehensive Benchmark for Missing Value Imputation"
+message: "If you use this software, please cite it as below."
+type: software
+authors:
+  - family-names: Huang
+    given-names: Edward
+license: MIT
+repository-code: "https://github.com/yourusername/ImputeBench"
+keywords:
+  - missing value imputation
+  - benchmark
+  - tabular data
+  - machine learning
+  - deep learning
+  - MCAR
+  - MAR
+  - MNAR
+abstract: >-
+  A reproducible, config-driven benchmark platform for systematically
+  comparing 13 missing value imputation methods (statistical, ML, deep
+  learning) across 12 tabular datasets, 3 missingness mechanisms, and
+  multiple evaluation metrics. Includes 17,160 pre-computed experimental
+  runs with publication-ready tables, figures, and statistical tests.
